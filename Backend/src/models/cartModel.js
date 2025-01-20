@@ -1,17 +1,16 @@
 const mongoose = require('mongoose');
 
-// Define CartItemSchema here
 const CartItemSchema = new mongoose.Schema({
   productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
   quantity: { type: Number, required: true, default: 1 },
 });
 
-const OrderSchema = new mongoose.Schema({
+const CartSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  items: [CartItemSchema],  // Use CartItemSchema for items array
-  totalAmount: { type: Number, required: true },
-  status: { type: String, enum: ['Pending', 'Completed', 'Cancelled'], default: 'Pending' },
+  items: [CartItemSchema],
+  table: { type: Number, default: 1 },  // Change ObjectId to Number or String
+  totalAmount: { type: Number, required: true, default: 0 },
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('Order', OrderSchema);
+module.exports = mongoose.model('Cart', CartSchema);

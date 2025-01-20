@@ -6,7 +6,9 @@ require('dotenv').config();
 
 // All Routes Imports
 const menuRouter = require("./src/routes/menuRoute")
-
+const authRouter = require("./src/routes/authRoute")
+const cartRouter = require("./src/routes/cartRoute")
+const orderRouter = require("./src/routes/orderRoute")
 
 connectDB();
 app.use(express.json());
@@ -15,6 +17,9 @@ app.use(cors());
 
 // all api routes
 app.use("/api/v1", menuRouter);
+app.use("/api/v1", authRouter);
+app.use("/api/v1", cartRouter);
+app.use("/api/v1", orderRouter);
 
 
 app.get("/", (req , res ) => {
