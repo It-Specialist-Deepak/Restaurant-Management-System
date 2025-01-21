@@ -7,7 +7,6 @@ module.exports.placeOrder = async (req, res) => {
   try {
     const { userId, cartId } = req.body;
 
-    // Fetch cart by cartId and userId with explicit model population
     const cart = await Cart.findOne({ userId, _id: cartId })
       .populate({
         path: 'items.productId',
@@ -18,13 +17,12 @@ module.exports.placeOrder = async (req, res) => {
       return res.status(404).json({ message: 'Cart not found' });
     }
 
-    // Calculate total amount
     let totalAmount = 0;
     cart.items.forEach(item => {
       totalAmount += item.productId.price * item.quantity;
     });
 
-    // Create new order
+
     const newOrder = new Order({
       userId,
       items: cart.items,
@@ -32,8 +30,6 @@ module.exports.placeOrder = async (req, res) => {
       table: cart.table, 
     });
     
-
-    // Save order
     await newOrder.save();
 
     // Remove the entire cart after placing the order
@@ -46,5 +42,44 @@ module.exports.placeOrder = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: 'Error placing order', error: error.message });
+  }
+};
+module.exports.getOrder = async (req, res) => {
+  try {
+    const { userId } = req.body; 
+  
+    const orders = await Order.find({ userId, status: 'Pending' }).populate({
+      path: 'items.productId', 
+      model: 'MenuItem',
+      select: 'name price image category' 
+    });
+    
+    if (!orders.length) {
+      return res.status(404).json({ message: 'Pending orders not found for this user' });
+    }
+    return res.status(200).json(orders);
+  
+  } catch (err) {
+    console.error('Error in getOrder API:', err.message);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+
+module.exports.cancelOrder = async (req, res) => {
+  try {
+    const { userId, orderId } = req.body;
+    const order = await Order.findOne({ userId, _id: orderId });
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    order.status = 'Cancelled';
+    await order.save();
+
+    res.status(200).json({ message: 'Order cancelled successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error cancelling order', error: error.message });
   }
 };

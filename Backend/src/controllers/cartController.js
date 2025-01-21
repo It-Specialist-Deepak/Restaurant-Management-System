@@ -43,6 +43,7 @@ module.exports.addtoCart = async (req, res) => {
   }
 };
 // get all cart item
+
 module.exports.getCart = async (req, res) => {
     try {
       const { userId } = req.body; 
