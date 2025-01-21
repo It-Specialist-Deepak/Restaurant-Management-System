@@ -1,6 +1,6 @@
-const Product = require('../models/menuModel'); // Assuming you have a Product model for MenuItems
-const Order = require('../models/orderModel'); // Assuming you have an Order model
-const Cart = require('../models/cartModel'); // Assuming you have a Cart model
+const Product = require('../models/menuModel'); 
+const Order = require('../models/orderModel'); 
+const Cart = require('../models/cartModel'); 
 
 
 module.exports.placeOrder = async (req, res) => {
