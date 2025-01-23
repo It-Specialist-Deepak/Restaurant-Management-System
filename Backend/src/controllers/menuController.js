@@ -27,7 +27,7 @@ module.exports.createMenu = async (req, res) => {
   
 module.exports.Allmenu = async (req, res) => {
   try {
-    const products = await menuModel.find();
+    const products = await menuModel.find({ availability: true });
     res.status(200).json(products);
   } catch (error) {
     res

@@ -12,6 +12,9 @@ const orderRouter = require("./src/routes/orderRoute");
 const staffAuthMiddleware = require("./src/middleware/staffAuthMiddleware");
 const adminAuthMiddleware = require("./src/middleware/adminAuthMiddleware");
 
+const orderManageRouter = require("./src/routes/staffRoutes/orderManageRoute");
+const menuManageRouter = require("./src/routes/staffRoutes/menuManageRoute");
+
 connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -23,10 +26,13 @@ app.use("/api/v1", authRouter);
 app.use("/api/v1", cartRouter);
 app.use("/api/v1", orderRouter);
 
+// staff api routes
+app.use("/api/v1" , orderManageRouter);
+app.use("/api/v1" , menuManageRouter);
+
 app.get("/staff-content", staffAuthMiddleware, (req, res) => {
   res.send("Welcome to staff content!");
 });
-
 // Admin-level content (accessible by admin only)
 app.get("/admin-content", adminAuthMiddleware, (req, res) => {
   res.send("Welcome to admin content!");

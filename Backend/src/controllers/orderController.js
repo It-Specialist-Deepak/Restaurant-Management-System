@@ -29,6 +29,7 @@ module.exports.placeOrder = async (req, res) => {
       totalAmount,
       table: cart.table, 
     });
+    console.log("table" , cart.table);
     
     await newOrder.save();
 
