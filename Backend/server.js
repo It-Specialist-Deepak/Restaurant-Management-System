@@ -1,14 +1,16 @@
-const express = require ("express");
+const express = require("express");
 const app = express();
-const cors = require ("cors");
+const cors = require("cors");
 const connectDB = require("./src/config/DB");
-require('dotenv').config();
+require("dotenv").config();
 
 // All Routes Imports
-const menuRouter = require("./src/routes/menuRoute")
-const authRouter = require("./src/routes/authRoute")
-const cartRouter = require("./src/routes/cartRoute")
-const orderRouter = require("./src/routes/orderRoute")
+const menuRouter = require("./src/routes/menuRoute");
+const authRouter = require("./src/routes/authRoute");
+const cartRouter = require("./src/routes/cartRoute");
+const orderRouter = require("./src/routes/orderRoute");
+const staffAuthMiddleware = require("./src/middleware/staffAuthMiddleware");
+const adminAuthMiddleware = require("./src/middleware/adminAuthMiddleware");
 
 connectDB();
 app.use(express.json());
@@ -21,10 +23,18 @@ app.use("/api/v1", authRouter);
 app.use("/api/v1", cartRouter);
 app.use("/api/v1", orderRouter);
 
+app.get("/staff-content", staffAuthMiddleware, (req, res) => {
+  res.send("Welcome to staff content!");
+});
 
-app.get("/", (req , res ) => {
-    res.send("Hello from Server")
-})
+// Admin-level content (accessible by admin only)
+app.get("/admin-content", adminAuthMiddleware, (req, res) => {
+  res.send("Welcome to admin content!");
+});
 
-PORT= process.env.PORT || 3000
+app.get("/", (req, res) => {
+  res.send("Hello from Server");
+});
+
+PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

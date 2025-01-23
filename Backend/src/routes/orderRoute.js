@@ -1,10 +1,14 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const userAuthMiddleware = require("../middleware/userAuthMiddleware");
+const {
+  placeOrder,
+  getOrder,
+  cancelOrder,
+} = require("../controllers/orderController");
 
-const { placeOrder , getOrder , cancelOrder } = require("../controllers/orderController");
-
-router.post('/placeorder', placeOrder);
-router.post("/getorder" , getOrder);
-router.post("/cancelorder" , cancelOrder);
+router.post("/placeorder", userAuthMiddleware, placeOrder);
+router.post("/getorder", userAuthMiddleware, getOrder);
+router.post("/cancelorder", userAuthMiddleware, cancelOrder);
 
 module.exports = router;

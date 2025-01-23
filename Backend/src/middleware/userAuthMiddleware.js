@@ -1,0 +1,30 @@
+const jwt = require('jsonwebtoken');
+const User = require('../models/userModel'); // Adjust the path to your User model
+
+const userAuthMiddleware = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    console.log(token);
+
+    if (!token) {
+      return res.status(401).json({ message: 'Unauthorized: No token provided' });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
+
+    // Optionally, you can verify the user from the database
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return res.status(401).json({ message: 'Unauthorized: User not found' });
+    }
+    
+    // Attaching user info to the request object
+    req.user = user;
+    next();
+  } catch (error) {
+    console.error('Authentication error:', error.message);
+    return res.status(401).json({ message: 'Unauthorized: Invalid token' });
+  }
+};
+
+module.exports = userAuthMiddleware;
