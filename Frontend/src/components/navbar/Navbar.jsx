@@ -1,77 +1,92 @@
+import React from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import SearchBar from "../searchBar/SearchBar";
 
-const Navbar = () => {
-  // Framer Motion Variants
-  const navItemVariants = {
-    hidden: { opacity: 0, y: -10 },
-    visible: (index) => ({
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.3, delay: index * 0.1 },
-    }),
-  };
-
-  const logoVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.6 } },
-    hover: { scale: 1.05, transition: { duration: 0.3 } },
-  };
-
+function Navbar() {
   return (
-    <motion.nav
-      className="bg-white shadow-md sticky top-0 z-50"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-    >
-      <div className="container mx-auto flex items-center justify-between py-4 px-6">
-        {/* Logo Section */}
-        <motion.div
-          className="logo"
-          variants={logoVariants}
-          initial="hidden"
-          animate="visible"
-          whileHover="hover"
-        >
-          <Link to="/">
-            <h1 className="text-2xl font-bold text-blue-950">FoodHub</h1>
-          </Link>
-        </motion.div>
+    <header className="bg-white text-black shadow-md">
+      <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          <div className="flex-1 md:flex md:items-center md:gap-12">
+            <Link className="block text-black text-lg font-bold" to="/">
+              Foodhub
+            </Link>
+          </div>
 
-        {/* Navigation Links */}
-        <motion.ul
-          className="flex space-x-6 text-gray-700 font-medium"
-          initial="hidden"
-          animate="visible"
-        >
-          {["Signup", "About", "Pankaj", "Cart(0)"].map((item, index) => (
-            <motion.li
-              key={item}
-              variants={navItemVariants}
-              custom={index}
-              className="hover:text-blue-600 transition duration-300"
-            >
-              <Link to={`/${item.toLowerCase().replace(/\s+/g, "")}`}>
-                {item}
+          <nav
+            aria-label="Global Navigation"
+            className="hidden md:block flex-1 text-center"
+          >
+            <ul className="flex justify-center items-center gap-6 text-sm">
+              <li>
+                <Link
+                  className="text-black transition hover:text-gray-700"
+                  to="/about"
+                  aria-label="About Us"
+                >
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="text-black transition hover:text-gray-700"
+                  to="/career"
+                  aria-label="Careers"
+                >
+                  Careers
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="text-black transition hover:text-gray-700"
+                  to="/cart"
+                  aria-label="Shopping Cart"
+                >
+                  Cart
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="text-black transition hover:text-gray-700"
+                  to="/service"
+                  aria-label="Our Services"
+                >
+                  Services
+                </Link>
+              </li>
+            </ul>
+          </nav>
+
+          <div className="flex items-center gap-4">
+            <input
+              type="text"
+              className="rounded-md border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
+              placeholder="Search..."
+              aria-label="Search"
+            />
+            <button className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white shadow hover:bg-gray-700 transition">
+              Search
+            </button>
+            <div className="sm:flex gap-4">
+              <Link
+                className="rounded-md bg-black px-5 py-2 text-sm font-medium text-white shadow hover:bg-gray-700 transition"
+                to="/login"
+                aria-label="Login"
+              >
+                Login
               </Link>
-            </motion.li>
-          ))}
-        </motion.ul>
-
-        {/* Search Bar */}
-        <motion.div
-          className="hidden lg:flex"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <SearchBar />
-        </motion.div>
+              <Link
+                className="rounded-md bg-black px-5 py-2 text-sm font-medium text-white shadow hover:bg-gray-700 transition"
+                to="/registration"
+                aria-label="Sign Up"
+              >
+                Signup
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
-    </motion.nav>
+    </header>
   );
-};
+}
 
 export default Navbar;

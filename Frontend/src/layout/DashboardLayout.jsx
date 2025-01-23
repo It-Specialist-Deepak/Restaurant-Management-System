@@ -1,16 +1,26 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import React from "react";
+import { Outlet } from "react-router-dom";
 import Footer from "../components/footer/Footer";
 import Navbar from "../components/navbar/Navbar";
+import Testimonial from "../components/testimonial/Testimonial";
+// import Ads from "../components/ads/Ads";
+// import SearchBar from "../components/searchBar/SearchBar";
 
 const DashboardLayout = () => {
   return (
-    <div>
+    <>
       <Navbar />
-      <Outlet /> {/* This is where nested routes will render */}
+      {/* <SearchBar /> */}
+      <main style={{ minHeight: "80vh" }}>
+        {" "}
+        {/* Adjust height or add styling */}
+        <Outlet /> {/* Nested routes render here */}
+      </main>
+      {/* <Ads /> */}
+      <Testimonial />
       <Footer />
-    </div>
+    </>
   );
-}
+};
 
 export default DashboardLayout;
