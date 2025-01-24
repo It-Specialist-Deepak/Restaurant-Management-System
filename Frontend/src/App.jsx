@@ -8,6 +8,9 @@ import Cart from "./pages/Cart";
 import OrderDone from "./pages/OrderDone";
 import Faqs from "./pages/Faqs";
 import About from "./pages/About";
+import Career from "./pages/Career";
+import Service from "./pages/Service";
+import ExploreMenu from "./pages/ExploreMenu";
 
 function App() {
   return (
@@ -22,6 +25,9 @@ function App() {
           <Route path="/done" element={<OrderDone />} />
           <Route path="/faqs" element={<Faqs />} />
           <Route path="/about" element={<About />} />
+          <Route path="/careers" element={<Career />} />
+          <Route path="/services" element={<Service />} />
+          <Route path="/exploremenu" element={<ExploreMenu />} />
         </Route>
       </Routes>
     </Router>
