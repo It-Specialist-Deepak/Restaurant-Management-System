@@ -21,25 +21,19 @@ module.exports.placeOrder = async (req, res) => {
     cart.items.forEach(item => {
       totalAmount += item.productId.price * item.quantity;
     });
-
-
+    
     const newOrder = new Order({
       userId,
       items: cart.items,
       totalAmount,
-      table: cart.table, 
     });
-    console.log("table" , cart.table);
-    
     await newOrder.save();
-
-    // Remove the entire cart after placing the order
     await Cart.deleteOne({ _id: cartId });
 
     res.status(201).json({
       message: 'Order placed successfully',
       order: newOrder,
-      table: cart.table, // Include the table in the response
+      table: cart.table, 
     });
   } catch (error) {
     res.status(500).json({ message: 'Error placing order', error: error.message });
@@ -65,7 +59,6 @@ module.exports.getOrder = async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
-
 
 module.exports.cancelOrder = async (req, res) => {
   try {

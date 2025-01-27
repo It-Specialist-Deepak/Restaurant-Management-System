@@ -11,7 +11,6 @@ const OrderSchema = new mongoose.Schema({
   items: [CartItemSchema],  // Use CartItemSchema for items array
   totalAmount: { type: Number, required: true },
   status: { type: String, enum: ['Pending', 'Completed', 'Cancelled'], default: 'Pending' },
-  table: { type: Number, default: 1 }, 
   createdAt: { type: Date, default: Date.now },
 });
 

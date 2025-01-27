@@ -115,29 +115,45 @@ module.exports.getCart = async (req, res) => {
       return res.status(500).json({ message: "Server error" });
     }
   };
-  
   module.exports.updateTableQuantity = async (req, res) => {
-    const { userId, tableQuantity } = req.body; // Assuming tableQuantity is passed in the request body
+    const { userId, tableQuantity } = req.body;
   
     try {
      
       if (isNaN(tableQuantity) || tableQuantity <= 0) {
         return res.status(400).json({ message: "Invalid table quantity" });
       }
+
       const cart = await Cart.findOne({ userId });
   
       if (!cart) {
         return res.status(404).json({ message: "Cart not found for this user" });
       }
+  
+      // Ensure cart.products is an array
+      const products = cart.items || [];
+  
+      // Calculate the total quantity of all products in the cart
+      const totalProductQuantity = products.reduce((sum, product) => sum + (product.quantity || 0), 0);
+      // console.log("Total product quantity:", totalProductQuantity);
+  
+      if (tableQuantity > totalProductQuantity) {
+        return res.status(400).json({
+          message: `Table quantity cannot exceed the total quantity of ${totalProductQuantity} items in the cart`,
+        });
+      }
       cart.table = tableQuantity;
       await cart.save();
   
-      return res.status(200).json({ message: "Table quantity updated successfully", cart });
+      return res
+        .status(200)
+        .json({ message: "Table quantity updated successfully", cart });
     } catch (error) {
       console.error("Error updating table quantity:", error);
       return res.status(500).json({ message: "Server error" });
     }
   };
+  
   module.exports.deleteCart = async (req, res) => {
     const { userId, productId } = req.body; 
   
@@ -148,22 +164,17 @@ module.exports.getCart = async (req, res) => {
       if (!cart) {
         return res.status(404).json({ message: "Cart not found for this user" });
       }
-  
-      // Find the index of the product in the cart items array
       const productIndex = cart.items.findIndex(item => item.productId.equals(productId));
   
       if (productIndex === -1) {
         return res.status(404).json({ message: "Product not found in cart" });
       }
   
-      // Remove the product from the cart's items array
       cart.items.splice(productIndex, 1);
-  
-      // If the cart is empty after deletion, delete the entire cart
+
       if (cart.items.length === 0) {
-        // Delete the cart from the database
+      
         await Cart.deleteOne({ userId });
-  
         return res.status(200).json({ message: "Cart is empty. Cart deleted successfully" });
       }
       await cart.save();
