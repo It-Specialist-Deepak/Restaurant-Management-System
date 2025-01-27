@@ -45,7 +45,7 @@ const category = [
 
 const FoodCategory = () => {
   return (
-    <div className="mt-5">
+    <div className="mt-5 bg-gray-950 py-5">
       <div className="flex overflow-x-scroll lg:justify-center hide-scroll-bar">
         {/* Categories */}
         {category.map((item, index) => (
@@ -58,8 +58,8 @@ const FoodCategory = () => {
           >
             {/* Category Image and Hover Effect */}
             <motion.div
-              className="w-16 h-16 lg:w-24 lg:h-24 max-w-xs rounded-full bg-pink-500 transition-all cursor-pointer mb-1"
-              whileHover={{ scale: 1.1, backgroundColor: "#ff2e63" }}
+              className="w-16 h-16 lg:w-24 lg:h-24 max-w-xs rounded-full bg-gray-800 transition-all cursor-pointer mb-1"
+              whileHover={{ scale: 1.1, backgroundColor: "#1e293b" }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.3 }}
             >
@@ -76,7 +76,7 @@ const FoodCategory = () => {
 
             {/* Category Name */}
             <motion.h1
-              className="text-sm lg:text-lg text-center font-medium title-font capitalize"
+              className="text-sm lg:text-lg text-center font-medium title-font capitalize text-gray-300"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}

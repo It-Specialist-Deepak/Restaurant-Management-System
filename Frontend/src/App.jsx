@@ -11,8 +11,14 @@ import About from "./pages/About";
 import Career from "./pages/Career";
 import Service from "./pages/Service";
 import ExploreMenu from "./pages/ExploreMenu";
+import { useContext } from "react";
+import { ContextData } from "./context/UserContext";
 
 function App() {
+  const UserData = useContext(ContextData);
+
+  console.log(UserData);
+
   return (
     <Router>
       <Routes>

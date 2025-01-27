@@ -1,64 +1,115 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-function ExploreMenu() {
-  const [menuItems, setMenuItems] = useState([]);
-  const [loading, setLoading] = useState(true);
+const Login = () => {
+  // State for form fields
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // State for error message
 
-  // Fetch the best menu items from the API
-  useEffect(() => {
-    const fetchMenuItems = async () => {
-      try {
-        // Replace the URL with your actual API endpoint
-        const response = await fetch(
-          "https://www.themealdb.com/meal/53083-Lamb-Pilaf-(Plov)-Recipe"
-        );
-        const data = await response.json();
+  // useNavigate hook for redirecting to ExploreMenu page
+  const navigate = useNavigate();
 
-        // Set the fetched data to state
-        setMenuItems(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching menu items:", error);
-        setLoading(false);
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(""); // Reset any previous error
+
+    if (!email || !password) {
+      setError("Please enter both email and password.");
+      return;
+    }
+
+    const apiUrl = `${import.meta.env.VITE_BASE_URL}/api/v1/login`; // Backend login route
+
+    try {
+      const response = await axios.post(apiUrl, { email, password });
+
+      // If login is successful, redirect to ExploreMenu
+      if (response.status === 200) {
+        console.log("Login successful:", response.data);
+
+        // Store token and user info if needed (e.g., in localStorage or context)
+        localStorage.setItem("token", response.data.token); // Example token storage
+
+        // Redirect to ExploreMenu page
+        navigate("/ExploreMenu"); // Navigate to the ExploreMenu page
       }
-    };
-
-    fetchMenuItems();
-  }, []);
-
-  // If data is still loading, show a loading message
-  if (loading) {
-    return <div>Loading menu...</div>;
-  }
+    } catch (err) {
+      console.error("Error during login:", err.response?.data || err);
+      setError(
+        err.response?.data?.message || "Login failed. Please try again."
+      );
+    }
+  };
 
   return (
-    <div className="explore-menu">
-      <h2 className="text-3xl font-bold text-center">Explore Our Menu</h2>
+    <div className="flex justify-center items-center h-screen bg-gray-950">
+      {/* Login Form */}
+      <div className="login_Form bg-gray-900 text-gray-200 px-1 lg:px-8 py-6 border border-gray-800 rounded-xl shadow-md">
+        {/* Top Heading */}
+        <div className="mb-5">
+          <h2 className="text-center text-2xl font-bold text-blue-400">
+            Login
+          </h2>
+        </div>
 
-      <div className="menu-items grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
-        {menuItems.map((item) => (
-          <div
-            key={item.id}
-            className="menu-item p-4 border rounded-lg shadow-lg"
-          >
-            <img
-              src={item.imageUrl}
-              alt={item.name}
-              className="w-full h-48 object-cover rounded-t-lg"
-            />
-            <h3 className="mt-4 text-xl font-semibold">{item.name}</h3>
-            <p className="mt-2 text-gray-500">{item.description}</p>
-            <span className="block mt-2 text-lg font-bold text-rose-700">
-              ${item.price}
-            </span>
-            <button className="mt-4 bg-rose-600 text-white px-6 py-2 rounded-md">
-              Add to Cart
-            </button>
+        {/* Error message */}
+        {error && (
+          <div className="text-red-500 text-center font-semibold mb-4">
+            {error}
           </div>
-        ))}
+        )}
+
+        {/* Email Input */}
+        <div className="mb-3">
+          <input
+            type="email"
+            placeholder="Email Address"
+            className="bg-gray-800 border border-gray-700 px-2 py-2 w-96 rounded-md outline-none placeholder-gray-500 text-gray-200"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)} // Handle input change
+          />
+        </div>
+
+        {/* Password Input */}
+        <div className="mb-5">
+          <input
+            type="password"
+            placeholder="Password"
+            className="bg-gray-800 border border-gray-700 px-2 py-2 w-96 rounded-md outline-none placeholder-gray-500 text-gray-200"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)} // Handle input change
+          />
+        </div>
+
+        {/* Login Button */}
+        <div className="mb-5">
+          <button
+            type="button"
+            className="bg-blue-600 hover:bg-blue-700 w-full text-white text-center py-2 font-bold rounded-md"
+            onClick={handleSubmit} // Handle form submission
+          >
+            Login
+          </button>
+        </div>
+
+        {/* Signup Link */}
+        <div>
+          <h2 className="text-gray-400">
+            Don't have an account?{" "}
+            <Link
+              className="text-blue-400 hover:underline"
+              to={"/registration"}
+            >
+              Signup
+            </Link>
+          </h2>
+        </div>
       </div>
     </div>
   );
-}
+};
 
-export default ExploreMenu;
+export default Login;

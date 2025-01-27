@@ -1,5 +1,10 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"; // Import motion for animations
+
+// Placeholder for TypingEffect component
+const TypingEffect = ({ text }) => {
+  return <span>{text}</span>;
+};
 
 function HomePage() {
   return (
@@ -33,7 +38,7 @@ function HomePage() {
           <div className="mt-8 flex flex-wrap gap-4 text-center">
             <motion.a
               href="/exploremenu"
-              className="block w-full rounded bg-slate-950 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring active:bg-rose-500 sm:w-auto sm:text-base lg:px-8 lg:py-4 lg:text-lg"
+              className="block w-full rounded bg-slate-950 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring focus:ring-rose-400 active:bg-rose-500 sm:w-auto sm:text-base lg:px-8 lg:py-4 lg:text-lg"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 1 }}
@@ -43,7 +48,7 @@ function HomePage() {
 
             <motion.a
               href="#"
-              className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring active:text-rose-500 sm:w-auto sm:text-base lg:px-8 lg:py-4 lg:text-lg"
+              className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring focus:ring-rose-400 active:text-rose-500 sm:w-auto sm:text-base lg:px-8 lg:py-4 lg:text-lg"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 1.2 }}
@@ -55,23 +60,6 @@ function HomePage() {
       </div>
     </section>
   );
-}
-
-function TypingEffect({ text }) {
-  const [displayedText, setDisplayedText] = React.useState("");
-  const [index, setIndex] = React.useState(0);
-
-  React.useEffect(() => {
-    if (index < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayedText((prev) => prev + text[index]);
-        setIndex(index + 1);
-      }, 100); // Adjust speed here
-      return () => clearTimeout(timeout);
-    }
-  }, [index, text]);
-
-  return <span>{displayedText}</span>;
 }
 
 export default HomePage;
