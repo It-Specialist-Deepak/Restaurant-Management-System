@@ -32,7 +32,7 @@ const Login = () => {
 
         // Store token and user info if needed (e.g., in localStorage or context)
         localStorage.setItem("token", response.data.token); // Example token storage
-
+        localStorage.setItem("userid", response.data.userid); // Example token storage
         // Redirect to ExploreMenu page
         navigate("/explore-menu"); // Navigate to the ExploreMenu page
       }

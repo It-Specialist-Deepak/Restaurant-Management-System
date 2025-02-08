@@ -42,6 +42,8 @@ function Registration() {
       if (response.status === 201) {
         console.log("User registered successfully:", response.data);
         navigate("/login");
+        localStorage.setItem("token", response.data.token); // Example token storage
+        localStorage.setItem("userid", response.data.userid);
       }
     } catch (err) {
       console.error("Error during registration:", err.response?.data || err);
