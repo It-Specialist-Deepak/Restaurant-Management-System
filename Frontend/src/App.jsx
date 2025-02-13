@@ -13,6 +13,7 @@ import Service from "./pages/Service";
 import ExploreMenu from "./pages/ExploreMenu";
 import { useContext } from "react";
 import { ContextData } from "./context/UserContext";
+import CreateMenu from "./pages/CreateMenu";
 
 function App() {
   const UserData = useContext(ContextData);
@@ -34,6 +35,7 @@ function App() {
           <Route path="/careers" element={<Career />} />
           <Route path="/services" element={<Service />} />
           <Route path="/exploremenu" element={<ExploreMenu />} />
+          <Route path="/createmenu" element={<CreateMenu />} />
         </Route>
       </Routes>
     </Router>

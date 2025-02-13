@@ -1,115 +1,133 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  // State for form fields
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // State for error message
-
-  // useNavigate hook for redirecting to ExploreMenu page
+function ExploreMenu() {
+  const [menus, setMenus] = useState([]);
   const navigate = useNavigate();
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(""); // Reset any previous error
+  useEffect(() => {
+    const fetchMenus = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/v1/menu");
+        setMenus(res.data);
+      } catch (err) {
+        console.error("Error fetching menus:", err);
+      }
+    };
+    fetchMenus();
+  }, []);
 
-    if (!email || !password) {
-      setError("Please enter both email and password.");
+  const handleAddToCart = async (productId) => {
+    const storedUserId = localStorage.getItem("userId");
+    if (!storedUserId) {
+      alert("User ID not found! Please log in.");
+      navigate("/login");
       return;
     }
 
-    const apiUrl = `${import.meta.env.VITE_BASE_URL}/api/v1/login`; // Backend login route
+    try {
+      const response = await axios.post("http://localhost:5000/api/v1/add-to-cart", {
+        userId: storedUserId,
+        productId,
+      });
+      
+      if (response.data.cartId) {
+        localStorage.setItem("cartId", response.data.cartId);
+      }
+      alert("Item added to cart!");
+      navigate("/cart");
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      alert("Failed to add item to cart.");
+    }
+  };
+
+  const handleJustNowOrder = async () => {
+    const storedUserId = localStorage.getItem("userId");
+    if (!storedUserId) {
+      alert("User ID not found! Please log in.");
+      navigate("/login");
+      return;
+    }
 
     try {
-      const response = await axios.post(apiUrl, { email, password });
+      const { data } = await axios.get(`http://localhost:5000/api/v1/cart/${storedUserId}`);
+      const cartId = data?._id;
 
-      // If login is successful, redirect to ExploreMenu
-      if (response.status === 200) {
-        console.log("Login successful:", response.data);
-
-        // Store token and user info if needed (e.g., in localStorage or context)
-        localStorage.setItem("token", response.data.token); // Example token storage
-
-        // Redirect to ExploreMenu page
-        navigate("/ExploreMenu"); // Navigate to the ExploreMenu page
+      if (!cartId) {
+        alert("No cart found! Please add items first.");
+        return;
       }
-    } catch (err) {
-      console.error("Error during login:", err.response?.data || err);
-      setError(
-        err.response?.data?.message || "Login failed. Please try again."
-      );
+
+      await axios.post("http://localhost:5000/api/v1/placeorder", {
+        userId: storedUserId,
+        cartId,
+      });
+
+      alert("Order placed successfully!");
+      navigate("/orders");
+    } catch (error) {
+      console.error("Error placing order:", error);
+      alert("Failed to place order.");
     }
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-950">
-      {/* Login Form */}
-      <div className="login_Form bg-gray-900 text-gray-200 px-1 lg:px-8 py-6 border border-gray-800 rounded-xl shadow-md">
-        {/* Top Heading */}
-        <div className="mb-5">
-          <h2 className="text-center text-2xl font-bold text-blue-400">
-            Login
-          </h2>
-        </div>
+    <div
+      className="min-h-screen bg-cover bg-center p-5"
+      style={{
+        backgroundImage:
+          "url('https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg?cs=srgb&dl=pexels-chanwalrus-941861.jpg&fm=jpg')",
+      }}
+    >
+      <h1 className="text-3xl font-bold text-center text-green-600 mb-6">
+        Explore Menu
+      </h1>
 
-        {/* Error message */}
-        {error && (
-          <div className="text-red-500 text-center font-semibold mb-4">
-            {error}
-          </div>
-        )}
-
-        {/* Email Input */}
-        <div className="mb-3">
-          <input
-            type="email"
-            placeholder="Email Address"
-            className="bg-gray-800 border border-gray-700 px-2 py-2 w-96 rounded-md outline-none placeholder-gray-500 text-gray-200"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)} // Handle input change
-          />
-        </div>
-
-        {/* Password Input */}
-        <div className="mb-5">
-          <input
-            type="password"
-            placeholder="Password"
-            className="bg-gray-800 border border-gray-700 px-2 py-2 w-96 rounded-md outline-none placeholder-gray-500 text-gray-200"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)} // Handle input change
-          />
-        </div>
-
-        {/* Login Button */}
-        <div className="mb-5">
-          <button
-            type="button"
-            className="bg-blue-600 hover:bg-blue-700 w-full text-white text-center py-2 font-bold rounded-md"
-            onClick={handleSubmit} // Handle form submission
-          >
-            Login
-          </button>
-        </div>
-
-        {/* Signup Link */}
-        <div>
-          <h2 className="text-gray-400">
-            Don't have an account?{" "}
-            <Link
-              className="text-blue-400 hover:underline"
-              to={"/registration"}
+      {menus.length === 0 ? (
+        <p className="text-center text-gray-600">No menu items available</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {menus.map((menu) => (
+            <div
+              key={menu._id}
+              className="bg-white shadow-lg rounded-lg p-4 transition duration-300 transform hover:scale-105"
             >
-              Signup
-            </Link>
-          </h2>
+              <img
+                src={
+                  menu.image && typeof menu.image === "string"
+                    ? `http://localhost:5000/${menu.image}`
+                    : "https://via.placeholder.com/150?text=No+Image"
+                }
+                alt={menu.name}
+                className="w-full h-40 object-cover rounded-md"
+              />
+              <h3 className="text-lg font-semibold mt-3">{menu.name}</h3>
+              <p className="text-gray-500">
+                <strong>Category:</strong> {menu.category}
+              </p>
+              <p className="text-gray-700 font-bold">${menu.price}</p>
+
+              <button
+                onClick={() => handleAddToCart(menu._id)}
+                className="mt-3 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded w-full"
+              >
+                Add to Cart
+              </button>
+            </div>
+          ))}
         </div>
-      </div>
+      )}
+
+      <button
+        onClick={handleJustNowOrder}
+        className="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full"
+      >
+        Just Now Order
+      </button>
     </div>
   );
-};
+}
 
-export default Login;
+export default ExploreMenu;

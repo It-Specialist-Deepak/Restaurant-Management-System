@@ -1,63 +1,65 @@
-import React from "react";
+import { useState } from "react";
+import cx from "clsx";
+import classes from "../../module/TrustedSource.module.css"; // Ensure correct file path
 
-function TrustedSource() {
+const data = [
+  { id: "1", avatar: "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png", name: "Robert Wolfkisser", job: "Engineer", email: "rob_wolf@gmail.com" },
+  { id: "2", avatar: "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png", name: "Jill Jailbreaker", job: "Engineer", email: "jj@breaker.com" },
+  { id: "3", avatar: "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png", name: "Henry Silkeater", job: "Designer", email: "henry@silkeater.io" },
+  { id: "4", avatar: "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-3.png", name: "Bill Horsefighter", job: "Designer", email: "bhorsefighter@gmail.com" },
+  { id: "5", avatar: "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-10.png", name: "Jeremy Footviewer", job: "Manager", email: "jeremy@foot.dev" }
+];
+
+export function TrustedSource() {
+  const [selection, setSelection] = useState([]);
+
+  const toggleRow = (id) => {
+    setSelection((current) =>
+      current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
+    );
+  };
+
+  const toggleAll = () => {
+    setSelection((current) => (current.length === data.length ? [] : data.map((item) => item.id)));
+  };
+
   return (
-    <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 bg-slate-950 animate-fadeIn">
-      <div className="mx-auto max-w-3xl text-center">
-        <h2 className="text-3xl font-bold text-gray-100 sm:text-4xl">
-          Trusted by eCommerce Businesses
-        </h2>
-
-        <p className="mt-4 text-gray-400 sm:text-xl">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-          dolores laborum labore provident impedit esse recusandae facere libero
-          harum sequi.
-        </p>
-      </div>
-
-      <dl className="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="flex flex-col rounded-lg border border-gray-700 px-4 py-8 text-center">
-          <dt className="order-last text-lg font-medium text-gray-400">
-            Total Sales
-          </dt>
-
-          <dd className="text-4xl font-extrabold text-blue-400 md:text-5xl">
-            $4.8m
-          </dd>
-        </div>
-
-        <div className="flex flex-col rounded-lg border border-gray-700 px-4 py-8 text-center">
-          <dt className="order-last text-lg font-medium text-gray-400">
-            Official Addons
-          </dt>
-
-          <dd className="text-4xl font-extrabold text-blue-400 md:text-5xl">
-            24
-          </dd>
-        </div>
-
-        <div className="flex flex-col rounded-lg border border-gray-700 px-4 py-8 text-center">
-          <dt className="order-last text-lg font-medium text-gray-400">
-            Total Addons
-          </dt>
-
-          <dd className="text-4xl font-extrabold text-blue-400 md:text-5xl">
-            86
-          </dd>
-        </div>
-
-        <div className="flex flex-col rounded-lg border border-gray-700 px-4 py-8 text-center">
-          <dt className="order-last text-lg font-medium text-gray-400">
-            Downloads
-          </dt>
-
-          <dd className="text-4xl font-extrabold text-blue-400 md:text-5xl">
-            86k
-          </dd>
-        </div>
-      </dl>
+    <div className={classes.tableContainer}>
+      <table className={classes.table}>
+        <thead>
+          <tr>
+            <th>
+              <input
+                type="checkbox"
+                onChange={toggleAll}
+                checked={selection.length === data.length}
+                indeterminate={selection.length > 0 && selection.length !== data.length}
+              />
+            </th>
+            <th>User</th>
+            <th>Email</th>
+            <th>Job</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((item) => {
+            const selected = selection.includes(item.id);
+            return (
+              <tr key={item.id} className={cx({ [classes.rowSelected]: selected })}>
+                <td>
+                  <input type="checkbox" checked={selected} onChange={() => toggleRow(item.id)} />
+                </td>
+                <td className={classes.userInfo}>
+                  <img src={item.avatar} alt={item.name} className={classes.avatar} />
+                  <p className={classes.userName}>{item.name}</p>
+                </td>
+                <td>{item.email}</td>
+                <td>{item.job}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 }
-
-export default TrustedSource;
