@@ -2,14 +2,17 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import UserContext from "./context/UserContext";
+// import UserContext from "./context/UserContext";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+
 
 const root = createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <UserContext>
-      <App />
-    </UserContext>
-  </React.StrictMode>
+  <Provider store={store}>
+    <App />
+  </Provider>
+</React.StrictMode>
 );

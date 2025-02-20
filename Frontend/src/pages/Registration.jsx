@@ -1,25 +1,23 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import axios from "axios";
+import { registerUser } from "../store/authSlice"; // ✅ Import Redux action
 
 const Registration = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   const validateInputs = () => {
-    if (!fullname || !email || !password) {
-      return "All fields are required.";
-    }
+    if (!fullname || !email || !password) return "All fields are required.";
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return "Please enter a valid email address.";
-    }
-    if (password.length < 6) {
-      return "Password must be at least 6 characters.";
-    }
+    if (!emailRegex.test(email)) return "Please enter a valid email address.";
+    if (password.length < 6) return "Password must be at least 6 characters.";
     return null;
   };
 
@@ -34,15 +32,17 @@ const Registration = () => {
     }
 
     try {
-      const response = await axios.post(
+      const { data } = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/api/v1/register`,
         { fullname, email, password }
       );
 
-      if (response.status === 201) {
-        console.log("User registered successfully:", response.data);
-        navigate("/login");
-      }
+      console.log("User registered successfully:", data);
+
+      // Dispatch register action to Redux store
+      dispatch(registerUser({ userId: data.userid, name: fullname, email, token: data.token }));
+
+      navigate("/login");
     } catch (err) {
       console.error("Registration error:", err.response?.data || err);
       setError(err.response?.data?.message || "Registration failed. Please try again.");
@@ -62,11 +62,7 @@ const Registration = () => {
           Register
         </h2>
 
-        {error && (
-          <div className="text-red-500 text-center font-semibold mb-4">
-            {error}
-          </div>
-        )}
+        {error && <div className="text-red-500 text-center font-semibold mb-4">{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <input
