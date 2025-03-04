@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const adsData = [
   {
@@ -25,32 +26,77 @@ const adsData = [
 ];
 
 const Ads = () => {
+  // Animation variants for staggered children
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3, // Stagger animations for children
+      },
+    },
+  };
+
+  const childVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <div className="container mx-auto px-5 py-10">
-      <h2 className="text-3xl font-bold text-gray-800 text-center mb-6">🔥 Special Food Deals</h2>
+    <section
+      className="overflow-hidden bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage:
+          "url('https://www.pcrm.org/sites/default/files/2024-03/processed-food.jpg')",
+      }}
+    >
+      <div className="bg-black/50 p-8 md:p-12 lg:px-16 lg:py-24">
+        <div className="container mx-auto px-5 py-10">
+          <motion.h2
+            className="text-3xl font-bold text-white text-center mb-6"
+            variants={childVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            🔥 Special Food Deals
+          </motion.h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {adsData.map((ad) => (
-          <a key={ad.id} href="#" className="group block overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition duration-300">
-            <img
-              src={ad.image}
-              alt={ad.title}
-              className="h-[350px] w-full object-cover sm:h-[450px] group-hover:scale-105 transition duration-300"
-            />
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {adsData.map((ad) => (
+              <motion.a
+                key={ad.id}
+                href="#"
+                className="group block overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition duration-300 bg-white/10 backdrop-blur-lg border border-white/20"
+                variants={childVariants}
+                whileHover={{ scale: 1.05 }} // Scale up on hover
+                whileTap={{ scale: 0.95 }} // Slight scale down on tap
+              >
+                <img
+                  src={ad.image}
+                  alt={ad.title}
+                  className="h-[350px] w-full object-cover sm:h-[450px] group-hover:scale-105 transition duration-300"
+                />
 
-            <div className="mt-3 flex justify-between text-sm p-3">
-              <div>
-                <h3 className="text-gray-900 font-semibold group-hover:underline group-hover:underline-offset-4 transition duration-200">
-                  {ad.title}
-                </h3>
-                <p className="mt-1.5 text-pretty text-xs text-gray-500">{ad.description}</p>
-              </div>
-              <p className="text-gray-900 font-bold">{ad.price}</p>
-            </div>
-          </a>
-        ))}
+                <div className="mt-3 flex justify-between text-sm p-3">
+                  <div>
+                    <h3 className="text-white font-semibold group-hover:underline group-hover:underline-offset-4 transition duration-200">
+                      {ad.title}
+                    </h3>
+                    <p className="mt-1.5 text-pretty text-xs text-white/80">{ad.description}</p>
+                  </div>
+                  <p className="text-white font-bold">{ad.price}</p>
+                </div>
+              </motion.a>
+            ))}
+          </motion.div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

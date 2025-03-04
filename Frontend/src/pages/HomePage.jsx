@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Placeholder for TypingEffect component
 const TypingEffect = ({ text }) => <span>{text}</span>;
 
-// Array of images for the slider
 const images = [
   "https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg?cs=srgb&dl=pexels-chanwalrus-941861.jpg&fm=jpg",
   "https://d2w1ef2ao9g8r9.cloudfront.net/otl-images/_1600x900_crop_center-center_82_line/Owning-a-Restaurant-Hero-Image-1.png",
@@ -13,11 +11,13 @@ const images = [
 
 function HomePage() {
   const [currentImage, setCurrentImage] = useState(0);
+  const [slideDirection, setSlideDirection] = useState("fade");
 
   useEffect(() => {
     const interval = setInterval(() => {
+      setSlideDirection((prev) => (prev === "fade" ? "left" : "fade"));
       setCurrentImage((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000); // Change image every 2 seconds
+    }, 4000);
 
     return () => clearInterval(interval);
   }, []);
@@ -25,18 +25,19 @@ function HomePage() {
   return (
     <section className="relative h-screen">
       {/* Background Image Slider */}
-      <motion.div
-        key={currentImage}
-        className="absolute inset-0 bg-cover bg-center transition-all duration-1000"
-        style={{
-          backgroundImage: `url(${images[currentImage]})`,
-        }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      />
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentImage}
+          className="absolute inset-0 bg-cover bg-center brightness-110"
+          style={{ backgroundImage: `url(${images[currentImage]})` }}
+          initial={slideDirection === "fade" ? { opacity: 0 } : { x: "100%" }}
+          animate={slideDirection === "fade" ? { opacity: 1 } : { x: 0 }}
+          exit={slideDirection === "fade" ? { opacity: 0 } : { x: "-100%" }}
+          transition={{ duration: 1 }}
+        />
+      </AnimatePresence>
 
-      <div className="absolute inset-0 bg-black/50"></div>
+      <div className="absolute  bg-white"></div>
 
       <div className="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
         <div className="max-w-xl text-center text-white ltr:sm:text-left rtl:sm:text-right">
