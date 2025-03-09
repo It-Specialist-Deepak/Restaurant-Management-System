@@ -112,7 +112,8 @@ module.exports.forgetPassword = async function (req, res){
     return res.status(200).send({ message: "Password Reset Link Sent Sucessfully"})
   }
   catch ( err ){
-    console.error("Something went wrong", err)
+    console.error("Something went wrong", err);
+    return res.status(500).json({ message: 'Internal Server Error' });
   }
 }
 // Reset Password api
@@ -135,5 +136,6 @@ module.exports.ResetPassword = async function(req, res)
     return res.status(200).send( { message: "password reset Sucessfully"})
   }
   catch(err){
-  console.error("Something went wrong", err)}
+  console.error("Something went wrong", err)};
+  return res.status(500).json({ message: 'Internal Server Error' });
 }
