@@ -1,5 +1,6 @@
 
 const userModel = require('../models/userModel');
+const Blacklist = require ('../models/BlacklistModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const generateToken = require('../utils/generateToken'); 
@@ -139,3 +140,20 @@ module.exports.ResetPassword = async function(req, res)
   console.error("Something went wrong", err)};
   return res.status(500).json({ message: 'Internal Server Error' });
 }
+// Logout user
+module.exports.Logout = async (req, res) => {
+  const token = req.header("Authorization")?.split(" ")[1];
+  if (!token) return res.status(400).json({ message: "No token provided" });
+
+  try {
+      const existingToken = await Blacklist.findOne({ token });
+      if (existingToken) return res.status(400).json({ message: "Token already blacklisted" });
+
+      const blacklistedToken = new Blacklist({ token });
+      await blacklistedToken.save();
+
+      res.json({ message: "User logged out successfully" });
+  } catch (error) {
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+};

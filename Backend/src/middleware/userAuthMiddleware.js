@@ -4,8 +4,6 @@ const User = require('../models/userModel'); // Adjust the path to your User mod
 const userAuthMiddleware = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
-    console.log(token);
-
     if (!token) {
       return res.status(401).json({ message: 'Unauthorized: No token provided' });
     }
@@ -17,7 +15,6 @@ const userAuthMiddleware = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: 'Unauthorized: User not found' });
     }
-    
     // Attaching user info to the request object
     req.user = user;
     next();

@@ -3,8 +3,9 @@ const router = express.Router();
 
 const { createVacancy , getAllVacancy , deleteVacancy } = require("../../controllers/managerControllers/careerControllers");
 const adminAuthMiddleware = require("../../middleware/adminAuthMiddleware");
-router.post('/create-vacancy', adminAuthMiddleware , createVacancy);
+const verifyToken = require("../../middleware/verifyTokenMiddleware");
+router.post('/create-vacancy', adminAuthMiddleware , verifyToken ,createVacancy);
 router.get('/get-vacancy' , getAllVacancy);
-router.delete('/delete-vacancy', adminAuthMiddleware , deleteVacancy);
+router.delete('/delete-vacancy', adminAuthMiddleware , verifyToken , deleteVacancy);
 
 module.exports = router;
