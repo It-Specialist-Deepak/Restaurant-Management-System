@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { registerUser } from "../store/authSlice";
 import { motion } from "framer-motion";
-import { FcGoogle } from "react-icons/fc"; // Google icon
-import { FaFacebook, FaGithub } from "react-icons/fa"; // Facebook and GitHub icons
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook, FaGithub } from "react-icons/fa";
 
 const Registration = () => {
   const dispatch = useDispatch();
@@ -51,20 +51,16 @@ const Registration = () => {
     }
   };
 
-  // Placeholder handlers for social signups
   const handleGoogleSignup = () => {
     console.log("Signup with Google clicked");
-    // Implement Google OAuth here (e.g., Firebase, Auth0)
   };
 
   const handleFacebookSignup = () => {
     console.log("Signup with Facebook clicked");
-    // Implement Facebook OAuth here
   };
 
   const handleGithubSignup = () => {
     console.log("Signup with GitHub clicked");
-    // Implement GitHub OAuth here
   };
 
   return (
@@ -76,13 +72,13 @@ const Registration = () => {
       }}
     >
       <motion.div
-        className="bg-gray-900/70 backdrop-blur-lg text-gray-200 p-6 sm:p-8 md:p-10 border border-gray-700/50 rounded-2xl shadow-xl w-full max-w-lg"
+        className="bg-white/90 backdrop-blur-lg text-blue-900 p-6 sm:p-8 md:p-10 border border-black rounded-2xl shadow-xl w-full max-w-lg"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
         <motion.h2
-          className="text-center text-2xl sm:text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 mb-6"
+          className="text-center text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 mb-6"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.5, ease: "easeOut" }}
@@ -92,7 +88,7 @@ const Registration = () => {
 
         {error && (
           <motion.div
-            className="bg-red-500/30 text-red-300 text-center font-semibold mb-6 py-2 px-4 rounded-md"
+            className="bg-red-100 text-red-800 text-center font-semibold mb-6 py-2 px-4 rounded-md border border-black"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -106,7 +102,7 @@ const Registration = () => {
           <motion.input
             type="text"
             placeholder="Full Name"
-            className="bg-gray-800/50 border border-gray-600/50 px-4 py-3 w-full rounded-lg outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200 transition-all duration-300 hover:bg-gray-700/50"
+            className="bg-white/80 border border-black px-4 py-3 w-full rounded-lg outline-none focus:ring-2 focus:ring-blue-400 placeholder-blue-300 text-blue-900 transition-all duration-300 hover:bg-white"
             value={fullname}
             onChange={(e) => setFullname(e.target.value)}
             initial={{ opacity: 0, x: -20 }}
@@ -116,7 +112,7 @@ const Registration = () => {
           <motion.input
             type="email"
             placeholder="Email Address"
-            className="bg-gray-800/50 border border-gray-600/50 px-4 py-3 w-full rounded-lg outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200 transition-all duration-300 hover:bg-gray-700/50"
+            className="bg-white/80 border border-black px-4 py-3 w-full rounded-lg outline-none focus:ring-2 focus:ring-blue-400 placeholder-blue-300 text-blue-900 transition-all duration-300 hover:bg-white"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             initial={{ opacity: 0, x: -20 }}
@@ -126,7 +122,7 @@ const Registration = () => {
           <motion.input
             type="password"
             placeholder="Password"
-            className="bg-gray-800/50 border border-gray-600/50 px-4 py-3 w-full rounded-lg outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200 transition-all duration-300 hover:bg-gray-700/50"
+            className="bg-white/80 border border-black px-4 py-3 w-full rounded-lg outline-none focus:ring-2 focus:ring-blue-400 placeholder-blue-300 text-blue-900 transition-all duration-300 hover:bg-white"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             initial={{ opacity: 0, x: -20 }}
@@ -135,7 +131,7 @@ const Registration = () => {
           />
           <motion.button
             type="submit"
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 w-full text-white py-3 font-bold rounded-lg shadow-md transition-all duration-300"
+            className="bg-blue-600 hover:bg-blue-700 w-full text-white py-3 font-bold rounded-lg border border-black shadow-md transition-all duration-300"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.5, ease: "easeOut" }}
@@ -152,22 +148,20 @@ const Registration = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7, duration: 0.5, ease: "easeOut" }}
         >
-          {/* Link */}
-          <p className="text-gray-300">
+          <p className="text-blue-900">
             Already have an account?{" "}
             <Link
               to="/login"
-              className="text-blue-400 font-semibold hover:text-blue-300 transition-all duration-300 hover:underline"
+              className="text-blue-600 font-semibold hover:text-blue-800 transition-all duration-300 hover:underline"
             >
               Login
             </Link>
           </p>
 
-          {/* Social Signup Buttons */}
           <div className="flex justify-center gap-4 mt-4">
             <motion.button
               onClick={handleGoogleSignup}
-              className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white py-2 px-4 rounded-lg transition-all duration-300"
+              className="flex items-center gap-2 bg-white/80 hover:bg-white text-blue-900 py-2 px-4 rounded-lg border border-black transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 20 }}
@@ -178,7 +172,7 @@ const Registration = () => {
             </motion.button>
             <motion.button
               onClick={handleFacebookSignup}
-              className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white py-2 px-4 rounded-lg transition-all duration-300"
+              className="flex items-center gap-2 bg-white/80 hover:bg-white text-blue-900 py-2 px-4 rounded-lg border border-black transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 20 }}
@@ -189,14 +183,14 @@ const Registration = () => {
             </motion.button>
             <motion.button
               onClick={handleGithubSignup}
-              className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white py-2 px-4 rounded-lg transition-all duration-300"
+              className="flex items-center gap-2 bg-white/80 hover:bg-white text-blue-900 py-2 px-4 rounded-lg border border-black transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.0, duration: 0.5, ease: "easeOut" }}
             >
-              <FaGithub size={20} className="text-gray-300" /> GitHub
+              <FaGithub size={20} className="text-black" /> GitHub
             </motion.button>
           </div>
         </motion.div>

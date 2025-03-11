@@ -3,26 +3,23 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      colors: {
-        'beige': {
-          100: '#f5f1e9',
-        },
-        'brown': {
-          500: '#d4a373',
-          600: '#b08562',
-          700: '#8f6a4f',
-        },
-      },
       animation: {
         fadeIn: "fadeIn 1.5s ease-out",
+        typing: "typing 6s steps(20) infinite"
       },
       keyframes: {
         fadeIn: {
           "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
+          "100%": { opacity: "1" }
         },
-      },
-    },
+        typing: {
+          "0%": { width: "0" },
+          "20%": { width: "100%" },
+          "80%": { width: "100%" },
+          "100%": { width: "0" }
+        }
+      }
+    }
   },
-  plugins: [],
+  plugins: []
 };

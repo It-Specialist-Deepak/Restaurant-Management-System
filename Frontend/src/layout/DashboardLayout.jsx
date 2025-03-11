@@ -10,6 +10,7 @@ import PermitRoomSection from "../components/PermitRoomSection/PermitRoomSection
 import { motion } from "framer-motion";
 import StorySection from "../components/StorySection/StorySection";
 import BookTable from "../components/booknow/BookTable"
+import Chef from "../components/Chef/Chef"
 
 const DashboardLayout = () => {
   const location = useLocation();
@@ -28,6 +29,7 @@ const DashboardLayout = () => {
     "/careers",
     "/support",
     "/feedback",
+    
   ];
 
   const isMinimalLayout = restrictedRoutes.includes(location.pathname);
@@ -52,13 +54,14 @@ const DashboardLayout = () => {
       {/* Show additional sections only if the current route is NOT in restrictedRoutes */}
       {!isMinimalLayout && (
         <div className="flex flex-col m-0 p-0">
+          <Chef className="m-0 p-0"/>
           <BookTable/>
           <CategoryLayout className="m-0 p-0" />
-          <PermitRoomSection className="m-0 p-0" />
           <RecentFood className="m-0 p-0" />
           <Ads className="m-0 p-0" />
           <StorySection className="m-0 p-0" />
           <Discount className="m-0 p-0" />
+          <PermitRoomSection className="m-0 p-0" />
           <Footer className="m-0 p-0" />
         </div>
       )}

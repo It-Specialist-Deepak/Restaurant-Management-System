@@ -1,134 +1,181 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React from "react";
+import { motion } from "framer-motion";
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeNav, setActiveNav] = useState(null); // Track the active parent nav item
-  const location = useLocation(); // Get current URL path
-
-  // Define all navigation items
-  const navItems = [
-    {
-      label: "Menu",
-      links: [
-        { label: "Explore Menu", link: "/exploremenu" },
-        { label: "Create Menu", link: "/createmenu" },
-      ],
+function Footer() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      },
     },
-    {
-      label: "Services",
-      links: [
-        { label: "Catering", link: "/catering" },
-        { label: "Delivery", link: "/delivery" },
-      ],
-    },
-    {
-      label: "About",
-      links: [
-        { label: "Our Story", link: "/about" },
-        { label: "Careers", link: "/careers" },
-      ],
-    },
-    {
-      label: "Contact",
-      links: [
-        { label: "Support", link: "/support" },
-        { label: "Feedback", link: "/feedback" },
-      ],
-    },
-  ];
+  };
 
-  // Define pages where minimal navbar should be shown
-  const minimalPages = navItems.flatMap(item => item.links.map(link => link.link));
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 100 },
+    },
+  };
 
-  // Determine active navigation based on current path
-  useEffect(() => {
-    const currentNav = navItems.find(item =>
-      item.links.some(link => link.link === location.pathname)
-    );
-    setActiveNav(currentNav ? currentNav.label : null);
-  }, [location.pathname]);
-
-  // Filter nav items based on current page
-  const isMinimalView = minimalPages.includes(location.pathname);
-  const filteredNavItems = isMinimalView
-    ? [
-        { 
-          label: activeNav || "Home", 
-          links: [
-            ...(activeNav 
-              ? navItems.find(item => item.label === activeNav)?.links || [] 
-              : []),
-            { label: "Back to Home", link: "/" }
-          ]
-        }
-      ]
-    : navItems;
+  const buttonVariants = {
+    hover: { scale: 1.05, backgroundColor: "#1e40af" },
+    tap: { scale: 0.95 },
+  };
 
   return (
-    <nav className="bg-white text-gray-900 shadow-md w-full fixed top-0 left-0 z-50">
-      <div className="container mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex-grow"></div>
-        
-        {/* Hamburger menu for mobile */}
-        <button 
-          className="text-2xl focus:outline-none md:hidden"
-          onClick={() => setIsOpen(!isOpen)}
+    <footer className="bg-white text-gray-800 shadow-lg">
+      <motion.div
+        className="mx-auto max-w-screen-xl px-4 py-10 sm:px-6 lg:px-8"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
+        {/* Newsletter Section */}
+        <motion.div
+          variants={itemVariants}
+          className="text-center mb-8 max-w-2xl mx-auto"
         >
-          {isOpen ? '×' : '≡'}
-        </button>
+          <h3 className="text-xl font-extrabold mb-4 sm:text-2xl text-gray-900 tracking-tight">
+            Join Our Culinary Journey
+          </h3>
+          <form className="flex max-w-md mx-auto gap-3">
+            <input
+              className="w-full rounded-full border border-gray-300 bg-gray-50 p-3 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300"
+              type="email"
+              placeholder="Enter your email"
+            />
+            <motion.button
+              variants={buttonVariants}
+              whileHover="hover"
+              whileTap="tap"
+              className="rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md hover:shadow-lg transition-all duration-300"
+            >
+              Subscribe
+            </motion.button>
+          </form>
+        </motion.div>
 
-        {/* Navigation items */}
-        <ul className={`
-          ${isOpen ? 'flex' : 'hidden'}
-          md:flex flex-col md:flex-row gap-6 sm:gap-8 lg:gap-10 
-          absolute md:static top-14 left-0 w-full md:w-auto 
-          bg-white md:bg-transparent p-4 sm:p-6 md:p-0 
-          shadow-md md:shadow-none transition-all duration-300 ease-in-out
-        `}>
-          {filteredNavItems.map((item, index) => (
-            <li key={index} className="relative group">
-              <button 
-                className={`
-                  transition duration-300 w-full text-left text-sm sm:text-base
-                  ${location.pathname === '/' && item.label === 'Home' 
-                    ? 'text-blue-400 font-semibold' 
-                    : 'hover:text-blue-400'}
-                `}
-              >
-                {item.label}
-              </button>
-              <ul className="
-                md:absolute md:right-0 mt-2 md:mt-4 bg-white shadow-lg rounded-md 
-                w-full md:w-48 md:opacity-0 md:invisible md:group-hover:opacity-100 
-                md:group-hover:visible transition-all duration-300 ease-in-out
-              ">
-                {item.links.map((link, idx) => (
-                  <li key={idx} className="border-b border-gray-200 last:border-0">
-                    <Link
-                      to={link.link}
-                      className={`
-                        block px-4 py-2 text-sm sm:text-base whitespace-nowrap
-                        ${location.pathname === link.link 
-                          ? 'bg-gray-100 text-blue-400 font-semibold' 
-                          : 'text-gray-900 hover:bg-gray-100'}
-                      `}
-                      onClick={() => {
-                        setIsOpen(false);
-                        if (link.link === "/") setActiveNav(null); // Reset on home click
-                      }}
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {/* About Section */}
+          <motion.div variants={itemVariants}>
+            <h4 className="text-base font-bold text-gray-900 mb-3">
+              FoodHub
+            </h4>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              Elevating dining with innovative flavors since 2022.
+            </p>
+            <div className="flex justify-start gap-5 mt-5">
+              {[
+                {
+                  name: "facebook",
+                  url: "https://facebook.com/foodhubrestaurant",
+                },
+                {
+                  name: "instagram",
+                  url: "https://instagram.com/foodhubrestaurant",
+                },
+                {
+                  name: "twitter",
+                  url: "https://twitter.com/foodhubrestaurant",
+                },
+              ].map((social) => (
+                <motion.a
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-500 hover:text-blue-600 transition-colors duration-200"
+                  whileHover={{ scale: 1.3, rotate: 5 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <svg className="w-6 h-6" fill="currentColor">
+                    <path d={getSocialIconPath(social.name)} />
+                  </svg>
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Quick Links */}
+          {[
+            {
+              title: "Discover",
+              links: [
+                { name: "Menu", url: "/menu" },
+                { name: "Specials", url: "/specials" },
+                { name: "Events", url: "/events" },
+              ],
+            },
+            {
+              title: "Our Story",
+              links: [
+                { name: "Mission", url: "/mission" },
+                { name: "Team", url: "/team" },
+                { name: "Vision", url: "/vision" },
+              ],
+            },
+            {
+              title: "Connect",
+              links: [
+                { name: "Support", url: "/support" },
+                { name: "Reservations", url: "/reservations" },
+                { name: "Feedback", url: "/feedback" },
+              ],
+            },
+          ].map((section) => (
+            <motion.div key={section.title} variants={itemVariants}>
+              <h4 className="text-base font-bold text-gray-900 mb-3 tracking-wide">
+                {section.title}
+              </h4>
+              <ul className="space-y-2">
+                {section.links.map((link) => (
+                  <li key={link.name}>
+                    <a
+                      href={link.url}
+                      className="text-sm text-gray-600 hover:text-blue-600 transition-colors duration-200 hover:underline underline-offset-4"
                     >
-                      {link.label}
-                    </Link>
+                      {link.name}
+                    </a>
                   </li>
                 ))}
               </ul>
-            </li>
+            </motion.div>
           ))}
-        </ul>
-      </div>
-    </nav>
+        </div>
+
+        {/* Copyright */}
+        <motion.div
+          variants={itemVariants}
+          className="mt-10 pt-6 border-t border-gray-200"
+        >
+          <p className="text-center text-xs text-gray-500 tracking-wide">
+            © FoodHub 2025. Crafted with Passion.
+          </p>
+        </motion.div>
+      </motion.div>
+    </footer>
   );
+}
+
+// Helper function for social icons (simplified paths)
+const getSocialIconPath = (social) => {
+  switch (social) {
+    case "facebook":
+      return "M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z";
+    case "instagram":
+      return "M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.326 3.608 1.301.975.975 1.24 2.242 1.301 3.608.058 1.266.07 1.646.07 4.85 0 3.204-.012 3.584-.07 4.85-.062 1.366-.326 2.633-1.301 3.608-1.301.975-1.24 2.242-1.301 3.608-.058 1.266-.07 1.646-.07 4.85 0 3.204.012 3.584.07 4.85.062 1.366.326 2.633 1.301 3.608 1.301.975 1.24 2.242 1.301 3.608.058 1.266.07 1.646.07 4.85 0 3.204z";
+    case "twitter":
+      return "M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z";
+    default:
+      return "";
+  }
 };
 
-export default Navbar;
+export default Footer;

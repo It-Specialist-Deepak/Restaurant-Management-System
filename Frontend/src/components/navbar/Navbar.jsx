@@ -3,6 +3,13 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
+
+  const handleLogout = () => {
+    // Perform logout actions here, such as clearing tokens or user data
+    setIsLoggedIn(false); // Update login status
+    // You might also want to redirect the user to the home page or login page
+  };
 
   const navItems = [
     {
@@ -32,6 +39,43 @@ const Navbar = () => {
         { label: "Support", link: "/support" },
         { label: "Feedback", link: "/feedback" },
       ],
+    },
+    {
+      label: "Reservations",
+      links: [
+        { label: "Book a Table", link: "/reservations" },
+        { label: "Group Bookings", link: "/group-bookings" },
+      ],
+    },
+    {
+      label: "Specials",
+      links: [
+        { label: "Today's Special", link: "/todays-special" },
+        { label: "Seasonal Offers", link: "/seasonal-offers" },
+      ],
+    },
+    {
+      label: "Events",
+      links: [
+        { label: "Upcoming Events", link: "/events" },
+        { label: "Private Dining", link: "/private-dining" },
+      ],
+    },
+    {
+      label: "Gallery",
+      links: [
+        { label: "Photo Gallery", link: "/gallery" },
+        { label: "Virtual Tour", link: "/virtual-tour" },
+      ],
+    },
+    {
+      label: "Signup",
+      links: isLoggedIn
+        ? [{ label: "Logout", link: "/", onClick: handleLogout }] // Logout button
+        : [
+            { label: "Signup", link: "/registration" },
+            { label: "Login", link: "/login" },
+          ],
     },
   ];
 
@@ -65,13 +109,17 @@ const Navbar = () => {
                 md:absolute md:right-0 mt-2 md:mt-4 bg-white shadow-lg rounded-md 
                 w-full md:w-48 md:opacity-0 md:invisible md:group-hover:opacity-100 
                 md:group-hover:visible transition-all duration-300 ease-in-out
+                flex flex-col space-y-2 // Added for vertical layout
               ">
                 {item.links.map((link, idx) => (
                   <li key={idx} className="border-b border-gray-200 last:border-0">
                     <Link
                       to={link.link}
                       className="block px-4 py-2 text-gray-900 hover:bg-gray-100 text-sm sm:text-base whitespace-nowrap"
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => {
+                        setIsOpen(false);
+                        if (link.onClick) link.onClick(); // Handle logout onClick
+                      }}
                     >
                       {link.label}
                     </Link>

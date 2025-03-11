@@ -24,23 +24,23 @@ const BookTable = () => {
             transition={{ duration: 1 }}
           >
             <div className="max-w-lg mx-auto md:max-w-none">
-              <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl lg:text-5xl leading-tight bg-gradient-to-r from-gray-900/80 to-gray-700/80 bg-clip-text text-transparent">
+              <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl lg:text-5xl leading-tight bg-gradient-to-r from-gray-900/80 to-gray-700/80 bg-clip-text text-transparent font-playfair">
                 Discover Exquisite Flavors
               </h2>
-              <p className="mt-4 text-gray-800/70 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed">
+              <p className="mt-4 text-gray-800/70 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed font-poppins">
                 Indulge in a culinary journey with our finest dishes. From aromatic spices to
                 perfectly crafted meals, every bite tells a story of tradition and innovation.
               </p>
               <div className="mt-6 space-y-4 flex flex-col">
                 <button
                   onClick={() => navigate('/tablereservation')}
-                  className="inline-flex justify-center px-6 py-3 bg-gradient-to-r from-blue-900 to-black text-white font-medium rounded-md hover:from-black hover:to-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  className="inline-flex justify-center px-6 py-3 bg-gradient-to-r from-blue-900 to-black text-white font-medium rounded-md hover:from-black hover:to-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-poppins"
                 >
                   Book Table <span className="ml-2">➔</span>
                 </button>
                 <button
                   onClick={() => navigate('/exploremenu')}
-                  className="inline-flex justify-center px-6 py-3 bg-gradient-to-r from-gray-700 to-black text-white font-medium rounded-md hover:from-black hover:to-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  className="inline-flex justify-center px-6 py-3 bg-gradient-to-r from-gray-700 to-black text-white font-medium rounded-md hover:from-black hover:to-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-poppins"
                 >
                   Explore Menu <span className="ml-2">➔</span>
                 </button>

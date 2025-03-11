@@ -26,13 +26,12 @@ const adsData = [
 ];
 
 const Ads = () => {
-  // Animation variants for staggered children
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3, // Stagger animations for children
+        staggerChildren: 0.3,
       },
     },
   };
@@ -43,17 +42,11 @@ const Ads = () => {
   };
 
   return (
-    <section
-      className="overflow-hidden bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage:
-          "url('https://www.pcrm.org/sites/default/files/2024-03/processed-food.jpg')",
-      }}
-    >
-      <div className="bg-black/50 p-8 md:p-12 lg:px-16 lg:py-24">
+    <section className="overflow-hidden bg-white bg-center bg-no-repeat">
+      <div className="bg-white p-8 md:p-12 lg:px-16 lg:py-24">
         <div className="container mx-auto px-5 py-10">
           <motion.h2
-            className="text-3xl font-bold text-white text-center mb-6"
+            className="text-3xl font-bold text-black text-center mb-6"
             variants={childVariants}
             initial="hidden"
             animate="visible"
@@ -71,10 +64,10 @@ const Ads = () => {
               <motion.a
                 key={ad.id}
                 href="#"
-                className="group block overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition duration-300 bg-white/10 backdrop-blur-lg border border-white/20"
+                className="group block overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition duration-300 bg-white border border-gray-300"
                 variants={childVariants}
-                whileHover={{ scale: 1.05 }} // Scale up on hover
-                whileTap={{ scale: 0.95 }} // Slight scale down on tap
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <img
                   src={ad.image}
@@ -84,12 +77,12 @@ const Ads = () => {
 
                 <div className="mt-3 flex justify-between text-sm p-3">
                   <div>
-                    <h3 className="text-white font-semibold group-hover:underline group-hover:underline-offset-4 transition duration-200">
+                    <h3 className="text-black font-semibold group-hover:underline group-hover:underline-offset-4 transition duration-200">
                       {ad.title}
                     </h3>
-                    <p className="mt-1.5 text-pretty text-xs text-white/80">{ad.description}</p>
+                    <p className="mt-1.5 text-pretty text-xs text-gray-700">{ad.description}</p>
                   </div>
-                  <p className="text-white font-bold">{ad.price}</p>
+                  <p className="text-black font-bold">{ad.price}</p>
                 </div>
               </motion.a>
             ))}

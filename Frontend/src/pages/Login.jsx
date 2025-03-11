@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { loginUser } from "../store/authSlice";
-import { motion } from "framer-motion"; // Import Framer Motion
+import { motion } from "framer-motion";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -49,13 +49,13 @@ const Login = () => {
       }}
     >
       <motion.div
-        className="bg-gray-900/70 backdrop-blur-lg text-gray-200 p-6 sm:p-8 md:p-10 border border-gray-700/50 rounded-2xl shadow-xl w-full max-w-md"
+        className="bg-white/90 backdrop-blur-lg text-blue-900 p-6 sm:p-8 md:p-10 border border-black rounded-2xl shadow-xl w-full max-w-md"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
         <motion.h2
-          className="text-center text-2xl sm:text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 mb-5"
+          className="text-center text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 mb-5"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.5, ease: "easeOut" }}
@@ -65,7 +65,7 @@ const Login = () => {
 
         {error && (
           <motion.div
-            className="bg-red-500/30 text-red-300 text-center font-semibold mb-4 py-2 px-4 rounded-md"
+            className="bg-red-100 text-red-800 text-center font-semibold mb-4 py-2 px-4 rounded-md border border-black"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -79,7 +79,7 @@ const Login = () => {
           <motion.input
             type="email"
             placeholder="Email Address"
-            className="bg-gray-800/50 border border-gray-600/50 px-4 py-3 w-full rounded-lg outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200 transition-all duration-300 hover:bg-gray-700/50"
+            className="bg-white/80 border border-black px-4 py-3 w-full rounded-lg outline-none focus:ring-2 focus:ring-blue-400 placeholder-blue-300 text-blue-900 transition-all duration-300 hover:bg-white"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             initial={{ opacity: 0, x: -20 }}
@@ -89,7 +89,7 @@ const Login = () => {
           <motion.input
             type="password"
             placeholder="Password"
-            className="bg-gray-800/50 border border-gray-600/50 px-4 py-3 w-full rounded-lg outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200 transition-all duration-300 hover:bg-gray-700/50"
+            className="bg-white/80 border border-black px-4 py-3 w-full rounded-lg outline-none focus:ring-2 focus:ring-blue-400 placeholder-blue-300 text-blue-900 transition-all duration-300 hover:bg-white"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             initial={{ opacity: 0, x: -20 }}
@@ -98,7 +98,7 @@ const Login = () => {
           />
           <motion.button
             type="submit"
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 w-full text-white py-3 font-bold rounded-lg shadow-md transition-all duration-300"
+            className="bg-blue-600 hover:bg-blue-700 w-full text-white py-3 font-bold rounded-lg border border-black shadow-md transition-all duration-300"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.5, ease: "easeOut" }}
@@ -115,20 +115,20 @@ const Login = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.5, ease: "easeOut" }}
         >
-          <p className="text-gray-300">
+          <p className="text-blue-900">
             Don’t have an account?{" "}
             <Link
               to="/registration"
-              className="text-blue-400 font-semibold hover:text-blue-300 transition-all duration-300 hover:underline"
+              className="text-blue-600 font-semibold hover:text-blue-800 transition-all duration-300 hover:underline"
             >
               Register
             </Link>
           </p>
-          <p className="text-gray-300">
+          <p className="text-blue-900">
             Forgot your password?{" "}
             <Link
               to="/forgot-password"
-              className="text-blue-400 font-semibold hover:text-blue-300 transition-all duration-300 hover:underline"
+              className="text-blue-600 font-semibold hover:text-blue-800 transition-all duration-300 hover:underline"
             >
               Forgot Password
             </Link>

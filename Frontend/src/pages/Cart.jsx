@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchCart, updateQuantity, removeItem, updateTableQuantity, placeOrder } from "../store/cartSlice";
-import { motion } from "framer-motion"; // For animations
+import { motion } from "framer-motion";
 
 function Cart() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { cart, tableQuantity, status, error } = useSelector((state) => state.cart);
-  const userId = localStorage.getItem("userId");
+  const userId = localStorage.getItem("userId"); // Dynamic userId from localStorage
   const cartId = localStorage.getItem("cartId");
 
   const [localTableQuantity, setLocalTableQuantity] = useState(tableQuantity || 1);
@@ -22,10 +22,11 @@ function Cart() {
   useEffect(() => {
     if (userId) {
       dispatch(fetchCart(userId));
+    } else {
+      console.error("No userId found in localStorage");
     }
   }, [dispatch, userId]);
 
-  // Convert buffer to base64 if needed
   const renderImage = (image) => {
     if (!image) return "https://via.placeholder.com/150?text=No+Image";
     if (typeof image === "string") return `http://localhost:5000${image}`;
@@ -53,13 +54,28 @@ function Cart() {
     dispatch(updateTableQuantity({ userId, tableQuantity: newTableQuantity }));
   };
 
-  const handlePlaceOrder = () => {
-    if (cartId && userId) {
-      dispatch(placeOrder({ userId, cartId }));
-    } else {
-      alert("No cart found. Please add items to your cart.");
+  const handlePlaceOrder = async () => {
+    if (!userId) {
+      alert("Please log in to place an order.");
+      navigate("/login");
+      return;
     }
-  };
+    if (!cartId) {
+      alert("No cart available to place order.");
+      return;
+    }
+
+    try {
+      const result = await dispatch(placeOrder({ userId, cartId })).unwrap();
+      if (result === "Order placed successfully!") {
+        alert(result); // Show success message
+        navigate("/orderdone"); // Navigate to static route
+      }
+    } catch (err) {
+      alert("Failed to place order: " + err);
+      console.error("Place order error:", err);
+    }
+  }; // Added missing closing brace
 
   if (status === "loading") {
     return (
@@ -135,7 +151,14 @@ function Cart() {
               Add some delicious items to get started.
             </p>
             <motion.button
-              onClick={() => navigate("/exploremenu")}
+              onClick={() => {
+                if (userId) {
+                  navigate("/orderdone");
+                } else {
+                  alert("Please log in to view order details.");
+                  navigate("/login");
+                }
+              }}
               className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white py-2 px-6 rounded-lg font-semibold shadow-md transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -143,7 +166,7 @@ function Cart() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.5 }}
             >
-              Explore Menu
+              View Order Details
             </motion.button>
           </motion.div>
         ) : (

@@ -28,6 +28,7 @@ export const addToCart = createAsyncThunk(
   }
 );
 
+
 // Async Thunk for placing an order
 export const placeJustNowOrder = createAsyncThunk(
   "explore/placeJustNowOrder",

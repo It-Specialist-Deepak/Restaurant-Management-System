@@ -11,81 +11,95 @@ const images = [
 
 function HomePage() {
   const [currentImage, setCurrentImage] = useState(0);
-  const [slideDirection, setSlideDirection] = useState("fade");
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setSlideDirection((prev) => (prev === "fade" ? "left" : "fade"));
       setCurrentImage((prevIndex) => (prevIndex + 1) % images.length);
     }, 4000);
 
     return () => clearInterval(interval);
   }, []);
 
+  const slideVariants = {
+    initial: { x: "100%" },
+    animate: { x: 0 },
+    exit: { x: "-100%" },
+  };
+
   return (
-    <section className="relative h-screen">
-      {/* Background Image Slider */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentImage}
-          className="absolute inset-0 bg-cover bg-center brightness-110"
-          style={{ backgroundImage: `url(${images[currentImage]})` }}
-          initial={slideDirection === "fade" ? { opacity: 0 } : { x: "100%" }}
-          animate={slideDirection === "fade" ? { opacity: 1 } : { x: 0 }}
-          exit={slideDirection === "fade" ? { opacity: 0 } : { x: "-100%" }}
-          transition={{ duration: 1 }}
-        />
-      </AnimatePresence>
+    <>
+      <style>
+        {`
+          @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600&display=swap');
+          .font-playfair { font-family: 'Playfair Display', serif; }
+          .font-poppins { font-family: 'Poppins', sans-serif; }
+        `}
+      </style>
+      <section className="relative h-screen overflow-hidden font-poppins">
+        {/* Background Image Slider */}
+        <div className="absolute inset-0">
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={currentImage}
+              className="absolute inset-0 bg-cover bg-center brightness-110"
+              style={{ backgroundImage: `url(${images[currentImage]})` }}
+              variants={slideVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={{ duration: 1, ease: "easeInOut" }}
+            />
+          </AnimatePresence>
+        </div>
 
-      <div className="absolute  bg-white"></div>
-
-      <div className="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
-        <div className="max-w-xl text-center text-white ltr:sm:text-left rtl:sm:text-right">
-          <motion.h1
-            className="text-3xl font-extrabold sm:text-5xl lg:text-6xl xl:text-7xl"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            Welcome to
-            <strong className="block font-extrabold text-rose-500">
-              FoodHub Restaurant.
-            </strong>
-          </motion.h1>
-
-          <motion.p
-            className="mt-4 max-w-lg sm:text-xl lg:text-2xl xl:text-3xl text-white"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.5 }}
-          >
-            <TypingEffect text="Savor the best dishes, crafted with love, and experience the perfect blend of flavors!" />
-          </motion.p>
-
-          <div className="mt-8 flex flex-wrap gap-4 text-center">
-            <motion.a
-              href="/exploremenu"
-              className="block w-full rounded bg-slate-950 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring focus:ring-rose-400 active:bg-rose-500 sm:w-auto sm:text-base lg:px-8 lg:py-4 lg:text-lg"
+        <div className="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
+          <div className="max-w-xl text-center text-white ltr:sm:text-left rtl:sm:text-right">
+            <motion.h1
+              className="text-3xl font-extrabold sm:text-5xl lg:text-6xl xl:text-7xl font-playfair"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1 }}
+              transition={{ duration: 1 }}
             >
-              Explore Menu
-            </motion.a>
+              Welcome to
+              <strong className="block font-extrabold text-rose-500">
+                FoodHub Restaurant
+              </strong>
+            </motion.h1>
 
-            <motion.a
-              href="#"
-              className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring focus:ring-rose-400 active:text-rose-500 sm:w-auto sm:text-base lg:px-8 lg:py-4 lg:text-lg"
+            <motion.p
+              className="mt-4 max-w-lg sm:text-xl lg:text-2xl xl:text-3xl text-white font-poppins"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1.2 }}
+              transition={{ duration: 1, delay: 0.5 }}
             >
-              Learn More About Us
-            </motion.a>
+              <TypingEffect text="Savor the best dishes, crafted with love, and experience the perfect blend of flavors!" />
+            </motion.p>
+
+            <div className="mt-8 flex flex-wrap gap-4 text-center">
+              <motion.a
+                href="/exploremenu"
+                className="block w-full rounded bg-slate-950 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring focus:ring-rose-400 active:bg-rose-500 sm:w-auto sm:text-base lg:px-8 lg:py-4 lg:text-lg font-poppins"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 1 }}
+              >
+                Explore Menu
+              </motion.a>
+
+              <motion.a
+                href="#"
+                className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring focus:ring-rose-400 active:text-rose-500 sm:w-auto sm:text-base lg:px-8 lg:py-4 lg:text-lg font-poppins"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 1.2 }}
+              >
+                Learn More About Us
+              </motion.a>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
 
