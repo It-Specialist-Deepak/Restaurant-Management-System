@@ -6,10 +6,12 @@ const {
   placeOrder,
   getOrder,
   cancelOrder,
+  activeStatus,
 } = require("../controllers/orderController");
 
 router.post("/placeorder", userAuthMiddleware, verifyToken ,placeOrder);
 router.post("/getorder", userAuthMiddleware, verifyToken ,getOrder);
 router.post("/cancelorder", userAuthMiddleware, verifyToken ,cancelOrder);
+router.post("/activeStatus", userAuthMiddleware, verifyToken , activeStatus);
 
 module.exports = router;

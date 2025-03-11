@@ -9,8 +9,10 @@ const menuRouter = require("./src/routes/menuRoute");
 const authRouter = require("./src/routes/authRoute");
 const cartRouter = require("./src/routes/cartRoute");
 const orderRouter = require("./src/routes/orderRoute");
+const notificationRouter = require("./src/routes/notificationRoute");
 const staffAuthMiddleware = require("./src/middleware/staffAuthMiddleware");
 const adminAuthMiddleware = require("./src/middleware/adminAuthMiddleware");
+
 // Staff Routes Imports
 const orderManageRouter = require("./src/routes/staffRoutes/orderManageRoute");
 const menuManageRouter = require("./src/routes/staffRoutes/menuManageRoute");
@@ -27,6 +29,7 @@ app.use("/api/v1", menuRouter);
 app.use("/api/v1", authRouter);
 app.use("/api/v1", cartRouter);
 app.use("/api/v1", orderRouter);
+app.use("/api/v1", notificationRouter);
 
 // staff api routes
 app.use("/api/v1" , orderManageRouter);

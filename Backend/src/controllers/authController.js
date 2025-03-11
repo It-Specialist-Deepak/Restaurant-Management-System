@@ -53,7 +53,7 @@ module.exports.Register = async function (req, res) {
 // login Api
 module.exports.login = async function (req, res) {
   try {
-    const { email, password } = req.body;
+    const { email , password } = req.body;
 
     const user = await userModel.findOne({ email });
 
@@ -62,7 +62,7 @@ module.exports.login = async function (req, res) {
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-
+     
     // If password matches
     if (isMatch) {
       return res.json({
@@ -77,7 +77,7 @@ module.exports.login = async function (req, res) {
     }
   } catch (err) {
     console.error('Error during login:', err.message);
-    return res.status(500).json({ message: 'Internal Server Error' });
+    return res.status(500).json({ message: 'Internal Server Error(login)' });
   }
 };
 // forget password api

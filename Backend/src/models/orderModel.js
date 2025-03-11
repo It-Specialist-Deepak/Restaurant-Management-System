@@ -10,7 +10,7 @@ const OrderSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   items: [CartItemSchema],  // Use CartItemSchema for items array
   totalAmount: { type: Number, required: true },
-  status: { type: String, enum: ['Pending', 'Completed', 'Cancelled'], default: 'Pending' },
+  status: { type: String, enum: ['Pending','Accepted' ,'Completed', 'Cancelled'], default: 'Pending' },
   createdAt: { type: Date, default: Date.now },
 });
 
