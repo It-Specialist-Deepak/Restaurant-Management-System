@@ -81,6 +81,7 @@ module.exports.cancelOrder = async (req, res) => {
 const Invoice = require("../models/InvoiceModel");
 const Notification = require("../models/NotificationModel");
 const { generateInvoice } = require("../utils/generateInovice");
+
 module.exports.activeStatus = async (req, res) => {
   try {
     const { orderId, status } = req.body;
@@ -101,9 +102,9 @@ module.exports.activeStatus = async (req, res) => {
       return res.status(404).json({ message: "Order not found" });
     }
 
-    order.status = status;
+    order.status = "Accepted";
     await order.save();
-
+    
     let pdfUrl = null;
 
     // If order is accepted, generate invoice and send notification
@@ -112,6 +113,7 @@ module.exports.activeStatus = async (req, res) => {
         order: order._id,
         user: order.userId,
         totalAmount: order.totalAmount,
+        status: "Accepted", 
         items: order.items.map((item) => ({
           productId: item.productId._id,
           name: item.productId.name, // ✅ Extract product name
