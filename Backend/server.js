@@ -14,12 +14,12 @@ const InvoiceRouter = require("./src/routes/InvoiceRoute");
 const staffAuthMiddleware = require("./src/middleware/staffAuthMiddleware");
 const adminAuthMiddleware = require("./src/middleware/adminAuthMiddleware");
 
-
 // Staff Routes Imports
 const orderManageRouter = require("./src/routes/staffRoutes/orderManageRoute");
 const menuManageRouter = require("./src/routes/staffRoutes/menuManageRoute");
 //Manager Routes Imports
 const careerRouter = require("./src/routes/managerRoutes/careerRoute");
+const staisticsRouter = require("./src/routes/managerRoutes/staisticsRoute");
 
 connectDB();
 app.use(express.json());
@@ -40,6 +40,7 @@ app.use("/api/v1" , menuManageRouter);
 
 // manager api routes
 app.use("/api/v1" , careerRouter);
+app.use("/api/v1" , staisticsRouter);
 
 app.get("/staff-content", staffAuthMiddleware, (req, res) => {
   res.send("Welcome to staff content!");
