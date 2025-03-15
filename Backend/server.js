@@ -9,6 +9,7 @@ const menuRouter = require("./src/routes/menuRoute");
 const authRouter = require("./src/routes/authRoute");
 const cartRouter = require("./src/routes/cartRoute");
 const orderRouter = require("./src/routes/orderRoute");
+const feedbackRouter = require("./src/routes/feedbackRoute");
 const notificationRouter = require("./src/routes/notificationRoute");
 const InvoiceRouter = require("./src/routes/InvoiceRoute");
 const staffAuthMiddleware = require("./src/middleware/staffAuthMiddleware");
@@ -33,6 +34,7 @@ app.use("/api/v1", cartRouter);
 app.use("/api/v1", orderRouter);
 app.use("/api/v1", notificationRouter);
 app.use("/api/v1", InvoiceRouter);
+app.use("/api/v1", feedbackRouter);
 
 // staff api routes
 app.use("/api/v1" , orderManageRouter);
