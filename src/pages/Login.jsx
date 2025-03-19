@@ -30,8 +30,17 @@ const Login = () => {
 
       console.log("API Response:", data);
 
-      const { userid, fullname, email: responseEmail, token } = data;
-      dispatch(loginUser({ userId: userid, name: fullname, email: responseEmail, token }));
+      const { userid, fullname, email: responseEmail, token, role } = data;
+      
+      dispatch(
+        loginUser({ 
+          userId: userid, 
+          name: fullname, 
+          email: responseEmail, 
+          token, 
+          role: role || "user" // Ensure role is stored, default to "user"
+        })
+      );
 
       navigate("/exploremenu");
     } catch (err) {

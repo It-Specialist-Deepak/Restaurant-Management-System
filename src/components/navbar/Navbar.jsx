@@ -1,36 +1,70 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { FaShoppingCart } from "react-icons/fa"; // Import cart icon
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false); // State to check if the user is an admin
+  const navigate = useNavigate();
+  const location = useLocation(); // To detect route changes
 
-  const handleLogout = () => {
-    // Perform logout actions here, such as clearing tokens or user data
-    setIsLoggedIn(false); // Update login status
-    // You might also want to redirect the user to the home page or login page
+  // Check token and admin status whenever the route changes
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userRole = localStorage.getItem("role"); // Assuming role is stored in localStorage
+    setIsLoggedIn(!!token);
+    setIsAdmin(userRole === "admin"); // Check if the user is an admin
+  }, [location.pathname]); // Re-run when the pathname changes
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      try {
+        await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/logout`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+      } catch (error) {
+        console.error("Logout failed:", error);
+      }
+    }
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("role"); // Clear role on logout
+    setIsLoggedIn(false);
+    setIsAdmin(false); // Reset admin status
+    navigate("/");
   };
 
   const navItems = [
-    {
-      label: "Menu",
-      links: [
-        { label: "Explore Menu", link: "/exploremenu" },
-        { label: "Create Menu", link: "/createmenu" },
-      ],
-    },
+    // Admin Navigation (Visible only to admins)
+    ...(isAdmin
+      ? [
+          {
+            label: "Admin",
+            links: [
+              { label: "Admin Dashboard", link: "/admin" },
+              { label: "Add Product", link: "/createmenu" },
+              { label: "Create New Vacancies", link: "/vacancies" },
+              { label: "Staff Dashboard", link: "/staff" },
+            ],
+          },
+        ]
+      : []),
+   
     {
       label: "Services",
       links: [
         { label: "Catering", link: "/catering" },
         { label: "Delivery", link: "/delivery" },
-      ],
-    },
-    {
-      label: "About",
-      links: [
-        { label: "Our Story", link: "/about" },
-        { label: "Careers", link: "/careers" },
+        
       ],
     },
     {
@@ -40,42 +74,28 @@ const Navbar = () => {
         { label: "Feedback", link: "/feedback" },
       ],
     },
-    {
-      label: "Reservations",
-      links: [
-        { label: "Book a Table", link: "/reservations" },
-        { label: "Group Bookings", link: "/group-bookings" },
-      ],
-    },
+    ...(isLoggedIn
+      ? [
+          {
+            label: "Reservations",
+            links: [
+              { label: "Book a Table", link: "/tablereservation" },
+              { label: "Group Bookings", link: "/group-bookings" },
+              { label: "Career", link: "/career" }
+            ],
+          },
+        ]
+      : []),
     {
       label: "Specials",
       links: [
-        { label: "Today's Special", link: "/todays-special" },
+        { label: "Today's Special", link: "/today-special1" },
         { label: "Seasonal Offers", link: "/seasonal-offers" },
-      ],
-    },
-    {
-      label: "Events",
-      links: [
         { label: "Upcoming Events", link: "/events" },
         { label: "Private Dining", link: "/private-dining" },
-      ],
-    },
-    {
-      label: "Gallery",
-      links: [
         { label: "Photo Gallery", link: "/gallery" },
         { label: "Virtual Tour", link: "/virtual-tour" },
       ],
-    },
-    {
-      label: "Signup",
-      links: isLoggedIn
-        ? [{ label: "Logout", link: "/", onClick: handleLogout }] // Logout button
-        : [
-            { label: "Signup", link: "/registration" },
-            { label: "Login", link: "/login" },
-          ],
     },
   ];
 
@@ -83,42 +103,55 @@ const Navbar = () => {
     <nav className="bg-white text-gray-900 shadow-md w-full fixed top-0 left-0 z-50">
       <div className="container mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex-grow"></div>
-        
-        {/* Hamburger menu for mobile */}
-        <button 
+
+        {/* Cart Icon (Visible only when logged in and not an admin) */}
+        {isLoggedIn && !isAdmin && (
+          <div className="flex items-center gap-4">
+            <Link to="/cart" className="text-2xl hover:text-blue-400 transition duration-300">
+              <FaShoppingCart />
+            </Link>
+          </div>
+        )}
+
+        <button
           className="text-2xl focus:outline-none md:hidden"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? '×' : '≡'}
+          {isOpen ? "×" : "≡"}
         </button>
 
-        {/* Navigation items */}
-        <ul className={`
-          ${isOpen ? 'flex' : 'hidden'}
-          md:flex flex-col md:flex-row gap-6 sm:gap-8 lg:gap-10 
-          absolute md:static top-14 left-0 w-full md:w-auto 
-          bg-white md:bg-transparent p-4 sm:p-6 md:p-0 
-          shadow-md md:shadow-none transition-all duration-300 ease-in-out
-        `}>
+        <ul
+          className={`
+            ${isOpen ? "flex" : "hidden"}
+            md:flex flex-col md:flex-row gap-6 sm:gap-8 lg:gap-10 
+            absolute md:static top-14 left-0 w-full md:w-auto 
+            bg-white md:bg-transparent p-4 sm:p-6 md:p-0 
+            shadow-md md:shadow-none transition-all duration-300 ease-in-out
+          `}
+        >
           {navItems.map((item, index) => (
             <li key={index} className="relative group">
               <button className="hover:text-blue-400 transition duration-300 w-full text-left text-sm sm:text-base">
                 {item.label}
               </button>
-              <ul className="
-                md:absolute md:right-0 mt-2 md:mt-4 bg-white shadow-lg rounded-md 
-                w-full md:w-48 md:opacity-0 md:invisible md:group-hover:opacity-100 
-                md:group-hover:visible transition-all duration-300 ease-in-out
-                flex flex-col space-y-2 // Added for vertical layout
-              ">
+              <ul
+                className="
+                  md:absolute md:right-0 mt-2 md:mt-4 bg-white shadow-lg rounded-md 
+                  w-full md:w-48 md:opacity-0 md:invisible md:group-hover:opacity-100 
+                  md:group-hover:visible transition-all duration-300 ease-in-out
+                  flex flex-col space-y-2
+                "
+              >
                 {item.links.map((link, idx) => (
                   <li key={idx} className="border-b border-gray-200 last:border-0">
                     <Link
                       to={link.link}
                       className="block px-4 py-2 text-gray-900 hover:bg-gray-100 text-sm sm:text-base whitespace-nowrap"
-                      onClick={() => {
+                      onClick={(e) => {
                         setIsOpen(false);
-                        if (link.onClick) link.onClick(); // Handle logout onClick
+                        if (link.onClick) {
+                          link.onClick(e);
+                        }
                       }}
                     >
                       {link.label}
@@ -128,6 +161,67 @@ const Navbar = () => {
               </ul>
             </li>
           ))}
+
+          {/* Login/Logout Dropdown */}
+          <li className="relative group">
+            <button className="hover:text-blue-400 transition duration-300 w-full text-left text-sm sm:text-base">
+              {isLoggedIn ? "Logout" : "Login"}
+            </button>
+            <ul
+              className="
+                md:absolute md:right-0 mt-2 md:mt-4 bg-white shadow-lg rounded-md 
+                w-full md:w-48 md:opacity-0 md:invisible md:group-hover:opacity-100 
+                md:group-hover:visible transition-all duration-300 ease-in-out
+                flex flex-col space-y-2
+              "
+            >
+              {isLoggedIn ? (
+                <>
+                  {/* Show Cart only for non-admin users */}
+                  {!isAdmin && (
+                    <li className="border-b border-gray-200">
+                      <Link
+                        to="/cart"
+                        className="block px-4 py-2 text-gray-900 hover:bg-gray-100 text-sm sm:text-base whitespace-nowrap"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <FaShoppingCart className="inline-block mr-2" /> Cart
+                      </Link>
+                    </li>
+                  )}
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="block px-4 py-2 text-gray-900 hover:bg-gray-100 text-sm sm:text-base w-full text-left"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="border-b border-gray-200">
+                    <Link
+                      to="/registration"
+                      className="block px-4 py-2 text-gray-900 hover:bg-gray-100 text-sm sm:text-base whitespace-nowrap"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Signup
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/login"
+                      className="block px-4 py-2 text-gray-900 hover:bg-gray-100 text-sm sm:text-base whitespace-nowrap"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Login
+                    </Link>
+                  </li>
+                </>
+              )}
+            </ul>
+          </li>
         </ul>
       </div>
     </nav>
