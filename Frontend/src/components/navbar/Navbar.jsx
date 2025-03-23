@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { FaShoppingCart } from "react-icons/fa"; // Import cart icon
+import { FaShoppingCart, FaBell } from "react-icons/fa"; // Import cart icon
+import CartCount from "../ui/CartCount";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false); // State to check if the user is an admin
+  const [isStaff, setIsStaff] = useState(false); // State to check if the user is an admin
   const navigate = useNavigate();
   const location = useLocation(); // To detect route changes
 
   // Check token and admin status whenever the route changes
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const userRole = localStorage.getItem("role"); // Assuming role is stored in localStorage
+    const userRole = localStorage.getItem("role");
+
     setIsLoggedIn(!!token);
     setIsAdmin(userRole === "admin"); // Check if the user is an admin
+    setIsStaff(userRole === "staff"); // Check if the user is an admin
   }, [location.pathname]); // Re-run when the pathname changes
 
   const handleLogout = async (e) => {
@@ -26,7 +30,7 @@ const Navbar = () => {
         await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/logout`, {
           method: "POST",
           headers: {
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         });
@@ -58,30 +62,38 @@ const Navbar = () => {
           },
         ]
       : []),
-   
+    ...(isStaff
+      ? [
+          {
+            label: "Staff",
+            links: [
+              { label: "Staff Dashboard", link: "/staff" },
+              { label: "Add Product", link: "/createmenu" },
+            ],
+          },
+        ]
+      : []),
     {
-      label: "Services",
+      label: "Orders",
       links: [
-        { label: "Catering", link: "/catering" },
-        { label: "Delivery", link: "/delivery" },
-        
+        { label: "Pending Orders", link: "/orderdone" },
+        { label: "Accepted Orders", link: "/acceptedorder" },
       ],
     },
     {
       label: "Contact",
       links: [
-        { label: "Support", link: "/support" },
-        { label: "Feedback", link: "/feedback" },
+        { label: "FAQs", link: "/faq" },
+        { label: "Feedback", link: "/postfeedback" },
       ],
     },
     ...(isLoggedIn
       ? [
           {
-            label: "Reservations",
+            label: "Work With Us",
             links: [
-              { label: "Book a Table", link: "/tablereservation" },
-              { label: "Group Bookings", link: "/group-bookings" },
-              { label: "Career", link: "/career" }
+              { label: "work Culture", link: "/workculture" },
+              { label: "Career", link: "/career" },
             ],
           },
         ]
@@ -101,17 +113,18 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white text-gray-900 shadow-md w-full fixed top-0 left-0 z-50">
-      <div className="container mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex-grow"></div>
-
-        {/* Cart Icon (Visible only when logged in and not an admin) */}
-        {isLoggedIn && !isAdmin && (
-          <div className="flex items-center gap-4">
-            <Link to="/cart" className="text-2xl hover:text-blue-400 transition duration-300">
-              <FaShoppingCart />
-            </Link>
-          </div>
-        )}
+      <div className="container mx-auto flex justify-between items-center  sm:px-4 lg:px-4 py-4">
+        <Link
+          to="/"
+          className=" flex items-center text-2xl font-bold hover:text-blue-400 transition duration-300"
+        >
+          <img
+            src="https://image.freepik.com/free-vector/food-hunter-logo-template-design_316488-1783.jpg?w=2000"
+            className=" h-16  w-16"
+            alt="logo"
+          />
+          Food Hunter
+        </Link>
 
         <button
           className="text-2xl focus:outline-none md:hidden"
@@ -129,6 +142,29 @@ const Navbar = () => {
             shadow-md md:shadow-none transition-all duration-300 ease-in-out
           `}
         >
+          {isLoggedIn && !isAdmin && (
+            <div className="relative flex">
+              <Link
+                to="/cart"
+                className="text-2xl hover:text-blue-400 transition duration-300 relative"
+              >
+                <FaShoppingCart />
+                <CartCount />
+              </Link>
+            </div>
+          )}
+
+          <div className="flex ">
+            <Link
+              to="/notification"
+              className="text-2xl hover:text-blue-400 transition duration-300"
+            >
+              <FaBell />
+            </Link>
+          </div>
+          <div className="flex ">
+            <Link to="/exploremenu">Menu</Link>
+          </div>
           {navItems.map((item, index) => (
             <li key={index} className="relative group">
               <button className="hover:text-blue-400 transition duration-300 w-full text-left text-sm sm:text-base">
@@ -143,7 +179,10 @@ const Navbar = () => {
                 "
               >
                 {item.links.map((link, idx) => (
-                  <li key={idx} className="border-b border-gray-200 last:border-0">
+                  <li
+                    key={idx}
+                    className="border-b border-gray-200 last:border-0"
+                  >
                     <Link
                       to={link.link}
                       className="block px-4 py-2 text-gray-900 hover:bg-gray-100 text-sm sm:text-base whitespace-nowrap"
@@ -177,22 +216,10 @@ const Navbar = () => {
             >
               {isLoggedIn ? (
                 <>
-                  {/* Show Cart only for non-admin users */}
-                  {!isAdmin && (
-                    <li className="border-b border-gray-200">
-                      <Link
-                        to="/cart"
-                        className="block px-4 py-2 text-gray-900 hover:bg-gray-100 text-sm sm:text-base whitespace-nowrap"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        <FaShoppingCart className="inline-block mr-2" /> Cart
-                      </Link>
-                    </li>
-                  )}
                   <li>
                     <button
                       onClick={handleLogout}
-                      className="block px-4 py-2 text-gray-900 hover:bg-gray-100 text-sm sm:text-base w-full text-left"
+                      className="block px-4 py-2 text-red-500 hover:text-red-700 text-sm sm:text-base w-full text-left"
                     >
                       Logout
                     </button>

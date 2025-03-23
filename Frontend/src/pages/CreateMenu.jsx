@@ -80,7 +80,7 @@ function CreateMenu() {
 
   return (
     <div
-      className="flex justify-center items-center min-h-screen bg-cover bg-center py-12 px-4 sm:px-6 lg:px-8"
+      className="flex justify-center items-center min-h-screen bg-cover bg-center py-12 px-4 sm:px-6 lg:px-8 mt-12"
       style={{
         backgroundImage:
           "url('https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg')",

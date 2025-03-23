@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchCart, updateQuantity, removeItem, updateTableQuantity, placeOrder } from "../store/cartSlice";
 import { motion } from "framer-motion";
+import { ToastContainer , toast } from "react-toastify";
+
 
 function Cart() {
   const dispatch = useDispatch();
@@ -68,14 +70,17 @@ function Cart() {
     try {
       const result = await dispatch(placeOrder({ userId, cartId })).unwrap();
       if (result === "Order placed successfully!") {
-        alert(result); // Show success message
-        navigate("/orderdone"); // Navigate to static route
+        toast.success("Order Placed successfully!");
+        setTimeout(() => {
+          navigate("/orderdone");
+        }, 3000);
+
       }
     } catch (err) {
       alert("Failed to place order: " + err);
       console.error("Place order error:", err);
     }
-  }; // Added missing closing brace
+  }; 
 
   if (status === "loading") {
     return (
@@ -98,7 +103,24 @@ function Cart() {
       </div>
     );
   }
-
+  if (error === "Cart not found") {
+    return (
+      <motion.div
+      className="text-center py-12"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: 0.3, duration: 0.5 }}
+    >
+      <div className="text-6xl p-5 mt-40 mb-4">🛒</div>
+      <p className="text-lg sm:text-xl text-black font-semibold mb-2">
+        Your cart is empty!
+      </p>
+      <p className="text-black text-sm sm:text-base mb-6 font-bold">
+        Add some delicious items to get started.
+      </p>
+    </motion.div>
+    ); // Render custom component when cart is not found
+  }
   if (error) {
     return (
       <div className="min-h-screen flex justify-center items-center bg-gray-900/80">
@@ -115,8 +137,10 @@ function Cart() {
   }
 
   return (
+    <>
+      <ToastContainer position="top-right" autoClose={3000} />
     <div
-      className="min-h-screen bg-cover bg-center py-12 px-4 sm:px-6 lg:px-8 flex justify-center items-center"
+      className="min-h-screen bg-cover bg-center py-12 px-4 sm:px-6 lg:px-8 flex justify-center items-center mt-14"
       style={{
         backgroundImage: "url('https://d2w1ef2ao9g8r9.cloudfront.net/otl-images/_1600x900_crop_center-center_82_line/Owning-a-Restaurant-Hero-Image-1.png')",
       }}
@@ -136,7 +160,7 @@ function Cart() {
           🛒 Your Cart
         </motion.h2>
 
-        {!cart || !cart.items || cart.items.length === 0 ? (
+        {!cart || !cart.items  || cart.items.length === 0 ? (
           <motion.div
             className="text-center py-12"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -277,7 +301,7 @@ function Cart() {
                     Placing Order...
                   </span>
                 ) : (
-                  "🚀 Place Order Now"
+                  "🚀 Check Out"
                 )}
               </button>
             </motion.div>
@@ -285,6 +309,7 @@ function Cart() {
         )}
       </motion.div>
     </div>
+    </>
   );
 }
 

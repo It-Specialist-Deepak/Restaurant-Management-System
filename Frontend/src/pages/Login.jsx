@@ -30,7 +30,7 @@ const Login = () => {
 
       console.log("API Response:", data);
 
-      const { userid, fullname, email: responseEmail, token, role } = data;
+      const { userid, fullname, email: responseEmail, token, userRole } = data;
       
       dispatch(
         loginUser({ 
@@ -38,10 +38,10 @@ const Login = () => {
           name: fullname, 
           email: responseEmail, 
           token, 
-          role: role || "user" // Ensure role is stored, default to "user"
+          role: userRole || "user" // Ensure role is stored, default to "user"
         })
       );
-
+ console.log( "userid", userid, "fullname", fullname, "email", responseEmail, "token", token, "role", userRole);
       navigate("/exploremenu");
     } catch (err) {
       console.error("Login error:", err.response?.data || err);
@@ -88,7 +88,7 @@ const Login = () => {
           <motion.input
             type="email"
             placeholder="Email Address"
-            className="bg-white/80 border border-black px-4 py-3 w-full rounded-lg outline-none focus:ring-2 focus:ring-blue-400 placeholder-blue-300 text-blue-900 transition-all duration-300 hover:bg-white"
+            className="bg-white/80 border  px-4 py-2.5 w-full rounded-lg outline-none focus:ring-2 focus:ring-blue-400  text-blue-900 transition-all duration-300 hover:bg-white"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             initial={{ opacity: 0, x: -20 }}
@@ -98,7 +98,7 @@ const Login = () => {
           <motion.input
             type="password"
             placeholder="Password"
-            className="bg-white/80 border border-black px-4 py-3 w-full rounded-lg outline-none focus:ring-2 focus:ring-blue-400 placeholder-blue-300 text-blue-900 transition-all duration-300 hover:bg-white"
+            className="bg-white/80 border  px-4 py-2.5 w-full rounded-lg outline-none focus:ring-2 focus:ring-blue-400  text-blue-900 transition-all duration-300 hover:bg-white"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             initial={{ opacity: 0, x: -20 }}
@@ -107,7 +107,7 @@ const Login = () => {
           />
           <motion.button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 w-full text-white py-3 font-bold rounded-lg border border-black shadow-md transition-all duration-300"
+            className="bg-cyan-500  shadow-cyan-500/50 ... w-full text-white py-2.5 font-bold rounded-lg border  shadow-md transition-all duration-300"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.5, ease: "easeOut" }}

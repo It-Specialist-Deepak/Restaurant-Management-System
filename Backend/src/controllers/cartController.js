@@ -138,8 +138,9 @@ module.exports.getCart = async (req, res) => {
       // console.log("Total product quantity:", totalProductQuantity);
   
       if (tableQuantity > totalProductQuantity) {
-        return res.status(400).json({
+        return res.status(300).json({
           message: `Table quantity cannot exceed the total quantity of ${totalProductQuantity} items in the cart`,
+          "warning": true
         });
       }
       cart.table = tableQuantity;
@@ -153,7 +154,26 @@ module.exports.getCart = async (req, res) => {
       return res.status(500).json({ message: "Server error" });
     }
   };
-  
+//   module.exports.updateTableQuantity = async (req, res) => {
+//     const { userId, tableQuantity } = req.body;
+
+//     try {
+//         const cart = await Cart.findOne({ userId });
+
+//         if (!cart) {
+//             return res.status(404).json({ message: "Cart not found for this user" });
+//         }
+
+//         cart.table = tableQuantity;
+//         await cart.save();
+
+//         return res.status(200).json({ message: "Table quantity updated successfully", cart });
+//     } catch (error) {
+//         console.error("Error updating table quantity:", error);
+//         return res.status(500).json({ message: "Server error" });
+//     }
+// };
+
   module.exports.deleteCart = async (req, res) => {
     const { userId, productId } = req.body; 
   

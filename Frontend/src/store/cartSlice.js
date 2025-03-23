@@ -23,7 +23,6 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
-
 // **Fetch Cart Data**
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
@@ -32,12 +31,17 @@ export const fetchCart = createAsyncThunk(
       const response = await api.post("/getcart", { userId });
       return response.data;
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || "Item Not Availaval For This Time Please Add To Cart"
-      );
+      if (error.response) {
+        if (error.response.status === 404) {
+          return rejectWithValue("Cart not found");
+        }
+        return rejectWithValue(error.response.data?.message || "Item Not Available For This Time. Please Add To Cart");
+      }
+      return rejectWithValue("Something went wrong. Please try again later.");
     }
   }
 );
+
 
 // **Update Item Quantity**
 export const updateQuantity = createAsyncThunk(

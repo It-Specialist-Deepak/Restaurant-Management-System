@@ -9,14 +9,17 @@ export const logoutUserAsync = createAsyncThunk(
       return rejectWithValue("No token found");
     }
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/logout`, {
-        method: "POST",
-        credentials: "include", // Include cookies if required by the API
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/v1/logout`,
+        {
+          method: "POST",
+          credentials: "include", // Include cookies if required by the API
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (!response.ok) {
         const data = await response.json();
         throw new Error(data.message || "Logout failed");
@@ -49,7 +52,8 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       localStorage.setItem("userId", userId);
       localStorage.setItem("token", token);
-      localStorage.setItem("role", role); // Store role in localStorage
+      localStorage.setItem("role", role);
+       // Store role in localStorage
     },
     // Login action (example)
     loginUser: (state, action) => {
@@ -71,9 +75,8 @@ const authSlice = createSlice({
         state.token = "";
         state.role = "user"; // Reset role to default
         state.isAuthenticated = false;
-        localStorage.removeItem("userId");
-        localStorage.removeItem("token");
-        localStorage.removeItem("role"); // Clear role from localStorage
+        localStorage.clear();
+      
       })
       .addCase(logoutUserAsync.rejected, (state, action) => {
         // Log error (could also set an error state if needed)

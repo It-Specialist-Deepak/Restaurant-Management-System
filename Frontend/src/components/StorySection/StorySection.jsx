@@ -2,7 +2,7 @@ import React from "react";
 
 const StorySection = () => {
   return (
-    <section className="bg-gray-100 py-16 px-6 md:px-12 lg:px-24 text-center">
+    <section className="bg-white  py-4 px-6 md:px-12 lg:px-24 text-center">
       {/* Section Header */}
       <h3 className="text-sm uppercase tracking-wide text-gray-600 font-semibold">
         Founding Myths

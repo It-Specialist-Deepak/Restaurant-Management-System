@@ -1,8 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
-import CareerMore from "./CareerMore";  
-import CareerResto from "./CareerResto";
-import CareerRestox from "./CareerRestox";
+import CareerMore from "./other/CareerMore";  
+import CareerResto from "./other/CareerResto";
+import CareerRestox from "./other/CareerRestox";
 
 function Careers() {
   return (

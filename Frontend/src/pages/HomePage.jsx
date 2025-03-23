@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Discount from "../components/discount/Discount";
+import Ads from "../components/ads/Ads";
+import CategoryLayout from "../components/CategoryLayout/CategoryLayout";
+import StorySection from "../components/StorySection/StorySection";
+import { Link } from "react-router-dom";
+
+
 
 const TypingEffect = ({ text }) => <span>{text}</span>;
 
@@ -75,16 +82,16 @@ function HomePage() {
               <TypingEffect text="Savor the best dishes, crafted with love, and experience the perfect blend of flavors!" />
             </motion.p>
 
-            <div className="mt-8 flex flex-wrap gap-4 text-center">
-              <motion.a
-                href="/exploremenu"
-                className="block w-full rounded bg-slate-950 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring focus:ring-rose-400 active:bg-rose-500 sm:w-auto sm:text-base lg:px-8 lg:py-4 lg:text-lg font-poppins"
-                initial={{ opacity: 0 }}
+            <motion.div className="mt-8 flex flex-wrap gap-4 text-center"   initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 1 }}
+                transition={{ duration: 1, delay: 1 }}>
+              <Link
+                to="/exploremenu"
+                className="block w-full rounded bg-slate-950 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring focus:ring-rose-400 active:bg-rose-500 sm:w-auto sm:text-base lg:px-8 lg:py-4 lg:text-lg font-poppins"
+              
               >
                 Explore Menu
-              </motion.a>
+              </Link>
 
               <motion.a
                 href="#"
@@ -95,10 +102,14 @@ function HomePage() {
               >
                 Learn More About Us
               </motion.a>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
+          <CategoryLayout className="m-0 p-0" />
+          <Ads className="m-0 p-0" />
+          <Discount className="mb-4 p-0" />
+          <StorySection className="m-0 p-0" />
     </>
   );
 }

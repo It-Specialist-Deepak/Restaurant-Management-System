@@ -26,7 +26,7 @@ function PostFeedback() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-32 mb-4">
       <h2 className="text-3xl font-bold text-center mb-6">Submit Feedback</h2>
 
       <form onSubmit={handleSubmit} className="mb-6">

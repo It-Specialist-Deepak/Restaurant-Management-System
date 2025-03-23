@@ -1,7 +1,9 @@
 const Product = require('../models/menuModel'); 
 const Order = require('../models/orderModel'); 
 const Cart = require('../models/cartModel'); 
-
+const Invoice = require("../models/InvoiceModel");
+const Notification = require("../models/NotificationModel");
+const { generateInvoice } = require("../utils/generateInovice");
 
 module.exports.placeOrder = async (req, res) => {
   try {
@@ -60,6 +62,48 @@ module.exports.getOrder = async (req, res) => {
   }
 };
 
+module.exports.getAcceptedOrder = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    // Fetch accepted orders and populate the necessary fields
+    const orders = await Order.find({ userId, status: "Accepted" })
+      .populate({
+        path: "items.productId",
+        model: "MenuItem",
+        select: "name price image category",
+      });
+
+    if (!orders || orders.length === 0) {
+      return res.status(404).json({ message: "No accepted orders found for this user." });
+    }
+
+    // Extract order IDs
+    const orderIds = orders.map(order => order._id);
+
+    // Fetch invoices separately using order IDs
+    const invoices = await Invoice.find({ order: { $in: orderIds } }).select("order pdfUrl");
+
+    // Create a map of orderId -> pdfUrl
+    const invoiceMap = new Map();
+    invoices.forEach(invoice => {
+      invoiceMap.set(invoice.order.toString(), invoice.pdfUrl);
+    });
+
+    // Attach pdfUrl directly to each order object
+    orders.forEach(order => {
+      order._doc.pdfUrl = invoiceMap.get(order._id.toString()) || null;
+    });
+
+    return res.status(200).json(orders);
+  } catch (err) {
+    console.error("Error in getAcceptedOrder API:", err.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+
+
 module.exports.cancelOrder = async (req, res) => {
   try {
     const { userId, orderId } = req.body;
@@ -78,9 +122,7 @@ module.exports.cancelOrder = async (req, res) => {
   }
 };
 
-const Invoice = require("../models/InvoiceModel");
-const Notification = require("../models/NotificationModel");
-const { generateInvoice } = require("../utils/generateInovice");
+
 
 module.exports.activeStatus = async (req, res) => {
   try {
@@ -101,8 +143,8 @@ module.exports.activeStatus = async (req, res) => {
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
     }
-
-    order.status = "Accepted";
+    
+    order.status = status;
     await order.save();
     
     let pdfUrl = null;
@@ -113,7 +155,7 @@ module.exports.activeStatus = async (req, res) => {
         order: order._id,
         user: order.userId,
         totalAmount: order.totalAmount,
-        status: "Accepted", 
+        status: status, 
         items: order.items.map((item) => ({
           productId: item.productId._id,
           name: item.productId.name, // ✅ Extract product name

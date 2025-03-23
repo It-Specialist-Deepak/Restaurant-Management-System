@@ -7,27 +7,30 @@ import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import OrderDone from "./pages/OrderDone";
-import Faqs from "./pages/Faqs";
-import About from "./pages/About";
+import Faqs from "./pages/other/Faqs";
+import About from "./pages/other/About";
 import Career from "./pages/Career";
 import ExploreMenu from "./pages/ExploreMenu";
 import CreateMenu from "./pages/CreateMenu";
-import TableReservation from "./pages/TableReservation";
+import TableReservation from "./pages//other/TableReservation";
 import Menu from "./pages/Menu";
 // import Sapport from "./pages/Support2"; // Double-check this spelling
 import UserDetails from "./pages/UserDetails";
-import Staff from "./pages/Staff";
-import Admin from "./pages/Admin";
+// import Staff from "./pages/Staff";
+import Admin from "./pages/Admin/Admin";
 import Vacancies from "./pages/Vacancies";
 import GetVacancies from "./pages/GetVacancies";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassLink from "./pages/ResetPassLink";
 import Invoice from "./pages/Invoice";
-import Catering1 from "./pages/Catering1";
+import Catering1 from "./pages/other/Catering1";
 import Logout from "./pages/Logout";
 import PostFeedback from "./pages/PostFeedback";
 import GetFeedback from "./pages/GetFeedback";
-import TodaySpecial1 from "./pages/TodaySpecial1";
+import TodaySpecial1 from "./pages//other/TodaySpecial1";
+import Staff from "./pages/Staff/Staff";
+import Notification from "./pages/Notification";
+import AcceptedOrder from "./pages/AcceptedOrder";
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -53,7 +56,7 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="registration" element={<Registration />} />
           <Route path="login" element={<Login />} />
-          <Route path="faqs" element={<Faqs />} />
+          <Route path="faq" element={<Faqs />} />
           <Route path="about" element={<About />} />
           <Route path="logout" element={<Logout />} />
           <Route path="getfeedback" element={<GetFeedback />} />
@@ -74,10 +77,13 @@ function App() {
           <Route path="tablereservation" element={<ProtectedRoute><TableReservation /></ProtectedRoute>} />
           <Route path="userdetails" element={<ProtectedRoute><UserDetails /></ProtectedRoute>} />
           <Route path="orderdone" element={<ProtectedRoute><OrderDone /></ProtectedRoute>} />
-         
+          <Route path="acceptedorder" element={<ProtectedRoute><AcceptedOrder /></ProtectedRoute>} />
+         {/* Admin Routes */}
           <Route path="admin" element={<AdminRoute><Admin /></AdminRoute>} />
           <Route path="createmenu" element={<AdminRoute><CreateMenu /></AdminRoute>} />
           <Route path="vacancies" element={<AdminRoute><Vacancies /></AdminRoute>} />
+          <Route path="notification" element={<Notification />} />
+          {/* Staff Routes */}
           <Route path="staff" element={<ProtectedRoute><Staff /></ProtectedRoute>} />
 
 

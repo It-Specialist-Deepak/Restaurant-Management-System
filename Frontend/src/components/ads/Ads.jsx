@@ -43,7 +43,7 @@ const Ads = () => {
 
   return (
     <section className="overflow-hidden bg-white bg-center bg-no-repeat">
-      <div className="bg-white p-8 md:p-12 lg:px-16 lg:py-24">
+      {/* <div className="bg-white p-8 md:p-12 lg:px-16 lg:py-24"> */}
         <div className="container mx-auto px-5 py-10">
           <motion.h2
             className="text-3xl font-bold text-black text-center mb-6"
@@ -88,7 +88,7 @@ const Ads = () => {
             ))}
           </motion.div>
         </div>
-      </div>
+      {/* </div> */}
     </section>
   );
 };

@@ -4,8 +4,6 @@ import cartReducer from "../store/cartSlice";
 import exploreCartReducer from "../store/exploreCartSlice";
 import createMenuReducer from "../store/createMenuSlice";
 import cancelOrderReducer from "../store/cancelOrderSlice";
-import staffReducer from "../store/staffSlice";
-import adminReducer from "../store/adminSlice";
 import vacanciesReducer from "../store/vacanciesSlice";
 import passwordReducer from "../store/passwordSlice";
 import invoiceReducer from "../store/invoiceSlice";
@@ -18,8 +16,6 @@ export const store = configureStore({
     explore: exploreCartReducer,
     menu: createMenuReducer,
     cancelOrder: cancelOrderReducer, // Ensure this matches your slice
-    staff: staffReducer,
-    admin: adminReducer,
     vacancies: vacanciesReducer,
     password: passwordReducer,
     invoice: invoiceReducer,

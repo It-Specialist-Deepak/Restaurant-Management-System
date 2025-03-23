@@ -1,3 +1,4 @@
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -9,21 +10,6 @@ export const forgetPassword = createAsyncThunk(
   async (email, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${BASE_URL}/forget-password`, { email });
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-// Reset Password API Call
-export const resetPassword = createAsyncThunk(
-  "password/resetPassword",
-  async ({ token, newPassword }, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(`${BASE_URL}/reset-password/${token}`, {
-        password: newPassword,
-      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -51,23 +37,11 @@ const passwordSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(forgetPassword.fulfilled, (state, action) => {
+      .addCase(forgetPassword.fulfilled, (state) => {
         state.loading = false;
         state.success = true;
       })
       .addCase(forgetPassword.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(resetPassword.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(resetPassword.fulfilled, (state, action) => {
-        state.loading = false;
-        state.success = true;
-      })
-      .addCase(resetPassword.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

@@ -36,3 +36,30 @@ module.exports.getStatistics = async function (req, res) {
         res.status(500).json({ message: err.message });
     }
 };
+
+
+
+module.exports.getStaffStatistics = async function (req, res) {
+    try {
+        const [
+            pendingOrders,
+            acceptedOrders,
+            completedOrders,
+            allProducts
+        ] = await Promise.all([
+            OrderModel.countDocuments({ status: 'Pending' }),
+            OrderModel.countDocuments({ status: 'Accepted' }),
+            OrderModel.countDocuments({ status: 'Completed' }),
+            MenuModel.countDocuments({availability: true})
+        ]);
+
+        res.status(200).json({
+            pendingOrders,
+            acceptedOrders,
+            completedOrders,
+            allProducts
+        });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};

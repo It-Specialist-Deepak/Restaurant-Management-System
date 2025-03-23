@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Discount = () => {
   // Animation variants
@@ -25,7 +26,7 @@ const Discount = () => {
   };
 
   return (
-    <section className="overflow-hidden bg-white min-h-[400px] sm:min-h-[500px] md:min-h-[600px] flex items-center justify-center">
+    <section className="overflow-hidden bg-white min-h-[400px] sm:min-h-[500px] md:min-h-[600px] flex items-center justify-center mb-4">
       <motion.div
         className="relative mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8 rounded-xl shadow-2xl bg-white text-black sm:grid sm:grid-cols-2"
         initial="hidden"
@@ -62,15 +63,15 @@ const Discount = () => {
           </h2>
 
           {/* CTA Button with Hover, Tap, and Floating Effects */}
-          <motion.a
+          <Link
             className="mt-4 sm:mt-6 inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 bg-white text-black font-bold uppercase tracking-wide rounded-lg shadow-md border border-black hover:bg-gray-200 transition-all duration-300"
-            href="#"
+           to="/exploremenu"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             variants={floatButton}
           >
             Claim Your Deal Now 🔥 <span className="ml-2">➔</span>
-          </motion.a>
+          </Link>
 
           <p className="mt-3 sm:mt-6 text-xs sm:text-sm md:text-base font-medium uppercase text-gray-700">
             Offer expires in <span className="font-bold text-black">24 hours!</span> Don't miss
