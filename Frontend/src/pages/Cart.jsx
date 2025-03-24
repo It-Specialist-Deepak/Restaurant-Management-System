@@ -265,6 +265,7 @@ function Cart() {
                   ➕
                 </button>
               </div>
+              <p className="text-xs  text-white text-center mt-2">*Table quantity cannot exceed the total quantity of all items in the cart.*</p>
             </motion.div>
 
             <motion.div

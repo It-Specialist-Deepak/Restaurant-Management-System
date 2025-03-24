@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const adsData = [
   {
@@ -61,9 +62,9 @@ const Ads = () => {
             animate="visible"
           >
             {adsData.map((ad) => (
-              <motion.a
+              <Link
                 key={ad.id}
-                href="#"
+                to="/exploremenu"
                 className="group block overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition duration-300 bg-white border border-gray-300"
                 variants={childVariants}
                 whileHover={{ scale: 1.05 }}
@@ -84,7 +85,7 @@ const Ads = () => {
                   </div>
                   <p className="text-black font-bold">{ad.price}</p>
                 </div>
-              </motion.a>
+              </Link>
             ))}
           </motion.div>
         </div>

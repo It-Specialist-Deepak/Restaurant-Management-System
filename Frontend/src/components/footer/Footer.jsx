@@ -30,7 +30,7 @@ function Footer() {
   return (
     <footer className="bg-white text-gray-800 shadow-lg">
       <motion.div
-        className="mx-auto max-w-screen-xl px-4 py-10 sm:px-6 lg:px-8"
+        className="mx-auto max-w-screen-xl px-4 pt-10 sm:px-6 lg:px-8"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -56,7 +56,7 @@ function Footer() {
               whileTap="tap"
               className="rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md hover:shadow-lg transition-all duration-300"
             >
-              Subscribe
+              login
             </motion.button>
           </form>
         </motion.div>
@@ -65,11 +65,10 @@ function Footer() {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* About Section */}
           <motion.div variants={itemVariants}>
-            <h4 className="text-base font-bold text-gray-900 mb-3">
-              FoodHub
-            </h4>
+            <h4 className="text-base font-bold text-gray-900 mb-3">Food Hunter</h4>
             <p className="text-sm text-gray-600 leading-relaxed">
-              Elevating dining with innovative flavors since 2022.
+              Elevating dining with innovative flavors since{" "}
+              {new Date().getFullYear()}.
             </p>
             <div className="flex justify-start gap-5 mt-5">
               {[
@@ -106,10 +105,10 @@ function Footer() {
           {/* Quick Links */}
           {[
             {
-              title: "Discover",
+              title: "Contact",
               links: [
-                { name: "Menu", url: "/menu" },
-                { name: "Specials", url: "/specials" },
+                { name: "FAQs", url: "/faq" },
+                { name: "Feedback", url: "/feedback" },
                 { name: "Events", url: "/events" },
               ],
             },
@@ -156,7 +155,7 @@ function Footer() {
           className="mt-10 pt-6 border-t border-gray-200"
         >
           <p className="text-center text-xs text-gray-500 tracking-wide">
-            © FoodHub 2025. Crafted with Passion.
+            © FoodHunter {new Date().getFullYear()}. Crafted with Passion.
           </p>
         </motion.div>
       </motion.div>

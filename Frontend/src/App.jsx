@@ -16,13 +16,11 @@ import TableReservation from "./pages//other/TableReservation";
 import Menu from "./pages/Menu";
 // import Sapport from "./pages/Support2"; // Double-check this spelling
 import UserDetails from "./pages/UserDetails";
-// import Staff from "./pages/Staff";
 import Admin from "./pages/Admin/Admin";
 import Vacancies from "./pages/Vacancies";
 import GetVacancies from "./pages/GetVacancies";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassLink from "./pages/ResetPassLink";
-import Invoice from "./pages/Invoice";
 import Catering1 from "./pages/other/Catering1";
 import Logout from "./pages/Logout";
 import PostFeedback from "./pages/PostFeedback";
@@ -31,6 +29,8 @@ import TodaySpecial1 from "./pages//other/TodaySpecial1";
 import Staff from "./pages/Staff/Staff";
 import Notification from "./pages/Notification";
 import AcceptedOrder from "./pages/AcceptedOrder";
+import UpdateMenu from "./pages/Admin/UpdateMenu";
+import Testimonial from "./pages/other/Testimonial";
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -47,7 +47,15 @@ const AdminRoute = ({ children }) => {
   if (userRole !== "admin") return <Navigate to="/" replace />;
   return children;
 };
+const StaffRoute = ({ children }) => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const token = localStorage.getItem("token");
+  const userRole = useSelector((state) => state.auth.user?.role) || localStorage.getItem("role");
 
+  if (!isAuthenticated && !token) return <Navigate to="/login" replace />;
+  if (userRole !== "staff" && userRole !== "admin") return <Navigate to="/" replace />;
+  return children;
+};
 function App() {
   return (
     <Router>
@@ -69,10 +77,11 @@ function App() {
           <Route path="getvacancies" element={<GetVacancies />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassLink />} />
-          <Route path="invoice" element={<Invoice />} />
           <Route path="today-special1" element={<TodaySpecial1 />} />
-          
+         <Route path= "testimonials" element={<Testimonial />} />
 
+          <Route path="notification" element={<Notification />} />
+          {/* Protected Routes */}
           <Route path="cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
           <Route path="tablereservation" element={<ProtectedRoute><TableReservation /></ProtectedRoute>} />
           <Route path="userdetails" element={<ProtectedRoute><UserDetails /></ProtectedRoute>} />
@@ -80,11 +89,13 @@ function App() {
           <Route path="acceptedorder" element={<ProtectedRoute><AcceptedOrder /></ProtectedRoute>} />
          {/* Admin Routes */}
           <Route path="admin" element={<AdminRoute><Admin /></AdminRoute>} />
-          <Route path="createmenu" element={<AdminRoute><CreateMenu /></AdminRoute>} />
           <Route path="vacancies" element={<AdminRoute><Vacancies /></AdminRoute>} />
-          <Route path="notification" element={<Notification />} />
+          
+      
           {/* Staff Routes */}
-          <Route path="staff" element={<ProtectedRoute><Staff /></ProtectedRoute>} />
+          <Route path="createmenu" element={<StaffRoute><CreateMenu /></StaffRoute>} />
+          <Route path="staff" element={<StaffRoute><Staff /></StaffRoute>} />
+          <Route path="update-menu" element={<StaffRoute><UpdateMenu/></StaffRoute>} />
 
 
           <Route path="*" element={<PageNotFound />} />

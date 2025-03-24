@@ -6,7 +6,6 @@ import createMenuReducer from "../store/createMenuSlice";
 import cancelOrderReducer from "../store/cancelOrderSlice";
 import vacanciesReducer from "../store/vacanciesSlice";
 import passwordReducer from "../store/passwordSlice";
-import invoiceReducer from "../store/invoiceSlice";
 import feedbackReducer from "../store/feedbackSlice"
 
 export const store = configureStore({
@@ -18,7 +17,6 @@ export const store = configureStore({
     cancelOrder: cancelOrderReducer, // Ensure this matches your slice
     vacancies: vacanciesReducer,
     password: passwordReducer,
-    invoice: invoiceReducer,
     feedback: feedbackReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),

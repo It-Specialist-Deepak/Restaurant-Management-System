@@ -58,6 +58,7 @@ const Navbar = () => {
               { label: "Add Product", link: "/createmenu" },
               { label: "Create New Vacancies", link: "/vacancies" },
               { label: "Staff Dashboard", link: "/staff" },
+              { label: "Update Menu", link: "/update-menu" },
             ],
           },
         ]
@@ -69,6 +70,7 @@ const Navbar = () => {
             links: [
               { label: "Staff Dashboard", link: "/staff" },
               { label: "Add Product", link: "/createmenu" },
+              { label: "Update Menu", link: "/update-menu" },
             ],
           },
         ]
@@ -142,7 +144,7 @@ const Navbar = () => {
             shadow-md md:shadow-none transition-all duration-300 ease-in-out
           `}
         >
-          {isLoggedIn && !isAdmin && (
+          {isLoggedIn && (
             <div className="relative flex">
               <Link
                 to="/cart"

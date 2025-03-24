@@ -41,7 +41,7 @@ const Login = () => {
           role: userRole || "user" // Ensure role is stored, default to "user"
         })
       );
- console.log( "userid", userid, "fullname", fullname, "email", responseEmail, "token", token, "role", userRole);
+ 
       navigate("/exploremenu");
     } catch (err) {
       console.error("Login error:", err.response?.data || err);
