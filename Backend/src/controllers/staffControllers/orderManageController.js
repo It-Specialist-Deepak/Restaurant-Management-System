@@ -9,12 +9,12 @@ module.exports.allorders = async (req, res) => {
             .populate({
                 path: 'userId',
                 model: 'User',
-                select: 'name email', // Only include name and email from User
+                select: 'fullname email', // Only include name and email from User
             })
             .populate({
                 path: 'items.productId',
                 model: 'MenuItem',
-                select: 'name price category', // Include relevant product details
+                select: 'name price image category', // Include relevant product details
             });
 
         res.status(200).json({ orders });

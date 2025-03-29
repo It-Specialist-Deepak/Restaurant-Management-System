@@ -127,6 +127,8 @@ module.exports.ResetPassword = async function(req, res)
     return res.status(400).send( { message: "Please Provide Password"})
     }
     const decode = jwt.verify(token , process.env.JWT_KEY)
+    console.log(process.env.JWT_KEY)
+    console.log(decode)
     const user =  await userModel.findOne({_id:decode.id})
   
     const salt = await bcrypt.genSalt(10);
