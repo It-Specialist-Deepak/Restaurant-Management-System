@@ -57,7 +57,7 @@ function Careers() {
                 Apply Now
               </a>
               <a
-                href="/"
+                href="/learnmore"
                 className="bg-gray-200 text-black font-semibold px-6 py-3 rounded-full shadow-lg transition hover:bg-gray-300"
               >
                 Learn More

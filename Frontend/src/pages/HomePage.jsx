@@ -5,6 +5,7 @@ import Ads from "../components/ads/Ads";
 import CategoryLayout from "../components/CategoryLayout/CategoryLayout";
 import StorySection from "../components/StorySection/StorySection";
 import { Link } from "react-router-dom";
+import Testimonial from "./other/Testimonial";
 
 
 
@@ -69,7 +70,7 @@ function HomePage() {
             >
               Welcome to
               <strong className="block font-extrabold text-rose-500">
-                FoodHub Restaurant
+                Food Hunter Restaurant
               </strong>
             </motion.h1>
 
@@ -110,6 +111,7 @@ function HomePage() {
           <Ads className="m-0 p-0" />
           <Discount className="mb-4 p-0" />
           <StorySection className="m-0 p-0" />
+          <Testimonial/>
     </>
   );
 }

@@ -7,7 +7,7 @@ import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import OrderDone from "./pages/OrderDone";
-import Faqs from "./pages/other/Faqs";
+import Faqs from "./pages/Faqs";
 import About from "./pages/other/About";
 import Career from "./pages/Career";
 import ExploreMenu from "./pages/ExploreMenu";
@@ -31,6 +31,14 @@ import Notification from "./pages/Notification";
 import AcceptedOrder from "./pages/AcceptedOrder";
 import UpdateMenu from "./pages/Admin/UpdateMenu";
 import Testimonial from "./pages/other/Testimonial";
+import SeasonalOffer from "./pages/SeasonalOffer";
+import PrivateDining from "./pages/PrivateDining";
+import PhotoGallery from "./pages/PhotoGallery";
+import VirtualTour from "./pages/VirtualTour";
+import LearnMore from "./pages/LearnMore";
+import UpcomingEvent from "./pages/UpcomingEvent";
+import WorkCulture from "./pages/WorkCulture";
+import Support from "./pages/Support2";
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -62,6 +70,14 @@ function App() {
       <Routes>
         <Route path="/" element={<DashboardLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="seasonal-offers" element={<SeasonalOffer />} />
+          <Route path="private-dining" element={<PrivateDining/>} />
+          <Route path="gallery" element={<PhotoGallery />} />
+          <Route path="virtual-tour" element={<VirtualTour />} />
+          <Route path="learnmore" element={<LearnMore />} />
+          <Route path="events" element={<UpcomingEvent />} />
+          <Route path="workculture" element={<WorkCulture />} />
+          <Route path="sapport" element={<Support />} />
           <Route path="registration" element={<Registration />} />
           <Route path="login" element={<Login />} />
           <Route path="faq" element={<Faqs />} />

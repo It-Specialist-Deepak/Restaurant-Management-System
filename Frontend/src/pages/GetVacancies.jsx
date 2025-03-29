@@ -51,13 +51,16 @@ const GetVacancies = () => {
                 <p className="text-gray-600 mt-2"><strong>Requirements:</strong> {vacancy.requirements}</p>
                 <p className="text-gray-600 mt-1"><strong>Description:</strong> {vacancy.description}</p>
                 
-                <motion.button
-                  className="mt-4 px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                <motion.a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLScZbSZWmw-FWzln-FFlJ5jTJ5lno--zOaS9iE5CcSHX6na4HQ/viewform?usp=preview"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 inline-block"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Apply Now
-                </motion.button>
+                </motion.a>
               </motion.li>
             ))}
           </motion.ul>

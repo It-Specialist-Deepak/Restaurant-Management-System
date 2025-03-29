@@ -94,8 +94,10 @@ const Navbar = () => {
           {
             label: "Work With Us",
             links: [
-              { label: "work Culture", link: "/workculture" },
               { label: "Career", link: "/career" },
+              { label: "Catering", link: "/catering" },
+              { label: "work Culture", link: "/workculture" },
+              
             ],
           },
         ]

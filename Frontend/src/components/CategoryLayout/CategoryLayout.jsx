@@ -153,14 +153,7 @@ const CategoryLayout = () => {
             </AnimatePresence>
           </motion.div>
           <div className="text-center mt-8">
-            <motion.button
-              className="px-6 py-2 bg-gray-200 text-gray-800 font-medium rounded-md hover:bg-gray-300 transition-colors duration-300 font-poppins"
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
-            >
-              Explore Recipes
-            </motion.button>
+        
           </div>
         </div>
       </section>
