@@ -30,7 +30,7 @@ function Footer() {
   return (
     <footer className="bg-white text-gray-800 shadow-lg">
       <motion.div
-        className="mx-auto max-w-screen-xl px-4 pt-10 sm:px-6 lg:px-8"
+        className="mx-auto max-w-screen-xl px-4 pt-5 sm:px-6 lg:px-8"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -39,9 +39,9 @@ function Footer() {
         {/* Newsletter Section */}
         <motion.div
           variants={itemVariants}
-          className="text-center mb-8 max-w-2xl mx-auto"
+          className="text-center mb-2 max-w-2xl mx-auto"
         >
-          <h3 className="text-xl font-extrabold mb-4 sm:text-2xl text-gray-900 tracking-tight">
+          <h3 className="text-xl font-extrabold mb-8 sm:text-2xl text-gray-900 tracking-tight">
             Join Our Culinary Journey
           </h3>
           <form className="flex max-w-md mx-auto gap-3">
@@ -66,8 +66,9 @@ function Footer() {
           {/* About Section */}
           <motion.div variants={itemVariants}>
             <h4 className="text-base font-bold text-gray-900 mb-3">Food Hunter</h4>
-            <p className="text-sm text-gray-600 leading-relaxed">
-              Elevating dining with innovative flavors since{" "}
+            <p className="text-sm text-gray-600 leading-relaxed font-semibold">
+            Welcome to Food Hunter – Your Ultimate Food Discovery Companion!
+            Craving something delicious but not sure where to start? Food Hunter is here to help you explore, discover, and enjoy the best meals around!
               {new Date().getFullYear()}.
             </p>
             <div className="flex justify-start gap-5 mt-5">
@@ -113,21 +114,25 @@ function Footer() {
               ],
             },
             {
-              title: "Our Story",
+              title: "Specials",
               links: [
-                { name: "Mission", url: "/mission" },
-                { name: "Team", url: "/team" },
-                { name: "Vision", url: "/vision" },
+             
+                { name: "Seasonal Offers", url: "/seasonal-offers" },
+                { name: "Upcoming Events", url: "/events" },
+                { name: "Photo Gallery", url: "/gallery" },
+          
               ],
             },
             {
-              title: "Connect",
+              title: "Work With us",
               links: [
-                { name: "Support", url: "/support" },
-                { name: "Reservations", url: "/reservations" },
-                { name: "Feedback", url: "/feedback" },
+                { name: "Career", url: "/career" },
+                { name: "Catering", url: "/catering" },
+                { name: "Work Culture", url: "/workculture" },
               ],
             },
+          
+
           ].map((section) => (
             <motion.div key={section.title} variants={itemVariants}>
               <h4 className="text-base font-bold text-gray-900 mb-3 tracking-wide">

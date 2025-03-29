@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import Discount from "../components/discount/Discount";
 import Ads from "../components/ads/Ads";
 import CategoryLayout from "../components/CategoryLayout/CategoryLayout";
-import StorySection from "../components/StorySection/StorySection";
 import { Link } from "react-router-dom";
 import Testimonial from "./other/Testimonial";
 
@@ -94,15 +93,16 @@ function HomePage() {
                 Explore Menu
               </Link>
 
-              <motion.a
-                href="#"
+              <Link
+              to= "/about"
+               
                 className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring focus:ring-rose-400 active:text-rose-500 sm:w-auto sm:text-base lg:px-8 lg:py-4 lg:text-lg font-poppins"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 1.2 }}
               >
                 Learn More About Us
-              </motion.a>
+              </Link>
             </motion.div>
           </div>
         </div>
@@ -110,7 +110,7 @@ function HomePage() {
           <CategoryLayout className="m-0 p-0" />
           <Ads className="m-0 p-0" />
           <Discount className="mb-4 p-0" />
-          <StorySection className="m-0 p-0" />
+          {/* <StorySection className="m-0 p-0" /> */}
           <Testimonial/>
     </>
   );

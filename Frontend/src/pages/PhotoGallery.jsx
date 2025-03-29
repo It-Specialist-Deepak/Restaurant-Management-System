@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const PhotoGallery = () => {
 	return (
@@ -15,12 +16,12 @@ const PhotoGallery = () => {
 								man which. Green make appear moveth fruit likeness.
 							</p>
 							<div className="mt-12">
-								<a
-									href="#!"
+								<Link
+									to="/about"
 									className="bg-blue-600 hover:bg-opacity-90 text-white border border-blue-600 rounded transition py-3 px-7 font-normal"
 								>
 									Read more
-								</a>
+								</Link>
 							</div>
 						</div>
 					</div>

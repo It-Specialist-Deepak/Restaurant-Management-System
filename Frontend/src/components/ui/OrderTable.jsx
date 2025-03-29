@@ -19,9 +19,12 @@ const OrdersTable = () => {
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/v1/all-orders", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "http://localhost:5000/api/v1/all-orders",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setOrders(response.data.orders);
       } catch (err) {
         setError("Failed to fetch orders. Please try again.");
@@ -51,7 +54,9 @@ const OrdersTable = () => {
       // Update local state
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
-          order._id === updatedOrder._id ? { ...order, status: updatedOrder.status } : order
+          order._id === updatedOrder._id
+            ? { ...order, status: updatedOrder.status }
+            : order
         )
       );
     } catch (err) {
@@ -112,7 +117,9 @@ const OrdersTable = () => {
                 <td className="border p-2">
                   <select
                     value={order.status}
-                    onChange={(e) => handleStatusChange(order._id, e.target.value)}
+                    onChange={(e) =>
+                      handleStatusChange(order._id, e.target.value)
+                    }
                     className="px-2 py-1 border rounded"
                     disabled={updating}
                   >
@@ -140,13 +147,30 @@ const OrdersTable = () => {
       {selectedOrder && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg p-6 max-w-lg w-full shadow-lg">
-            <h2 className="text-2xl font-bold text-center mb-4">Order Details</h2>
+            <h2 className="text-2xl font-bold text-center mb-4">
+              Order Details
+            </h2>
 
             <div className="border-b pb-3">
-              <p><strong>Order ID:</strong> {selectedOrder._id}</p>
-              <p><strong>User:</strong> {selectedOrder.userId?.fullname}</p>
-              <p><strong>Email:</strong> {selectedOrder.userId?.email}</p>
-              <p><strong>Total Amount:</strong> <span className="text-green-600 font-semibold">${selectedOrder.totalAmount?.toFixed(2)}</span></p>
+              <p>
+                <strong>Order ID:</strong> {selectedOrder._id}
+              </p>
+              <p>
+                <strong>Order Date:</strong> {new Date(selectedOrder.createdAt).toLocaleString() || selectedOrder.createdAt }
+              </p>
+
+              <p>
+                <strong>User:</strong> {selectedOrder.userId?.fullname}
+              </p>
+              <p>
+                <strong>Email:</strong> {selectedOrder.userId?.email}
+              </p>
+              <p>
+                <strong>Total Amount:</strong>{" "}
+                <span className="text-green-600 font-semibold">
+                  ${selectedOrder.totalAmount?.toFixed(2)}
+                </span>
+              </p>
               <span
                 className={`inline-flex items-center justify-center rounded-full px-2.5 py-0.5 text-sm mt-2 ${
                   selectedOrder.status === "Pending"
@@ -167,7 +191,10 @@ const OrdersTable = () => {
             <h3 className="font-semibold text-lg mt-4 mb-2">Ordered Items</h3>
             <div className="max-h-60 overflow-y-auto space-y-4">
               {selectedOrder.items.map((item) => (
-                <div key={item._id} className="flex items-center gap-4 border p-3 rounded-lg shadow-sm">
+                <div
+                  key={item._id}
+                  className="flex items-center gap-4 border p-3 rounded-lg shadow-sm"
+                >
                   <img
                     src={renderImage(item.productId.image)}
                     alt={item.productId?.name}
@@ -175,8 +202,12 @@ const OrdersTable = () => {
                   />
                   <div>
                     <p className="font-semibold">{item.productId?.name}</p>
-                    <p className="text-gray-600 text-sm">Quantity: {item.quantity}</p>
-                    <p className="text-gray-600 text-sm">Price: ${item.productId?.price.toFixed(2)}</p>
+                    <p className="text-gray-600 text-sm">
+                      Quantity: {item.quantity}
+                    </p>
+                    <p className="text-gray-600 text-sm">
+                      Price: ${item.productId?.price.toFixed(2)}
+                    </p>
                   </div>
                 </div>
               ))}

@@ -25,16 +25,13 @@ import Catering1 from "./pages/other/Catering1";
 import Logout from "./pages/Logout";
 import PostFeedback from "./pages/PostFeedback";
 import GetFeedback from "./pages/GetFeedback";
-import TodaySpecial1 from "./pages//other/TodaySpecial1";
 import Staff from "./pages/Staff/Staff";
 import Notification from "./pages/Notification";
 import AcceptedOrder from "./pages/AcceptedOrder";
 import UpdateMenu from "./pages/Admin/UpdateMenu";
 import Testimonial from "./pages/other/Testimonial";
 import SeasonalOffer from "./pages/SeasonalOffer";
-import PrivateDining from "./pages/PrivateDining";
 import PhotoGallery from "./pages/PhotoGallery";
-import VirtualTour from "./pages/VirtualTour";
 import LearnMore from "./pages/LearnMore";
 import UpcomingEvent from "./pages/UpcomingEvent";
 import WorkCulture from "./pages/WorkCulture";
@@ -71,9 +68,7 @@ function App() {
         <Route path="/" element={<DashboardLayout />}>
           <Route index element={<HomePage />} />
           <Route path="seasonal-offers" element={<SeasonalOffer />} />
-          <Route path="private-dining" element={<PrivateDining/>} />
           <Route path="gallery" element={<PhotoGallery />} />
-          <Route path="virtual-tour" element={<VirtualTour />} />
           <Route path="learnmore" element={<LearnMore />} />
           <Route path="events" element={<UpcomingEvent />} />
           <Route path="workculture" element={<WorkCulture />} />
@@ -93,8 +88,9 @@ function App() {
           <Route path="getvacancies" element={<GetVacancies />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassLink />} />
-          <Route path="today-special1" element={<TodaySpecial1 />} />
+         
          <Route path= "testimonials" element={<Testimonial />} />
+         <Route path= "about" element={<About />} />
 
           <Route path="notification" element={<Notification />} />
           {/* Protected Routes */}

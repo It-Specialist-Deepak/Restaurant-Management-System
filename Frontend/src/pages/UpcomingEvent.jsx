@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Shapes = () => (
 	<>
@@ -51,12 +52,14 @@ const UpcomingEvent = () => {
 						</h2>
 						<div className="max-w-xl">
 							<p className="text-[17px] leading-relaxed opacity-80 my-12">
-								Join us for an amazing event filled with insights, learning, and networking opportunities!
+								Join us for an amazing event filled with interesting activities! Whether you're a foodie, a sports enthusiast, or a culture lover, we've got something for everyone. Don't miss out on this unforgettable experience!
 							</p>
 						</div>
-						<button className="py-3 px-8 font-medium text-white bg-blue-600 hover:bg-opacity-90 rounded-full">
+						<Link 
+						 to="/registration"
+						 className="py-3 px-8 font-medium text-white bg-blue-600 hover:bg-opacity-90 rounded-full">
 							Register Now
-						</button>
+						</Link>
 					</div>
 					<div className="col-span-12 lg:col-span-5 relative text-center">
 						<ShapeSeven />

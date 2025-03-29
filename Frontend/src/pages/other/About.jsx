@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 function About() {
   return (
-    <div className="about-page bg-gradient-to-r from-green-100 to-blue-100 min-h-screen py-12 px-6">
+    <div className="about-page bg-gradient-to-r from-green-100 to-blue-100 min-h-screen py-12 px-6 mt-20">
       <motion.div
         className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-8"
         initial={{ opacity: 0, y: 50 }}
@@ -24,8 +24,8 @@ function About() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
-          Experience the passion and dedication that defines us. Learn more
-          about our journey, values, and commitment to exceptional dining.
+           Welcome to <span className="font-semibold text-red-500">Food Hunter</span>, your ultimate food discovery companion! 🍽️  
+           We help you explore the best restaurants, dishes, and flavors in your city. Whether you're a foodie looking for new experiences or just need a quick meal recommendation, we've got you covered!
         </motion.p>
 
         <section className="mb-10">
@@ -65,9 +65,8 @@ function About() {
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            To deliver an unparalleled dining experience that blends tradition,
-            innovation, and exceptional service. Every dish is a testament to
-            our passion for food and hospitality.
+            At <span className="font-semibold text-red-500">Food Hunter</span>, we believe that **great food should be easy to find**.  
+            Our mission is to connect food lovers with amazing culinary experiences, making every meal special.  
           </motion.p>
         </section>
 

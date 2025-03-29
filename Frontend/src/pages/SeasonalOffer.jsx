@@ -3,16 +3,16 @@ import PropTypes from "prop-types";
 
 const features = [
 	{
-		title: "Interest",
+		title: "Cashback",
 		amount: "2%",
 	},
 	{
-		title: "Support",
+		title: "Opening",
 		amount: "24/7",
 	},
 	{
-		title: "Interest",
-		amount: "5%",
+		title: "Regular Customers",
+		amount: "500+",
 	},
 ];
 
@@ -50,9 +50,8 @@ const SeasonalOffer = () => {
 							Why Choose Us?
 						</h2>
 						<p className="text-lg opacity-80 leading-7 my-6">
-							It’s easier to reach your savings goals when you have the right
-							savings account. Take a look and find the right one for you! There
-							are many online banks in Europe.
+						Welcome to <span className="font-semibold text-red-500">Food Hunter</span>, your ultimate food discovery companion! 🍽️  
+						We help you explore the best restaurants, dishes, and flavors in your city. Whether you're a foodie looking for new experiences or just need a quick meal recommendation, we've got you covered!
 						</p>
 						<div className="grid grid-cols-12 gap-6 text-center mt-12 pt-12">
 							{features.map((feature, i) => (

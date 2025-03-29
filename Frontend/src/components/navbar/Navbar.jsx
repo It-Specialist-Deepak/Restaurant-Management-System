@@ -105,12 +105,11 @@ const Navbar = () => {
     {
       label: "Specials",
       links: [
-        { label: "Today's Special", link: "/today-special1" },
+        // { label: "Today's Special", link: "/today-special1" },
         { label: "Seasonal Offers", link: "/seasonal-offers" },
         { label: "Upcoming Events", link: "/events" },
-        { label: "Private Dining", link: "/private-dining" },
         { label: "Photo Gallery", link: "/gallery" },
-        { label: "Virtual Tour", link: "/virtual-tour" },
+  
       ],
     },
   ];
