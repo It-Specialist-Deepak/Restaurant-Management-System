@@ -26,7 +26,7 @@ const UpdateMenu = () => {
 
   const fetchMenuData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/v1/adminmenu", {
+      const response = await axios.get( `${import.meta.env.VITE_BASE_URL}/api/v1/adminmenu`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -42,7 +42,7 @@ const UpdateMenu = () => {
     try {
       const newAvailability = !currentAvailability;
       await axios.put(
-        "http://localhost:5000/api/v1/update-availibility",
+       `${import.meta.env.VITE_BASE_URL}/api/v1/update-availibility`,
         { productId, availability: newAvailability },
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -207,7 +207,7 @@ const OrderDone = () => {
                               {item.productId.name}
                             </p>
                             <p className="font-bold">
-                              <strong>price:</strong> ${item.productId.price}
+                              <strong>price:</strong> ₹{item.productId.price}
                             </p>
                             <p className="text-sm text-gray-600">
                               {quantity} x ${price.toFixed(2)}

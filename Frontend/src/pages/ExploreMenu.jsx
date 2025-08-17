@@ -5,6 +5,9 @@ import { fetchMenu, addToCart } from "../store/exploreCartSlice";
 import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { fetchCart } from "../store/cartSlice";
+
+
 
 function ExploreMenu() {
   const dispatch = useDispatch();
@@ -46,19 +49,20 @@ function ExploreMenu() {
 
     try {
       await dispatch(addToCart({ userId, productId, token })).unwrap();
+       dispatch(fetchCart(userId));
       toast.success("Item added to cart successfully!", { position: "top-right", autoClose: 3000 });
     } catch (error) {
       toast.error(` ${error.message || "Failed to add item to cart"}`, { position: "top-right", autoClose: 3000 });
     }
   };
 
-  if (status === "loading") {
-    return (
-      <div className="min-h-screen flex justify-center items-center bg-gray-900/80">
-        <p className="text-white text-xl font-semibold">Loading menu...</p>
-      </div>
-    );
-  }
+  // if (status === "loading") {
+  //   return (
+  //     <div className="min-h-screen flex justify-center items-center bg-gray-900/80">
+  //       <p className="text-white text-xl font-semibold">Loading menu...</p>
+  //     </div>
+  //   );
+  // }
 
   if (error) {
     return (
@@ -107,9 +111,29 @@ function ExploreMenu() {
       </div>
 
       {filteredMenus.length === 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <motion.p className="text-center text-gray-300 text-lg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-          No matching menu items found
+        <div className="relative block overflow-hidden bg-white/50 backdrop-blur-md shadow-lg rounded-lg transition-all duration-300 hover:shadow-xl animate-pulse">
+  <div className="h-64 w-full bg-gray-200 sm:h-72 rounded-t-lg"></div>
+  <div className="relative p-6">
+    <div className="h-5 w-1/4 bg-gray-200 mb-3"></div>
+    <div className="flex justify-items-start items-center gap-3">
+      <div className="h-5 w-1/2 bg-gray-200 mb-3"></div>
+      <div className="inline-flex items-center justify-center rounded-full px-2.5 py-0.5 text-sm mt-2 bg-green-100 text-green-700">
+        <div className="h-5 w-5 bg-gray-200 rounded-full mr-1"></div>
+        <div className="w-16 h-4 bg-gray-200 rounded"></div>
+      </div>
+    </div>
+    <div className="h-4 bg-gray-200 rounded w-full mt-1.5"></div>
+    <div className="h-4 bg-gray-200 rounded w-3/4 mt-1.5"></div>
+    <div className="h-4 bg-gray-200 rounded w-1/2 mt-1.5"></div>
+    <div className="mt-4 flex h-10 gap-4">
+      <div className="w-full rounded-sm bg-gray-100"></div>
+    </div>
+  </div>
+</div>
         </motion.p>
+        </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredMenus.map((menu) => (
@@ -127,7 +151,7 @@ function ExploreMenu() {
                 onError={(e) => (e.target.src = "https://via.placeholder.com/150?text=No+Image")} />
 
               <div className="relative p-6">
-                <p className="text-teal-700 font-semibold text-2xl">${menu.price} </p>
+                <p className="text-teal-700 font-semibold text-2xl">₹{ menu.price} </p>
                 <div className="flex justify-items-start items-center gap-3">
                 <h3 className="mt-1.5 text-xl font-medium text-gray-900">{menu.name}</h3>
             

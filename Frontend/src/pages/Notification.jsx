@@ -20,7 +20,7 @@ const Notification = () => {
 
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/v1/get-notifications",
+          `${import.meta.env.VITE_BASE_URL}/api/v1/get-notifications`,
           { userId },
           {
             headers: {
@@ -51,7 +51,7 @@ const Notification = () => {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/v1/${notificationId}/read`,
+        `${import.meta.env.VITE_BASE_URL}/api/v1/${notificationId}/read`,
         {},
         {
           headers: {

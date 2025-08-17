@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/api/v1";
+const BASE_URL = `${import.meta.env.VITE_BASE_URL}/api/v1`;
 
 // Forget Password API Call
 export const forgetPassword = createAsyncThunk(

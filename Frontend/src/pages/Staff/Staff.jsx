@@ -16,7 +16,7 @@ const Staff = () => {
       const fetchStatistics = async () => {
         try {
           const token = localStorage.getItem("token"); // Get token from localStorage
-          const response = await axios.get("http://localhost:5000/api/v1/getStaffStatistics", {
+          const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/getStaffStatistics`, {
             headers: { Authorization: `Bearer ${token}` },
           });
   

@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Suggestion: Use environment variables for API URLs in production
-const API_BASE_URL = "http://localhost:5000/api/v1"; // Replace with process.env.REACT_APP_API_URL in production
+const API_BASE_URL = `${import.meta.env.VITE_BASE_URL}/api/v1`; // Replace with process.env.REACT_APP_API_URL in production
 
 // GET: Fetch Feedback from /getfeedback (with authorization)
 export const fetchFeedback = createAsyncThunk(

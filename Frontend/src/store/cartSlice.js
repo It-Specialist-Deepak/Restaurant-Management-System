@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Set base URL
-const BASE_URL = "http://localhost:5000/api/v1";
+const BASE_URL = `${import.meta.env.VITE_BASE_URL}`;
 
 // Create axios instance with default config
 const api = axios.create({
@@ -28,7 +28,7 @@ export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
   async (userId, { rejectWithValue }) => {
     try {
-      const response = await api.post("/getcart", { userId });
+      const response = await api.post( `${import.meta.env.VITE_BASE_URL}/api/v1/getcart`, { userId });
       return response.data;
     } catch (error) {
       if (error.response) {
@@ -48,7 +48,7 @@ export const updateQuantity = createAsyncThunk(
   "cart/updateQuantity",
   async ({ userId, productId, quantity }, { rejectWithValue }) => {
     try {
-      await api.post("/update-quantity", { userId, productId, quantity });
+      await api.post("/api/v1/update-quantity", { userId, productId, quantity });
       return { productId, quantity };
     } catch (error) {
       return rejectWithValue(
@@ -63,7 +63,7 @@ export const removeItem = createAsyncThunk(
   "cart/removeItem",
   async ({ userId, productId }, { rejectWithValue }) => {
     try {
-      await api.post("/deletecart", { userId, productId });
+      await api.post("/api/v1/deletecart", { userId, productId });
       return productId;
     } catch (error) {
       return rejectWithValue(
@@ -78,7 +78,7 @@ export const updateTableQuantity = createAsyncThunk(
   "cart/updateTableQuantity",
   async ({ userId, tableQuantity }, { rejectWithValue }) => {
     try {
-      await api.post("/table-quantity", { userId, tableQuantity });
+      await api.post("/api/v1/table-quantity", { userId, tableQuantity });
       return tableQuantity;
     } catch (error) {
       return rejectWithValue(
@@ -93,7 +93,7 @@ export const placeOrder = createAsyncThunk(
   "cart/placeOrder",
   async ({ userId, cartId }, { rejectWithValue }) => {
     try {
-      await api.post("/placeorder", { userId, cartId });
+      await api.post("/api/v1/placeorder", { userId, cartId });
       return "Order placed successfully!";
     } catch (error) {
       return rejectWithValue(

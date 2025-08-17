@@ -81,28 +81,28 @@ function Cart() {
       console.error("Place order error:", err);
     }
   }; 
-
-  if (status === "loading") {
-    return (
-      <div className="min-h-screen flex justify-center items-center bg-gray-900/80">
-        <motion.p
-          className="text-center text-white text-xl font-semibold"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <svg
-            className="animate-spin h-8 w-8 mx-auto mb-4 text-blue-400"
-            viewBox="0 0 24 24"
-          >
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-          </svg>
-          Loading cart...
-        </motion.p>
-      </div>
-    );
-  }
+// Removing Risky loading when quantity update
+  // if (status === "loading") {
+  //   return (
+  //     <div className="min-h-screen flex justify-center items-center bg-gray-900/80">
+  //       <motion.p
+  //         className="text-center text-white text-xl font-semibold"
+  //         initial={{ opacity: 0 }}
+  //         animate={{ opacity: 1 }}
+  //         transition={{ duration: 0.5 }}
+  //       >
+  //         <svg
+  //           className="animate-spin h-8 w-8 mx-auto mb-4 text-blue-400"
+  //           viewBox="0 0 24 24"
+  //         >
+  //           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+  //           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+  //         </svg>
+  //         Loading cart...
+  //       </motion.p>
+  //     </div>
+  //   );
+  // }
   if (error === "Cart not found") {
     return (
       <motion.div
@@ -214,7 +214,7 @@ function Cart() {
                   )}
                   <div className="flex-1">
                     <h4 className="text-lg sm:text-xl font-semibold text-white">{item.productId.name}</h4>
-                    <p className="text-gray-200 text-sm sm:text-base">💰 ${item.productId.price}</p>
+                    <p className="text-gray-200 text-sm sm:text-base">💰 ₹{item.productId.price}</p>
                     <div className="flex items-center space-x-2 mt-2">
                       <button
                         onClick={() => handleUpdateQuantity(item.productId._id, item.quantity - 1)}
@@ -275,7 +275,7 @@ function Cart() {
               transition={{ delay: 0.4, duration: 0.5 }}
             >
               <h3 className="text-xl sm:text-2xl font-bold text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-                💵 Total: ${cart.items.reduce((total, item) => total + item.productId.price * item.quantity, 0).toFixed(2)}
+                💵 Total: ₹{cart.items.reduce((total, item) => total + item.productId.price * item.quantity, 0).toFixed(2)}
               </h3>
             </motion.div>
 

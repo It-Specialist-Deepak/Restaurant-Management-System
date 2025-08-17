@@ -5,7 +5,7 @@ import axios from "axios";
 // Async Thunk for fetching the menu
 export const fetchMenu = createAsyncThunk("explore/fetchMenu", async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get("http://localhost:5000/api/v1/menu");
+    const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/menu`);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response?.data?.message || "Failed to fetch menu");
@@ -18,7 +18,7 @@ export const addToCart = createAsyncThunk(
   async ({ userId, productId, token }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/add-to-cart",
+        `${import.meta.env.VITE_BASE_URL}/api/v1/add-to-cart`,
         { userId, productId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -36,7 +36,7 @@ export const placeJustNowOrder = createAsyncThunk(
   async ({ userId, cartId, token }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/placeorder",
+       `${import.meta.env.VITE_BASE_URL}/api/v1/placeorder`,
         { userId, cartId },
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -366,7 +366,7 @@ const Admin = () => {
           return;
         }
 
-        const response = await fetch("http://localhost:5000/api/v1/getStatistics", {
+        const response = await fetch( `${import.meta.env.VITE_BASE_URL}/api/v1/getStatistics`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

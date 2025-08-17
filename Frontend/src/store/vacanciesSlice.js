@@ -7,7 +7,7 @@ export const fetchVacancies = createAsyncThunk(
     try {
       const token = getState().auth.token; // Get JWT token from Redux store
 
-      const response = await fetch("http://localhost:5000/api/v1/get-vacancy", {
+      const response = await fetch( `${import.meta.env.VITE_BASE_URL}/api/v1/get-vacancy`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export const createVacancy = createAsyncThunk(
     try {
       const token = getState().auth.token; // Get JWT token
 
-      const response = await fetch("http://localhost:5000/api/v1/create-vacancy", {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/create-vacancy`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,7 +64,7 @@ export const deleteVacancy = createAsyncThunk(
     try {
       const token = getState().auth.token; // Get JWT token
 
-      const response = await fetch("http://localhost:5000/api/v1/delete-vacancy", {
+      const response = await fetch( `${import.meta.env.VITE_BASE_URL}/api/v1/delete-vacancy`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

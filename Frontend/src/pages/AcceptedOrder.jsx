@@ -39,7 +39,7 @@ const AcceptedOrder = () => {
         }
 
         const response = await axios.post(
-          "http://localhost:5000/api/v1/getacceptedorder",
+        `${import.meta.env.VITE_BASE_URL}/api/v1/getacceptedorder`,
           { userId },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -81,7 +81,7 @@ const AcceptedOrder = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/download-invoice",
+         `${import.meta.env.VITE_BASE_URL}/api/v1/logout`,
         { invoiceId, userId },
         {
           headers: { Authorization: `Bearer ${token}` },
