@@ -19,8 +19,9 @@ const OrdersTable = () => {
       }
 
       try {
+        console.log(import.meta.env.VITE_BASE_URL)
         const response = await axios.get(
-          "http://localhost:5000/api/v1/all-orders",
+          `${import.meta.env.VITE_BASE_URL}/api/v1/all-orders`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -43,7 +44,7 @@ const OrdersTable = () => {
     setUpdating(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/activeStatus",
+        `${import.meta.env.VITE_BASE_URL}/api/v1/activeStatus`,
         { orderId, status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );

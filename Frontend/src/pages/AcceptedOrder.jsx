@@ -81,7 +81,7 @@ const AcceptedOrder = () => {
 
     try {
       const response = await axios.post(
-         `${import.meta.env.VITE_BASE_URL}/api/v1/logout`,
+         `${import.meta.env.VITE_BASE_URL}/api/v1/download-invoice`,
         { invoiceId, userId },
         {
           headers: { Authorization: `Bearer ${token}` },
