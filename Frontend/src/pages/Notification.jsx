@@ -93,7 +93,7 @@ const Notification = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/download-invoice",
+        `${import.meta.env.VITE_BASE_URL}/api/v1/download-invoice`,
         { invoiceId, userId },
         {
           headers: {

@@ -130,7 +130,7 @@ const Navbar = () => {
         </Link>
 
         <button
-          className="text-2xl focus:outline-none md:hidden"
+          className="text-2xl focus:outline-none md:hidden pr-3"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? "×" : "≡"}
@@ -140,7 +140,7 @@ const Navbar = () => {
           className={`
             ${isOpen ? "flex" : "hidden"}
             md:flex flex-col md:flex-row gap-6 sm:gap-8 lg:gap-10 
-            absolute md:static top-14 left-0 w-full md:w-auto 
+            absolute md:static top-20 left-0 w-full md:w-auto 
             bg-white md:bg-transparent p-4 sm:p-6 md:p-0 
             shadow-md md:shadow-none transition-all duration-300 ease-in-out
           `}
