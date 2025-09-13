@@ -113,7 +113,7 @@ function HomePage() {
         to="/about"
         className="block rounded-md bg-white px-8 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring focus:ring-rose-400 active:text-rose-500 sm:text-base lg:px-8 lg:py-4 lg:text-lg font-poppins"
       >
-        Learn More About Us
+        About Us
       </Link>
     </motion.div>
   </div>

@@ -21,7 +21,10 @@ const ForgotPassword = () => {
         toast.success("Reset link sent to your email!");
         setEmail(""); // Clear input on success
       } else {
-        toast.error(result.payload || "Something went wrong. Try again.");
+        // Check if backend sent a message, otherwise fallback
+        const errorMessage =
+          result.payload?.message || "Something went wrong. Try again.";
+        toast.error(errorMessage);
       }
     });
   };
@@ -102,16 +105,7 @@ const ForgotPassword = () => {
 
         {/* Success/Error Messages */}
         <AnimatePresence>
-          {error && (
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="text-red-500 text-center mt-4"
-            >
-              {error}
-            </motion.p>
-          )}
+        
           {success && (
             <motion.p
               initial={{ opacity: 0, y: 10 }}

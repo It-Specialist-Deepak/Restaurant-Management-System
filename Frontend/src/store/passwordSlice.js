@@ -44,6 +44,13 @@ const passwordSlice = createSlice({
       .addCase(forgetPassword.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        if (action.payload?.status === 404) {
+          state.notFound = true; // 👈 mark user not found
+          state.error = "User not found with this email.";
+        } else {
+          state.notFound = false;
+          state.error = action.payload?.message || "Something went wrong.";
+        }
       });
   },
 });

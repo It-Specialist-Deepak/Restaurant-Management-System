@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { fetchCart } from "../store/cartSlice";
+import MenuSkeleton from "../components/Skeleton/MenuSkeleton";
 
 
 
@@ -49,7 +50,7 @@ function ExploreMenu() {
 
     try {
       await dispatch(addToCart({ userId, productId, token })).unwrap();
-       dispatch(fetchCart(userId));
+      dispatch(fetchCart(userId));
       toast.success("Item added to cart successfully!", { position: "top-right", autoClose: 3000 });
     } catch (error) {
       toast.error(` ${error.message || "Failed to add item to cart"}`, { position: "top-right", autoClose: 3000 });
@@ -76,7 +77,7 @@ function ExploreMenu() {
   const categories = ["All", ...new Set(menus.map((menu) => menu.category))];
 
   // Filtered menu based on category and search input
-  const filteredMenus = menus.filter((menu) => 
+  const filteredMenus = menus.filter((menu) =>
     (selectedCategory === "All" || menu.category === selectedCategory) &&
     menu.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -112,34 +113,16 @@ function ExploreMenu() {
 
       {filteredMenus.length === 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <motion.p className="text-center text-gray-300 text-lg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-        <div className="relative block overflow-hidden bg-white/50 backdrop-blur-md shadow-lg rounded-lg transition-all duration-300 hover:shadow-xl animate-pulse">
-  <div className="h-64 w-full bg-gray-200 sm:h-72 rounded-t-lg"></div>
-  <div className="relative p-6">
-    <div className="h-5 w-1/4 bg-gray-200 mb-3"></div>
-    <div className="flex justify-items-start items-center gap-3">
-      <div className="h-5 w-1/2 bg-gray-200 mb-3"></div>
-      <div className="inline-flex items-center justify-center rounded-full px-2.5 py-0.5 text-sm mt-2 bg-green-100 text-green-700">
-        <div className="h-5 w-5 bg-gray-200 rounded-full mr-1"></div>
-        <div className="w-16 h-4 bg-gray-200 rounded"></div>
-      </div>
-    </div>
-    <div className="h-4 bg-gray-200 rounded w-full mt-1.5"></div>
-    <div className="h-4 bg-gray-200 rounded w-3/4 mt-1.5"></div>
-    <div className="h-4 bg-gray-200 rounded w-1/2 mt-1.5"></div>
-    <div className="mt-4 flex h-10 gap-4">
-      <div className="w-full rounded-sm bg-gray-100"></div>
-    </div>
-  </div>
-</div>
-        </motion.p>
+          {[...Array(4)].map((_, idx) => (
+            <MenuSkeleton key={idx} />
+          ))}
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredMenus.map((menu) => (
             <motion.div key={menu._id} className="group relative block overflow-hidden bg-white/50 backdrop-blur-md shadow-lg rounded-lg transition-all duration-300 hover:shadow-xl"
               initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}>
-              
+
               {/* <button className="absolute end-4 top-4 z-10 rounded-full bg-white/80 p-1.5 text-gray-900 transition hover:text-gray-700" aria-label="Add to wishlist">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4">
                   <path strokeLinecap="round" strokeLinejoin="round"
@@ -151,30 +134,30 @@ function ExploreMenu() {
                 onError={(e) => (e.target.src = "https://via.placeholder.com/150?text=No+Image")} />
 
               <div className="relative p-6">
-                <p className="text-teal-700 font-semibold text-2xl">₹{ menu.price} </p>
+                <p className="text-teal-700 font-semibold text-2xl">₹{menu.price} </p>
                 <div className="flex justify-items-start items-center gap-3">
-                <h3 className="mt-1.5 text-xl font-medium text-gray-900">{menu.name}</h3>
-            
-                <span
-                  className={`inline-flex items-center justify-center rounded-full px-2.5 py-0.5 text-sm mt-2 bg-green-100 text-green-700`}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="-ms-1 me-1.5 size-4"
+                  <h3 className="mt-1.5 text-xl font-medium text-gray-900">{menu.name}</h3>
+
+                  <span
+                    className={`inline-flex items-center justify-center rounded-full px-2.5 py-0.5 text-sm mt-2 bg-green-100 text-green-700`}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  <p className="whitespace-nowrap">{menu.category}</p>
-                </span>
-                 </div> 
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="-ms-1 me-1.5 size-4"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    <p className="whitespace-nowrap">{menu.category}</p>
+                  </span>
+                </div>
                 <p className="mt-1.5 line-clamp-3 text-gray-700">{menu.description}</p>
 
                 <div className="mt-4 flex gap-4">
