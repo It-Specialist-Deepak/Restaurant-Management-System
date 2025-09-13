@@ -116,21 +116,21 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white text-gray-900 shadow-md w-full fixed top-0 left-0 z-50">
-      <div className="container mx-auto flex justify-between items-center  sm:px-4 lg:px-4 py-4">
+      <div className="container mx-auto flex justify-between items-center  sm:px-2 lg:px-2 py-2">
         <Link
           to="/"
           className=" flex items-center text-2xl font-bold hover:text-blue-400 transition duration-300"
         >
           <img
             src="https://image.freepik.com/free-vector/food-hunter-logo-template-design_316488-1783.jpg?w=2000"
-            className=" h-16  w-16"
+            className=" h-20  w-20"
             alt="logo"
           />
           Food Hunter
         </Link>
 
         <button
-          className="text-2xl focus:outline-none md:hidden pr-3"
+          className="text-3xl font-semibold focus:outline-none md:hidden pr-3"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? "×" : "≡"}
@@ -145,28 +145,31 @@ const Navbar = () => {
             shadow-md md:shadow-none transition-all duration-300 ease-in-out
           `}
         >
+          
+
+          <div className="flex gap-6">
           {isLoggedIn && (
             <div className="relative flex">
               <Link
                 to="/cart"
                 className="text-2xl hover:text-blue-400 transition duration-300 relative"
+                onClick={() => setIsOpen(!isOpen)}
               >
                 <FaShoppingCart />
                 <CartCount />
               </Link>
             </div>
           )}
-
-          <div className="flex ">
             <Link
               to="/notification"
               className="text-2xl hover:text-blue-400 transition duration-300"
+              onClick={() => setIsOpen(!isOpen)}
             >
               <FaBell />
             </Link>
           </div>
           <div className="flex ">
-            <Link to="/exploremenu">Menu</Link>
+            <Link to="/exploremenu" onClick={() => setIsOpen(!isOpen)}>Menu</Link>
           </div>
           {navItems.map((item, index) => (
             <li key={index} className="relative group">
@@ -175,7 +178,7 @@ const Navbar = () => {
               </button>
               <ul
                 className="
-                  md:absolute md:right-0 mt-2 md:mt-4 bg-white shadow-lg rounded-md 
+                  md:absolute md:right-0 mt-1 md:mt-2 bg-white shadow-lg rounded-md 
                   w-full md:w-48 md:opacity-0 md:invisible md:group-hover:opacity-100 
                   md:group-hover:visible transition-all duration-300 ease-in-out
                   flex flex-col space-y-2
@@ -222,7 +225,7 @@ const Navbar = () => {
                   <li>
                     <button
                       onClick={handleLogout}
-                      className="block px-4 py-2 text-red-500 hover:text-red-700 text-sm sm:text-base w-full text-left"
+                      className="block px-4 py-2 text-red-500 hover:text-red-700 text-sm sm:text-base w-full font-semibold text-left"
                     >
                       Logout
                     </button>

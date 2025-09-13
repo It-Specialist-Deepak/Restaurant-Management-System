@@ -38,25 +38,25 @@ const data = [
     title: "Opportunities",
     description: "Explore diverse career paths and roles that suit your passion.",
     icon: Icons.briefcase,
-    link: "View Jobs",
+    
   },
   {
     title: "Culture",
     description: "Join a team that values collaboration, innovation, and growth.",
     icon: Icons.users,
-    link: "Our Culture",
+    
   },
   {
     title: "Growth",
     description: "Enhance your skills with training, mentorship, and challenges.",
     icon: Icons.graph,
-    link: "Career Growth",
+    
   },
   {
     title: "Benefits",
     description: "Enjoy competitive perks, flexible work, and a great environment.",
     icon: Icons.handshake,
-    link: "Explore Benefits",
+   
   },
 ];
 
@@ -112,13 +112,7 @@ function CareerMore() {
             </motion.div>
             <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
             <p className="text-gray-600">{item.description}</p>
-            <motion.a
-              href="#"
-              className="text-teal-600 font-medium mt-4 inline-block"
-              whileHover={{ scale: 1.1 }}
-            >
-              {item.link} →
-            </motion.a>
+            
           </motion.div>
         ))}
       </motion.div>

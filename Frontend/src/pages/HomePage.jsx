@@ -42,7 +42,7 @@ function HomePage() {
           .font-poppins { font-family: 'Poppins', sans-serif; }
         `}
       </style>
-      <section className="relative h-screen overflow-hidden font-poppins">
+      <section className="relative mt-24 overflow-hidden font-sans">
         {/* Background Image Slider */}
         <div className="absolute inset-0">
           <AnimatePresence initial={false}>
@@ -59,59 +59,72 @@ function HomePage() {
           </AnimatePresence>
         </div>
 
-        <div className="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
-          <div className="max-w-xl text-center text-white ltr:sm:text-left rtl:sm:text-right">
-            <motion.h1
-              className="text-3xl font-extrabold sm:text-5xl lg:text-6xl xl:text-7xl font-playfair"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-            >
-              Welcome to
-              <strong className="block font-extrabold text-rose-500">
-                Food Hunter Restaurant
-              </strong>
-            </motion.h1>
+        <div className="relative px-5 py-28 sm:px-6 lg:flex lg:items-center lg:px-8">
+  <div className="text-center text-white sm:text-left">
+    {/* Heading 1 */}
+    <motion.h1
+      className="text-3xl font-extrabold sm:text-5xl lg:text-6xl xl:text-7xl"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      <strong className="font-extrabold text-rose-700">
+        Welcome to
+      </strong>
+    </motion.h1>
 
-            <motion.p
-              className="mt-4 max-w-lg sm:text-xl lg:text-2xl xl:text-3xl text-white font-poppins"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.5 }}
-            >
-              <TypingEffect text="Savor the best dishes, crafted with love, and experience the perfect blend of flavors!" />
-            </motion.p>
+    {/* Heading 2 */}
+    <motion.h1
+      className="text-3xl font-extrabold sm:text-5xl lg:text-6xl xl:text-7xl mt-2"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      <strong className="font-extrabold text-rose-700">
+        Food Hunter Restaurant
+      </strong>
+    </motion.h1>
 
-            <motion.div className="mt-8 flex flex-wrap gap-4 text-center"   initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 1 }}>
-              <Link
-                to="/exploremenu"
-                className="block w-full rounded bg-slate-950 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring focus:ring-rose-400 active:bg-rose-500 sm:w-auto sm:text-base lg:px-8 lg:py-4 lg:text-lg font-poppins"
-              
-              >
-                Explore Menu
-              </Link>
+    {/* Subtext */}
+    <motion.p
+      className="mt-4 font-bold text-xl sm:text-2xl text-rose-700 max-w-2xl mx-auto sm:mx-0"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1, delay: 0.5 }}
+    >
+      <TypingEffect text="Savor the best dishes, crafted with love, and experience the perfect blend of flavors!" />
+    </motion.p>
 
-              <Link
-              to= "/about"
-               
-                className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring focus:ring-rose-400 active:text-rose-500 sm:w-auto sm:text-base lg:px-8 lg:py-4 lg:text-lg font-poppins"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 1.2 }}
-              >
-                Learn More About Us
-              </Link>
-            </motion.div>
-          </div>
-        </div>
+    {/* Buttons */}
+    <motion.div
+      className="mt-8 flex flex-wrap justify-center sm:justify-start gap-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1, delay: 1 }}
+    >
+      <Link
+        to="/exploremenu"
+        className="block rounded-md bg-slate-950 px-8 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring focus:ring-rose-400 active:bg-rose-500 sm:text-base lg:px-8 lg:py-4 lg:text-lg"
+      >
+        Explore Menu
+      </Link>
+
+      <Link
+        to="/about"
+        className="block rounded-md bg-white px-8 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring focus:ring-rose-400 active:text-rose-500 sm:text-base lg:px-8 lg:py-4 lg:text-lg font-poppins"
+      >
+        Learn More About Us
+      </Link>
+    </motion.div>
+  </div>
+</div>
+
       </section>
-          <CategoryLayout className="m-0 p-0" />
-          <Ads className="m-0 p-0" />
-          <Discount className="mb-4 p-0" />
-          {/* <StorySection className="m-0 p-0" /> */}
-          <Testimonial/>
+      <CategoryLayout className="m-0 p-0" />
+      <Ads className="m-0 p-0" />
+      <Discount className="mb-4 p-0" />
+      {/* <StorySection className="m-0 p-0" /> */}
+      <Testimonial />
     </>
   );
 }

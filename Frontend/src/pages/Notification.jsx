@@ -118,14 +118,25 @@ const Notification = () => {
   if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-gray-100 rounded-lg shadow-lg mt-28 ">
+    <div className="max-w-2xl  mx-auto p-6 bg-gray-100 rounded-lg shadow-lg mt-28 ">
       <h2 className="text-3xl font-bold text-center text-gray-800 flex items-center justify-center gap-2">
         <FaBell className="text-blue-500" /> Notifications
       </h2>
 
-      <div className="mt-28 space-y-4">
+      <div className="mt-16 space-y-4">
         {notifications.length === 0 ? (
-          <p className="text-center text-gray-500 ">No new notifications</p>
+       <div className="flex flex-col items-center justify-center h-64 rounded-2xl shadow-sm p-6">
+       <div
+         className="w-32 h-32 bg-cover bg-center opacity-90"
+         style={{
+           backgroundImage:
+             "url('https://cdn-icons-png.flaticon.com/512/4076/4076509.png')", // modern notification illustration
+         }}
+       ></div>
+       <p className="mt-4 text-lg font-medium text-gray-700">No Notifications</p>
+       <p className="text-sm text-gray-500">You're all caught up! 🎉</p>
+     </div>
+     
         ) : (
           notifications.map((notification) => (
             <div

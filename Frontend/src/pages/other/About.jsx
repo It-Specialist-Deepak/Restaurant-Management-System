@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import LearnMore from "../LearnMore";
 
 function About() {
   return (
@@ -70,7 +71,7 @@ function About() {
           </motion.p>
         </section>
 
-        <section className="text-center">
+        <section className="">
           <motion.h2
             className="text-2xl font-semibold text-gray-800 mb-3"
             initial={{ scale: 0.8, opacity: 0 }}
@@ -95,7 +96,9 @@ function About() {
             or call us at (123) 456-7890. We’d love to hear from you!
           </motion.p>
         </section>
+        <LearnMore />
       </motion.div>
+      
     </div>
   );
 }

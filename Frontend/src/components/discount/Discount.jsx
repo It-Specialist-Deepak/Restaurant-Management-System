@@ -28,7 +28,7 @@ const Discount = () => {
   return (
     <section className="overflow-hidden bg-white min-h-[400px] sm:min-h-[500px] md:min-h-[600px] flex items-center justify-center mb-4">
       <motion.div
-        className="relative mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8 rounded-xl shadow-2xl bg-white text-black sm:grid sm:grid-cols-2"
+        className="relative mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8 rounded-xl  bg-white text-black sm:grid sm:grid-cols-2"
         initial="hidden"
         animate="visible"
       >

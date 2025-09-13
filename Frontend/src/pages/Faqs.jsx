@@ -5,19 +5,19 @@ import { Plus, Minus } from "lucide-react";
 const faqList = [
   {
     isActive: true,
-    question: "What is Easy Frontend?",
+    question: "What is Food Hunter?",
     answer:
       "When it comes to booking a holiday, we know everyone likes something different - so we've designed our getaways with you in mind. When it comes to booking a holiday, we know everyone likes something different.",
   },
   {
     isActive: false,
-    question: "Who is Easy Frontend for?",
+    question: "How to place Order in food hunter?",
     answer:
       "When it comes to booking a holiday, we know everyone likes something different - so we've designed our getaways with you in mind. When it comes to booking a holiday, we know everyone likes something different.",
   },
   {
     isActive: false,
-    question: "How does Easy Frontend work?",
+    question: "how much time food hunter take to Accept an Order?",
     answer:
       "When it comes to booking a holiday, we know everyone likes something different - so we've designed our getaways with you in mind. When it comes to booking a holiday, we know everyone likes something different.",
   },
@@ -35,13 +35,13 @@ const faqList = [
   },
   {
     isActive: false,
-    question: "Can I use Easy Frontend designs in my portfolio?",
+    question: "How can i improve my portfolio in food hunter ?",
     answer:
       "When it comes to booking a holiday, we know everyone likes something different - so we've designed our getaways with you in mind. When it comes to booking a holiday, we know everyone likes something different.",
   },
   {
     isActive: false,
-    question: "Can I buy Easy Frontend extended license?",
+    question: "Can I buy extended license?",
     answer:
       "When it comes to booking a holiday, we know everyone likes something different - so we've designed our getaways with you in mind. When it comes to booking a holiday, we know everyone likes something different.",
   },
@@ -62,9 +62,8 @@ const FaqItem = ({ faq }) => {
         {isOpen ? <Minus size={20} /> : <Plus size={20} />}
       </button>
       <div
-        className={`${
-          isOpen ? "block" : "hidden"
-        } p-4 lg:p-6 bg-white shadow rounded-xl mt-2`}
+        className={`${isOpen ? "block" : "hidden"
+          } p-4 lg:p-6 bg-white shadow rounded-xl mt-2`}
       >
         <p className="text-gray-600">{faq.answer}</p>
       </div>
@@ -78,7 +77,7 @@ FaqItem.propTypes = {
 
 const Faqs = () => {
   return (
-    <section className="py-14 md:py-24 bg-white text-gray-900">
+    <section className="mt-20 md:mt-8 py-14 md:py-24 bg-white text-gray-900">
       <div className="container px-4 md:px-8 lg:px-16 mx-auto">
         <div className="grid grid-cols-12 justify-center mb-8 md:mb-12">
           <div className="col-span-12 lg:col-span-8 lg:col-start-3 text-center">

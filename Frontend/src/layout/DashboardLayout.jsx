@@ -13,20 +13,27 @@ const DashboardLayout = () => {
   };
 
   return (
-    <motion.div
-      className="flex flex-col min-h-screen m-0 p-0"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      {/* Navbar should always be visible */}
-      <Navbar className="mb-6" />
-      <main className="flex-grow mb-8">
-        <Outlet />
-        <Footer />
-      </main>
-    </motion.div>
-  );
+    <>    <motion.div
+    className="flex  m-0 p-0"
+    variants={containerVariants}
+    initial="hidden"
+    animate="visible"
+  >
+    {/* Navbar should always be visible */}
+    <Navbar className="mb-6" />
+  
+    {/* Main content area */}
+    <main className="flex-grow">
+      <Outlet />
+    </main>
+  
+    {/* Footer stays at the bottom */}
+    
+  </motion.div>
+  <Footer />
+  </>
+
+    );
 };
 
 export default DashboardLayout;

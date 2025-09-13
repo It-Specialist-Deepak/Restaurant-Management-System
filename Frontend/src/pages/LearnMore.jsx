@@ -3,25 +3,25 @@ import React, { useState } from "react";
 const testimonialList = [
   {
     name: "Pankaj Suman",
-    position: "CEO & Founder at EasyFrontend",
+    position: "CEO & Founder at Food Hunter",
     content:
       "It's easier to reach your savings goals when you have the right savings account. Take a look and find the right one for you.",
   },
   {
     name: "Deepak Rathore",
-    position: "CEO & Founder at EasyFrontend",
+    position: "CEO & Founder at Food Hunter",
     content:
       "It's easier to reach your savings goals when you have the right savings account. Take a look and find the right one for you.",
   },
   {
     name: "Sunjay Verma",
-    position: "CEO & Founder at EasyFrontend",
+    position: "CEO & Founder at Food Hunter",
     content:
       "It's easier to reach your savings goals when you have the right savings account. Take a look and find the right one for you.",
   },
   {
     name: "Yash Gupta",
-    position: "CEO & Founder at EasyFrontend",
+    position: "CEO & Founder at Food Hunter",
     content:
       "It's easier to reach your savings goals when you have the right savings account. Take a look and find the right one for you.",
   },
@@ -32,7 +32,7 @@ const LearnMore = () => {
   const { name, position, content } = testimonialList[index];
 
   return (
-    <section className="py-14 md:py-24 bg-white text-gray-900">
+    <section className="py-10 md:py-14 bg-white text-gray-900">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-12 md:col-span-5 relative">
@@ -43,7 +43,7 @@ const LearnMore = () => {
                 backgroundColor: '#f3f4f6' // Fallback background color
               }}
             >
-             
+
             </div>
           </div>
           <div className="col-span-12 md:col-span-6 md:col-start-7">
@@ -61,9 +61,8 @@ const LearnMore = () => {
                 {testimonialList.map((_, i) => (
                   <button
                     key={i}
-                    className={`w-3 h-3 rounded-full transition-transform duration-200 ${
-                      index === i ? "scale-125 bg-blue-600" : "bg-gray-400"
-                    }`}
+                    className={`w-3 h-3 rounded-full transition-transform duration-200 ${index === i ? "scale-125 bg-blue-600" : "bg-gray-400"
+                      }`}
                     onClick={() => setIndex(i)}
                     aria-label={`View testimonial ${i + 1}`}
                   />
