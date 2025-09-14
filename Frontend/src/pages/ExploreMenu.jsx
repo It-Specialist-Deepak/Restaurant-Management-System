@@ -83,13 +83,10 @@ function ExploreMenu() {
   );
 
   return (
-    <div className="min-h-screen bg-cover bg-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen mt-14 bg-cover bg-center py-12 px-4 sm:px-6 lg:px-8">
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
 
-      <motion.h1 className="text-3xl sm:text-4xl font-bold text-center text-green-500 mb-8"
-        initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-        Explore Menu
-      </motion.h1>
+     
 
       {/* Search & Category Filter */}
       <div className="flex flex-col sm:flex-row justify-center gap-4 mb-6">

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchOrders, cancelOrder } from "../store/cancelOrderSlice";
 import { motion } from "framer-motion";
+import Loader from "../components/Skeleton/Loader";
 
 const OrderDone = () => {
   const dispatch = useDispatch();
@@ -76,47 +77,37 @@ const OrderDone = () => {
   if (status === "loading") {
     return (
       <div className="min-h-screen flex justify-center items-center">
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          Loading orders...
-        </motion.p>
+
+        <div className="flex justify-center p-4">
+          <Loader size={50} color="text-rose-500" />
+        </div>
       </div>
     );
   }
 
   if (status === "failed") {
-  
+
     return (
-          <motion.div
-          className="text-center py-12"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-        >
-          <div className="text-6xl p-5 mt-40 mb-4">🛒</div>
-          <p className="text-lg sm:text-xl text-black font-semibold mb-2">
-            Not Yet Any order!
-          </p>
-          <p className="text-black text-sm sm:text-base mb-6 font-bold">
-           {error || "Failed to fetch orders. Please try again later."}
-          </p>
-        </motion.div>
-        )
+      <motion.div
+        className="text-center py-12"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+      >
+        <div className="text-6xl p-5 mt-40 mb-4">🛒</div>
+        <p className="text-lg sm:text-xl text-black font-semibold mb-2">
+          Not Yet Any order!
+        </p>
+        <p className="text-black text-sm sm:text-base mb-6 font-bold">
+          {error || "Failed to fetch orders. Please try again later."}
+        </p>
+      </motion.div>
+    )
   }
 
   return (
-    <div className="p-4 max-w-4xl mx-auto mt-10">
-      <motion.h2
-        className="text-2xl font-bold mb-6 text-center"
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        Placed Orders
-      </motion.h2>
+    <div className="p-4 max-w-4xl mx-auto mt-20">
+     
 
       {placedOrders.length === 0 ? (
         <motion.p
@@ -153,17 +144,16 @@ const OrderDone = () => {
                   {new Date(order.createdAt).toLocaleString()}
                 </p>
                 <span
-                  className={`inline-flex items-center justify-center rounded-full px-2.5 py-0.5 text-sm mt-2 ${
-                    order.status === "Pending"
+                  className={`inline-flex items-center justify-center rounded-full px-2.5 py-0.5 text-sm mt-2 ${order.status === "Pending"
                       ? "bg-yellow-100 text-yellow-700"
                       : order.status === "Accepted"
-                      ? "bg-green-100 text-green-700"
-                      : order.status === "Cancelled"
-                      ? "bg-red-100 text-red-700"
-                      : order.status === "Completed"
-                      ? "bg-blue-100 text-blue-700"
-                      : "bg-gray-100 text-gray-100" // Default fallback
-                  }`}
+                        ? "bg-green-100 text-green-700"
+                        : order.status === "Cancelled"
+                          ? "bg-red-100 text-red-700"
+                          : order.status === "Completed"
+                            ? "bg-blue-100 text-blue-700"
+                            : "bg-gray-100 text-gray-100" // Default fallback
+                    }`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

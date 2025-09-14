@@ -42,7 +42,7 @@ function HomePage() {
           .font-poppins { font-family: 'Poppins', sans-serif; }
         `}
       </style>
-      <section className="relative mt-24 overflow-hidden font-sans">
+      <section className="relative mt-16 overflow-hidden font-sans">
         {/* Background Image Slider */}
         <div className="absolute inset-0">
           <AnimatePresence initial={false}>

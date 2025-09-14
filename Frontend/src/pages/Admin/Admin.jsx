@@ -413,15 +413,8 @@ const Admin = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-blue-50 py-8 px-4 mt-4 sm:px-6 lg:px-8">
       <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
 
-      <div className="max-w-7xl mx-auto">
-        <motion.h2
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="text-3xl font-bold text-gray-800 text-center mb-8"
-        >
-          Admin Dashboard
-        </motion.h2>
+      <div className="max-w-7xl mx-auto mt-16">
+       
 
         <motion.div variants={containerVariants} initial="hidden" animate="visible" className="bg-white rounded-2xl shadow-xl p-6 mb-6">
           <p className="font-bold text-2xl text-center">Dashboard Overview</p>

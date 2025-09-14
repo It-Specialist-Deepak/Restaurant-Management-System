@@ -41,7 +41,7 @@ const ShapeSeven = () => (
 
 const UpcomingEvent = () => {
 	return (
-		<header className=" mt-20 py-14 md:py-24 bg-white dark:bg-[#0b1727] text-zinc-900 dark:text-white relative overflow-hidden z-10">
+		<header className=" mt-16 py-14 md:py-24 bg-white dark:bg-[#0b1727] text-zinc-900 dark:text-white relative overflow-hidden z-10">
 			<Shapes />
 
 			<div className="container px-4 mx-auto">

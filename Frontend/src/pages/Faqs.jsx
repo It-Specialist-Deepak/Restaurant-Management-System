@@ -77,7 +77,7 @@ FaqItem.propTypes = {
 
 const Faqs = () => {
   return (
-    <section className="mt-20 md:mt-8 py-14 md:py-24 bg-white text-gray-900">
+    <section className="mt-16 md:mt-8 py-14 md:py-24 bg-white text-gray-900">
       <div className="container px-4 md:px-8 lg:px-16 mx-auto">
         <div className="grid grid-cols-12 justify-center mb-8 md:mb-12">
           <div className="col-span-12 lg:col-span-8 lg:col-start-3 text-center">

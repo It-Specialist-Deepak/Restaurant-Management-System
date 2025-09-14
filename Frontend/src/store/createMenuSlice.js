@@ -9,7 +9,7 @@ export const createMenu = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token"); // Ensure token is fetched within the function
-      const response = await axios.post(`${BASE_URL}/createmenu`, formData, {
+      const response = await axios.post(`${BASE_URL}/api/v1/createmenu`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`, // Move inside headers

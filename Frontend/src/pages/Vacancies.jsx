@@ -69,19 +69,21 @@ const Vacancies = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createVacancy(vacancyData)).then((result) => {
-      if (result.meta.requestStatus === "fulfilled") {
-        setVacancyData({
-          title: "",
-          experience: "",
-          jobtype: "",
-          description: "",
-          location: "",
-          salary: "",
-          requirements: "",
-        });
-      }
-    });
+   dispatch(createVacancy(vacancyData)).then((result) => {
+  if (result.meta.requestStatus === "fulfilled") {
+    console.log("Created vacancy:", result.payload); // ✅ Console log here
+    setVacancyData({ title: "",
+      experience: "",
+      jobtype: "",
+      description: "",
+      location: "",
+      salary: "",
+      requirements: "",});
+  } else {
+    console.error("Create vacancy failed:", result.payload );
+  }
+});
+
   };
 
   const handleDelete = (vacancyId) => {
@@ -222,16 +224,10 @@ const Vacancies = () => {
                   <FaCheckCircle /> Vacancy posted successfully!
                 </motion.p>
               )}
-              {createStatus === "failed" && fetchError && (
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="text-red-600 mt-4 text-center flex items-center justify-center gap-2"
-                >
-                  <FaExclamationCircle /> {fetchError}
-                </motion.p>
-              )}
+           {createStatus === "failed" && fetchError && (
+  <motion.p> ... {fetchError} </motion.p>
+)}
+
             </AnimatePresence>
           </motion.div>
 

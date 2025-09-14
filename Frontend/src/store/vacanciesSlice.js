@@ -50,6 +50,7 @@ export const createVacancy = createAsyncThunk(
       }
 
       const data = await response.json();
+      console.log(data)
       return data; // Expecting the created vacancy object with _id
     } catch (error) {
       return rejectWithValue("An error occurred while creating the vacancy.");
@@ -134,6 +135,7 @@ const vacanciesSlice = createSlice({
       })
       .addCase(createVacancy.fulfilled, (state, action) => {
         state.createStatus = "succeeded";
+        console.log(action.payload)
         if (action.payload) {
           state.vacancies.push(action.payload); // Add the new vacancy
         }

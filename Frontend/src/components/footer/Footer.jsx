@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 function Footer() {
   const containerVariants = {
@@ -159,8 +160,8 @@ function Footer() {
           variants={itemVariants}
           className="mt-10 pt-6 border-t border-gray-200"
         >
-          <p className="text-center text-xs text-gray-500 tracking-wide">
-            © FoodHunter {new Date().getFullYear()}. Crafted with Passion.
+          <p className="text-center text-xm text-gray-500 tracking-wide">
+            © FoodHunter {new Date().getFullYear()}. <Link target="_blank" rel="noopener noreferrer" to="https://deepak-web-portfolio.onrender.com/" className="text-cyan-600 font-semibold hover:underline">Developer Deepak</Link>
           </p>
         </motion.div>
       </motion.div>

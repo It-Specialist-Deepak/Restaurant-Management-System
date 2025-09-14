@@ -47,7 +47,7 @@ const Staff = () => {
     if (error) return <p className="text-center text-red-500">{error}</p>;
   return (
     <>
- <div className="min-h-screen bg-gradient-to-br from-gray-100 to-blue-50 py-8 px-4 mt-24
+ <div className="min-h-screen bg-gradient-to-br from-gray-100 to-blue-50 py-8 px-4 mt-16
   sm:px-6 lg:px-8">
       <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
 

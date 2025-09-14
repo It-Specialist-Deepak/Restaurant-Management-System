@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { FaClock, FaFileInvoice } from "react-icons/fa";
-import { toast , ToastContainer} from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import Loader from "../components/Skeleton/Loader";
 
 const AcceptedOrder = () => {
   const [orders, setOrders] = useState([]);
@@ -39,7 +40,7 @@ const AcceptedOrder = () => {
         }
 
         const response = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/getacceptedorder`,
+          `${import.meta.env.VITE_BASE_URL}/api/v1/getacceptedorder`,
           { userId },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -61,11 +62,11 @@ const AcceptedOrder = () => {
   }, [userId, token]);
 
   const handleDownloadInvoice = async (pdfUrl) => {
-    
+
     if (!pdfUrl) {
-        toast.error("Invoice URL is missing or invalid.");
-        return;
-      }
+      toast.error("Invoice URL is missing or invalid.");
+      return;
+    }
     if (!token || !userId) {
       setError("Unauthorized: Missing token or userId");
       return;
@@ -81,7 +82,7 @@ const AcceptedOrder = () => {
 
     try {
       const response = await axios.post(
-         `${import.meta.env.VITE_BASE_URL}/api/v1/download-invoice`,
+        `${import.meta.env.VITE_BASE_URL}/api/v1/download-invoice`,
         { invoiceId, userId },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -98,7 +99,9 @@ const AcceptedOrder = () => {
     }
   };
 
-  if (loading) return <p className="text-center mt-28 text-lg font-semibold">Loading accepted orders...</p>;
+  if (loading) return <div className="flex justify-center p-4">
+    <Loader size={50} color="text-rose-500" />
+  </div>;
   if (error) return (
     <motion.div className="text-center py-12" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
       <div className="text-6xl p-5 mt-40 mb-4">🛒</div>
@@ -109,43 +112,42 @@ const AcceptedOrder = () => {
 
   return (
     <>
-    <ToastContainer />
-    <div className="p-6 mt-24 max-w-5xl mx-auto">
-      <h2 className="text-3xl font-bold mb-6 text-center">Accepted Orders</h2>
-      <div className="space-y-6">
-        {orders.map((order) => (
-          <div key={order._id} className="bg-white p-6 rounded-lg shadow-lg border">
-            <div className="flex justify-between items-center">
-              <div>
-                <p className="text-lg font-semibold text-gray-800"><span className="font-bold">Order ID:</span> {order._id}</p>
-                <p className="text-gray-600"><span className="font-bold">Date:</span> {new Date(order.createdAt).toLocaleString()}</p>
-              </div>
-              <div className="flex items-center bg-green-100 text-green-700 px-3 py-1 rounded-lg text-sm font-semibold">
-                <FaClock className="mr-1" /> {order.status}
-              </div>
-            </div>
-            <div className="mt-4 space-y-4">
-              {order.items.map((item) => (
-                <div key={item.productId._id} className="flex items-center space-x-4 border-b pb-4">
-                  <img src={renderImage(item.productId.image)} alt={item.productId.name} className="w-16 h-16 object-cover rounded-md border" onError={(e) => { e.target.src = "https://via.placeholder.com/150?text=No+Image"; }} />
-                  <div className="flex-1">
-                    <p className="text-md font-semibold">{item.productId.name}</p>
-                    <p className="text-gray-600"><span className="font-bold">Price:</span> ${item.productId.price.toFixed(2)}</p>
-                    <p className="text-gray-600">1 x ${item.productId.price.toFixed(2)}</p>
-                  </div>
+      <ToastContainer />
+      <div className="p-6 mt-20 max-w-5xl mx-auto">
+        <div className="space-y-6">
+          {orders.map((order) => (
+            <div key={order._id} className="bg-white p-6 rounded-lg shadow-lg border">
+              <div className="flex justify-between items-center">
+                <div>
+                  <p className="text-lg font-semibold text-gray-800"><span className="font-bold">Order ID:</span> {order._id}</p>
+                  <p className="text-gray-600"><span className="font-bold">Date:</span> {new Date(order.createdAt).toLocaleString()}</p>
                 </div>
-              ))}
+                <div className="flex items-center bg-green-100 text-green-700 px-3 py-1 rounded-lg text-sm font-semibold">
+                  <FaClock className="mr-1" /> {order.status}
+                </div>
+              </div>
+              <div className="mt-4 space-y-4">
+                {order.items.map((item) => (
+                  <div key={item.productId._id} className="flex items-center space-x-4 border-b pb-4">
+                    <img src={renderImage(item.productId.image)} alt={item.productId.name} className="w-16 h-16 object-cover rounded-md border" onError={(e) => { e.target.src = "https://via.placeholder.com/150?text=No+Image"; }} />
+                    <div className="flex-1">
+                      <p className="text-md font-semibold">{item.productId.name}</p>
+                      <p className="text-gray-600"><span className="font-bold">Price:</span> ${item.productId.price.toFixed(2)}</p>
+                      <p className="text-gray-600">1 x ${item.productId.price.toFixed(2)}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 text-right flex justify-around items-center gap-4">
+                <p className="text-xm md:text-lg font-semibold">Grand Total: <span className="text-gray-800">${order.totalAmount.toFixed(2)}</span></p>
+                <button onClick={() => handleDownloadInvoice(order.pdfUrl)} className="text-blue-600 flex items-center gap-2 font-medium hover:underline">
+                  <FaFileInvoice /> View Invoice
+                </button>
+              </div>
             </div>
-            <div className="mt-4 text-right flex justify-around items-center gap-4">
-              <p className="text-xm md:text-lg font-semibold">Grand Total: <span className="text-gray-800">${order.totalAmount.toFixed(2)}</span></p>
-              <button onClick={() => handleDownloadInvoice(order.pdfUrl)} className="text-blue-600 flex items-center gap-2 font-medium hover:underline">
-                <FaFileInvoice /> View Invoice
-              </button>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
     </>
   );
 };
